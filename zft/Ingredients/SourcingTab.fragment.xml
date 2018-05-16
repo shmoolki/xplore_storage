@@ -1,0 +1,293 @@
+<core:FragmentDefinition 	xmlns:layout 	= "sap.ui.layout"
+							xmlns:forms 	= "sap.ui.layout.form"
+							xmlns:core 		= "sap.ui.core"
+							xmlns 			= "sap.m"
+							xmlns:u 		= "sap.ui.unified"
+							xmlns:uxap		= "sap.uxap"
+							id 				= "Sourcing">
+	<layout:VerticalLayout>
+		<Table 		items			=	"{SourcingData>/}"
+				    mode			= 	"None"
+				    delete 			= 	"onSourcingDelete"
+				    id 				=	"SourcingTable"
+				    class 			=	"sapUiTinyMarginTop"> 
+				<headerToolbar>	
+					<Toolbar>
+						<Label 	text 				=	"{i18n>SOURCING}"
+								class				=	"sapUiTinyMarginTop"
+								design				=	"Bold"/>
+						
+						<ToolbarSpacer/>
+						<Button 	text		=	"{i18n>ADD_SOURCING}"
+									icon 		=	"sap-icon://add"
+									press		=	"addSourcing"
+									type		=	"Emphasized"
+									visible 	=	"{Edit>/EditOn}"
+									class		=	"sapUiTinyMarginTop"/>
+					</Toolbar>
+				</headerToolbar>			         
+			<columns>
+				
+				<Column width	=	"6%"
+						visible	=	"{	path		:	'Edit>/DISTB', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+					<Text	text 		=	"{i18n>DISTRIBUTOR_SHORT}" 
+							tooltip 	=	"{i18n>DISTRIBUTOR}"/>
+				</Column>
+				 
+				<Column width	=	"13%"
+						visible	=	"{	path		:	'Edit>/MFRNM', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+
+					<Text	text 		=	"{i18n>MANUFACTURER_NAME_SHORT}"
+							tooltip 	=	"{i18n>MANUFACTURER_NAME}" />
+				</Column>
+				
+				<Column	visible	=	"{	path		:	'Edit>/MFRNM', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+					<Text	 text 		=	"{i18n>MANUFACTURER_LABEL_SHORT}"
+							tooltip 	=	"{i18n>MANUFACTURER_LABEL}" />
+				</Column>
+				
+				<Column  width	=	"8%"
+						hAlign	="Center"
+						visible	=	"{	path		:	'Edit>/TEMPB', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+					<Text	text 		=	"{i18n>TEMP}" 
+							tooltip 	=	"{i18n>TEMPERATURE}"/>
+				</Column>
+				
+				<Column width =	"6%"
+						visible	=	"{	path		:	'Edit>/NTGEW', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+					<Text	text 		=	"{i18n>UNIT_NET_WEIGHT_SHORT}"
+							tooltip 	=	"{i18n>UNIT_NET_WEIGHT}" />
+				</Column>
+
+				<Column width =	"6%"
+						visible	=	"{	path		:	'Edit>/VLCRN', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+
+					<Text	text 		=	"{i18n>CONDITION_EXPECTED_SHORT}"
+							tooltip 	=	"{i18n>CONDITION_EXPECTED}" />
+				</Column>
+				
+				<Column width =	"6%"
+						hAlign="Center">
+					<Text	text 		=	"{i18n>DECONDIT}"
+							tooltip 	=	"{i18n>DECONDITIONED}" />
+				</Column>
+					 
+				<Column	hAlign="Center"
+						width =	"6%"
+						visible	=	"{	path		:	'Edit>/KBETR', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+					<Text	text 		=	"{i18n>PURCHASE_APPROACH_SHORT}"
+							tooltip 	=	"{i18n>PURCHASE_APPROACH}" />
+				</Column>
+
+				<Column width =	"4%"
+						hAlign="Center"
+						visible	=	"{	path		:	'Edit>/MEINS', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+					<Text	text 		=	"{i18n>UNIT_PURCHASE_SHORT}"
+							tooltip 	=	"{i18n>UNIT_PURCHASE_APPROACH}" />
+				</Column>
+				
+				<Column width =	"3%"
+						visible	=	"{	path		:	'Edit>/AR2SF', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+
+					<Text	text 		=	"{i18n>FILES_SHORT}" 
+							tooltip 	=	"{i18n>FILES}"/>
+				</Column>
+				
+				<Column width =	"13%"
+						hAlign="Center"
+						visible	=	"{	path		:	'Edit>/STATS', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+					<Text	text 		=	"{i18n>STATUS_SOURCING}"
+							tooltip 	=	"{i18n>STATUS_SOURCING}" />
+				</Column>
+
+				<Column width	=	"5%"
+						visible	=	"{	path		:	'Edit>/RECIP', 
+										formatter	:	'CatalogMat.util.Formatter.visibleField'}">
+
+					<Text	text 		=	"{i18n>RECIPE_CHOICE_SHORT}"
+							tooltip 	=	"{i18n>RECIPE_CHOICE}" />
+				</Column>
+					 
+				<Column width	=	"8%">
+					<Text text 			=	"{i18n>APPRO_CODE}" />
+				</Column>
+				
+				<Column  width	=	"4%">
+					<Text text 			=	"" />
+				</Column>
+				
+			</columns>
+			
+			<items>
+				
+				<ColumnListItem>
+				
+					<cells>
+						<Select enabled 			=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																		{path: 'articleData>/FICTF'},
+																		{path: 'Edit>/EditOn'},
+																		{path: 'Edit>/DISTB'},
+																		{path: 'SourcingData>STATS'}],
+															formatter:'CatalogMat.util.Formatter.editApproFictif'}"
+								forceSelection		=	"false"
+								selectedKey 		=	"{SourcingData>DISTB}"
+								width				=	"100%">
+							<items>
+								<core:Item key="L" text="{i18n>L}" />
+								<core:Item key="P" text="{i18n>P}" />
+							</items>
+						</Select>
+						<Input		editable			=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																			{path: 'articleData>/FICTF'},
+																			{path: 'Edit>/EditOn'},
+																			{path: 'Edit>/MFRNM'},
+																			{path: 'SourcingData>STATS'}],
+															formatter:'CatalogMat.util.Formatter.editApproFictif'}"
+									value				=	"{SourcingData>MFRNM}"
+									tooltip				=	"{SourcingData>MFRNM}"
+									showValueHelp		=	"true"
+									valueLiveUpdate 	=	"true"
+									valueHelpOnly		=	"true"
+									liveChange			=	"fournisseurChange"
+									valueHelpRequest	=	"NewFournisseurPress"/>
+						<Input	value			=	"{SourcingData>MAKTX}"
+								tooltip			=	"{SourcingData>MAKTX}"
+								editable		=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																	{path: 'articleData>/FICTF'},
+																	{path: 'Edit>/EditOn'},
+																	{path: 'Edit>/MAKTX'},
+																	{path: 'SourcingData>STATS'}],
+														formatter:'CatalogMat.util.Formatter.editApproFictif'}"/>
+						
+						<VBox>
+							<Select enabled 			=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																			{path: 'articleData>/FICTF'},
+																			{path: 'Edit>/EditOn'},
+																			{path: 'Edit>/TEMPB'},
+																			{path: 'SourcingData>STATS'}],
+																formatter:'CatalogMat.util.Formatter.editApproFictif'}"
+									items				=	"{VHService>/VHTempbSet/}"
+									width				=	"40px"
+									forceSelection		=	"false"
+									selectedKey 		=	"{SourcingData>TEMPB}"
+										tooltip			=	"{SourcingData>TBTXT}">
+								<core:Item 	key 		=	"{VHService>TEMPB}"
+											text 		= 	"{VHService>TEMPB}"/>
+							</Select>
+						</VBox>
+						<Input	value			=	"{SourcingData>NTGEW}"
+								editable		=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																	{path: 'articleData>/FICTF'},
+																	{path: 'Edit>/EditOn'},
+																	{path: 'Edit>/NTGEW'},
+																	{path: 'SourcingData>STATS'}],
+															formatter:'CatalogMat.util.Formatter.editApproFictif'}"/>
+			
+						<Input	value			=	"{SourcingData>VLCRN}"
+								editable		=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																	{path: 'articleData>/FICTF'},
+																	{path: 'Edit>/EditOn'},
+																	{path: 'Edit>/VLCRN'},
+																	{path: 'SourcingData>STATS'}],
+															formatter:'CatalogMat.util.Formatter.editApproFictif'}"/>
+						
+						<VBox>
+							<Select 		enabled				=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																					{path: 'articleData>/FICTF'},
+																					{path: 'Edit>/EditOn'},
+																					{path: 'SourcingData>STATS'}],
+																formatter:'CatalogMat.util.Formatter.editApproFictif2'}"
+											forceSelection 		= 	"false"
+											selectedKey 		=	"{SourcingData>DCDTD}"
+											visible				=	"{	parts: [	{path: 'SourcingData>DISTB'},
+																					{path: 'articleData>/FICTF'},
+																					{path: 'helpModel>/Select'}],
+																		formatter:'CatalogMat.util.Formatter.displayDeconditionned'}">
+								<items>
+									<core:Item key="O" text="{i18n>OUI}" />
+									<core:Item key="N" text="{i18n>NON}" />
+								</items>
+							</Select>
+							<Text			text				=	"-"
+											textAlign			=	"Center"
+											visible				=	"{	parts: [	{path: 'SourcingData>DISTB'},
+																					{path: 'articleData>/FICTF'},
+																					{path: 'helpModel>/Text'}],
+																		formatter:'CatalogMat.util.Formatter.displayDeconditionned'}"/>
+						</VBox>
+
+						<Input	value			=	"{SourcingData>KBETR}"
+								editable		=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																	{path: 'articleData>/FICTF'},
+																	{path: 'Edit>/EditOn'},
+																	{path: 'Edit>/KBETR'},
+																	{path: 'SourcingData>STATS'}],
+															formatter:'CatalogMat.util.Formatter.editApproFictif'}"/>
+						<Input	value			=	"{SourcingData>MEINS}"
+								editable		=	"{	parts: [	{path: 'SourcingData>RMATN'},
+																	{path: 'articleData>/FICTF'},
+																	{path: 'Edit>/EditOn'},
+																	{path: 'Edit>/MEINS'},
+																	{path: 'SourcingData>STATS'}],
+															formatter:'CatalogMat.util.Formatter.editApproFictif'}"/>
+					
+						<core:Icon	src 		=	"sap-icon://attachment"
+									size		=	"2rem"
+									color		=	"{	path: 'SourcingData>COFIL',
+														formatter:'CatalogMat.util.Formatter.haveFile'}"
+									press 		=	"HandleFilePress"/>
+
+						<Select id					=	"selectStatus"
+								enabled 			=	"{	parts: [	{path: 'articleData>/FICTF'},
+																		{path: 'Edit>/EditOn'},
+																		{path: 'Edit>/STATS'}],
+															formatter:'CatalogMat.util.Formatter.editFictif'}"
+								items				=	"{SourcingData>statut/}"
+								forceSelection		=	"false"
+								width				=	"170px"
+								selectedKey 		=	"{SourcingData>STATS}"
+								tooltip				=	"{SourcingData>TSTAT}">
+							<core:Item 	key 		=	"{SourcingData>STATS}"
+										text 		= 	"{SourcingData>VTEXT}"/>
+						</Select>
+
+						<CheckBox	selected 		=	"{SourcingData>RECIP}"
+									enabled 		=	"{	parts: [	{path: 'articleData>/FICTF'},
+																		{path: 'Edit>/EditOn'},
+																		{path: 'Edit>/STATS'}],
+															formatter:'CatalogMat.util.Formatter.editFictif'}"/>
+
+						<Input	value 				=	"{SourcingData>RMATN}"
+								type				=	"Number"
+								editable			=	"{	parts: [	{path: 'articleData>/FICTF'},
+																		{path: 'Edit>/EditOn'},
+																		{path: 'Edit>/RMATN'},
+																		{path:	'SourcingData>STATS'}],
+															formatter:'CatalogMat.util.Formatter.editFictifAppro'}"/>
+						
+						<Button 	icon 			=	"sap-icon://add"
+									visible 		=	"{articleData>/FICTF}"
+									press			=	"popOverText"
+									width			=	"2rem"
+									type			=	"{	path: 'SourcingData>STEXT',
+																formatter:'CatalogMat.util.Formatter.haveText'}"/>
+					
+					</cells>
+				
+				</ColumnListItem>
+			
+			</items>
+			
+		</Table>
+	</layout:VerticalLayout>
+</core:FragmentDefinition>

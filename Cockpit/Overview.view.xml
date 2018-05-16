@@ -1,0 +1,523 @@
+<mvc:View 	xmlns:mvc		=	"sap.ui.core.mvc"
+			xmlns 			=	"sap.m"
+			xmlns:uxap 		=	"sap.uxap"
+			xmlns:c 		=	"sap.ui.core"
+			xmlns:t 		=	"sap.ui.table"
+			xmlns:layout 	= 	"sap.ui.layout"
+			xmlns:fb 		= 	"sap.ui.comp.filterbar"
+			xmlns:var 		=	"sap.ui.comp.variants"
+			controllerName	=	"cockpitalerte.controller.Overview"
+			height 			=	"100%">
+			
+	<Page 		enableScrolling	=	"true" 
+				title 			=	"{i18n>appTitle}" 
+				class 			=	"sapMSampleFioriListReportPageOverflow">
+		<VBox	id 				= 	"msgArea" />
+		<!--<Panel 	expanded 		=	"true"-->
+		<!--		expandable 		=	"false">-->
+		<!--		<FlexBox>-->
+					
+		<!--			<FlexBox	direction 	=	"Column"-->
+		<!--					 	width 		= 	"100%">-->
+		<!--				<HBox	alignItems	=	"Start"-->
+		<!--						width		=	"200px"-->
+		<!--						justifyContent	=	"SpaceBetween">-->
+		<!--					<Label	text				=	"{i18n>APP}"/>-->
+		<!--					<HBox>-->
+		<!--						<c:Icon		src				=	"sap-icon://multiselect-all"-->
+		<!--									size			=	"0.8rem"-->
+		<!--									id				=	"AppLi"-->
+		<!--									press			=	"selectAll"-->
+		<!--									class			=	"sapUiTinyMarginEnd"/>-->
+								
+		<!--						<c:Icon		src				=	"sap-icon://clear-filter"-->
+		<!--									color			=	"Red"-->
+		<!--									size			=	"0.8rem"-->
+		<!--									visible			=	"{	path: 'QuickFilter>/App',-->
+		<!--																formatter:'.formatter.filterLabel'}"-->
+		<!--									id				=	"App"-->
+		<!--									press			=	"removeFilter"-->
+		<!--									class			=	"sapUiTinyMarginBegin"/>-->
+		<!--					</HBox>-->
+		<!--				</HBox>-->
+		<!--				<MultiComboBox	id					=	"AppList"-->
+		<!--				 				selectedKeys 		=	"{QuickFilter>/Hierarchy}"-->
+		<!--								selectionFinish		=	"handleSearch"-->
+		<!--								width 				=	"200px"-->
+		<!--								selectionChange		=	"checkAllSelected">-->
+		<!--					<items>-->
+		<!--						<c:Item key		=	"I" -->
+		<!--								text	=	"{i18n>INGREDIENT}" />-->
+		<!--						<c:Item key		=	"R" -->
+		<!--								text	=	"{i18n>RECETTE}" />-->
+		<!--						<c:Item key		=	"C" -->
+		<!--								text	=	"{i18n>CARTE}" />-->
+		<!--					</items>-->
+		<!--				</MultiComboBox>-->
+		<!--			</FlexBox>-->
+					
+		<!--			<FlexBox	direction 	=	"Column"-->
+		<!--					 	width 		= 	"100%">-->
+		<!--				<HBox	alignItems	=	"Start"-->
+		<!--						width		=	"200px"-->
+		<!--						justifyContent	=	"SpaceBetween">-->
+		<!--					<Label	text				=	"{i18n>CHANGE_TYPE}"/>-->
+		<!--					<HBox>-->
+		<!--						<c:Icon		src				=	"sap-icon://multiselect-all"-->
+		<!--									size			=	"0.8rem"-->
+		<!--									id				=	"ChangeLi"-->
+		<!--									press			=	"selectAll"-->
+		<!--									class			=	"sapUiTinyMarginEnd"/>-->
+								
+		<!--						<c:Icon		src				=	"sap-icon://clear-filter"-->
+		<!--									color			=	"Red"-->
+		<!--									size			=	"0.8rem"-->
+		<!--									visible			=	"{	path: 'QuickFilter>/Change',-->
+		<!--																formatter:'.formatter.filterLabel'}"-->
+		<!--									id				=	"Change"-->
+		<!--									press			=	"removeFilter"-->
+		<!--									class			=	"sapUiTinyMarginBegin"/>-->
+		<!--					</HBox>-->
+		<!--				</HBox>-->
+		<!--				<MultiComboBox	id					=	"ChangeList"-->
+		<!--				 				selectedKeys 		=	"{QuickFilter>/Change}"-->
+		<!--								selectionFinish		=	"handleSearch"-->
+		<!--								width 				=	"200px"-->
+		<!--								selectionChange		=	"checkAllSelected">-->
+		<!--					<items>-->
+		<!--						<c:Item key		=	"I" -->
+		<!--								text	=	"{i18n>ADD}" />-->
+		<!--						<c:Item key		=	"U" -->
+		<!--								text	=	"{i18n>UPDATE}" />-->
+		<!--						<c:Item key		=	"D" -->
+		<!--								text	=	"{i18n>DELETE}" />-->
+		<!--					</items>-->
+		<!--				</MultiComboBox>-->
+		<!--			</FlexBox>-->
+					
+		<!--			<FlexBox	direction 	=	"Column"-->
+		<!--					 	width 		= 	"100%">-->
+		<!--				<HBox	alignItems	=	"Start"-->
+		<!--						width		=	"200px"-->
+		<!--						justifyContent	=	"SpaceBetween">-->
+		<!--					<Label	text				=	"{i18n>USER}"/>-->
+		<!--					<HBox>-->
+		<!--						<c:Icon		src				=	"sap-icon://multiselect-all"-->
+		<!--									size			=	"0.8rem"-->
+		<!--									id				=	"UserLi"-->
+		<!--									press			=	"selectAll"-->
+		<!--									class			=	"sapUiTinyMarginEnd"/>-->
+								
+		<!--						<c:Icon		src				=	"sap-icon://clear-filter"-->
+		<!--									color			=	"Red"-->
+		<!--									size			=	"0.8rem"-->
+		<!--									visible			=	"{	path: 'QuickFilter>/User',-->
+		<!--																formatter:'.formatter.filterLabel'}"-->
+		<!--									id				=	"User"-->
+		<!--									press			=	"removeFilter"-->
+		<!--									class			=	"sapUiTinyMarginBegin"/>-->
+		<!--					</HBox>-->
+		<!--				</HBox>-->
+		<!--				<MultiComboBox	id					=	"UserList"-->
+		<!--								items				=	"{VhUser>/}"-->
+		<!--				 				selectedKeys 		=	"{QuickFilter>/Hierarchy}"-->
+		<!--								selectionFinish		=	"handleSearch"-->
+		<!--								width 				=	"200px"-->
+		<!--								selectionChange		=	"checkAllSelected">-->
+		<!--					<c:Item 	key			 		=	"{VhHierarchy>CAHIE}"-->
+		<!--								text 				= 	"{VhHierarchy>DSHIE}"/>-->
+		<!--				</MultiComboBox>-->
+		<!--			</FlexBox>-->
+					
+		<!--			<FlexBox	direction 	=	"Column"-->
+		<!--					 	width 		= 	"100%">-->
+		<!--				<Label	text				=	"{i18n>DATE}"/>-->
+					
+		<!--				<DateRangeSelection	class 			=	"sapUiTinyMarginEnd sapUiNoMarginTop"-->
+		<!--								value				=	"{QuickFilter>/DateValide}"-->
+		<!--								width 				=	"85%"-->
+		<!--								change				=	"handleSearch"-->
+		<!--								displayFormat 		= 	"dd.MM.yyyy"-->
+		<!--								valueFormat 		=	"yyyyMMdd"/>-->
+		<!--			</FlexBox>-->
+					
+		<!--			<FlexBox	direction 	=	"Column"-->
+		<!--					 	width 		= 	"5%"-->
+		<!--						class 		=	"sapUiNoMarginBegin">-->
+		<!--				<Label 			text 				=	""/>-->
+		<!--				<Button id		=	"clearFilter"-->
+		<!--							tooltip	=	"{i18n>CLEAR_FILTERS}"-->
+		<!--							class 	=	"sapUiTinyMarginEnd sapUiNoMarginTop"-->
+		<!--							icon	=	"sap-icon://clear-filter"-->
+		<!--							type	=	"Reject"-->
+		<!--							press	=	"onClearFilter"/>-->
+		<!--			</FlexBox>-->
+		<!--		</FlexBox>-->
+		<!--	</Panel>-->
+	
+			<Table 	id 					= 	"table" 
+					backgroundDesign	=	"Solid"
+	    			items				=	"{History>/}">
+
+					<columns>
+						<Column 	width			=	"7.5%"
+									mergeDuplicates	=	"true">
+							<Text text 			= 	"{i18n>APP}" />
+						</Column>
+						
+						<Column		width			=	"7.5%"
+									mergeDuplicates	=	"true">
+							<Text text 			= 	"{i18n>NOTIFY_NUMBER}" />
+						</Column>
+						
+						<Column 	width			=	"25%"
+									mergeDuplicates	=	"true">
+							<Text text 			=	"{i18n>PRODUIT}" />
+						</Column>
+
+						
+						<Column 	width			=	"5%">
+							<Text text 			=	"{i18n>CHANGE_TYPE}" />
+						</Column>
+						
+						<Column		width			=	"10%">
+							<Text text 			=	"{i18n>FIELD_NAME}" />
+						</Column>
+
+						<Column		width			=	"10%">
+							<Text text 			=	"{i18n>OLD_VALUE}" />
+						</Column>
+
+						<Column		width			=	"10%">
+							<Text text 			=	"{i18n>NEW_VALUE}" />
+						</Column>
+						
+						<Column		width			=	"10%">
+							<Text text 			=	"{i18n>DATE}" />
+						</Column>
+						
+						<Column 	width			=	"10%"
+									mergeDuplicates	=	"true">
+							<Text 	text				=	"{i18n>USER}"/>
+						</Column>
+
+					</columns>
+
+					<items>
+						<ColumnListItem>
+							<cells>
+					
+								<Text 		text				=	"{	path: 'History>PRNUM',
+																		formatter:'.formatter.appName'}"/>
+								
+								<Text 		text				=	"{History>CHANGENR}"/>
+								
+								<ObjectIdentifier	title		=	"{History>PRNUM}" 
+													text		=	"{History>DESCR}"/>
+								
+
+								<c:Icon		src					=	"{	path: 'History>CHNGT',
+																		formatter:'.formatter.iconChange'}"
+											color				=	"{	path: 'History>CHNGT',
+																		formatter:'.formatter.colorChange'}"/>
+								
+								<Text 		text				=	"{History>FTEXT}"/>
+
+								<Text 		text				=	"{History>OLDVL}"/>
+
+								<Text 		text				=	"{History>NEWVL}"/>
+								
+								<VBox>
+									<DatePicker 	dateValue 			=	"{History>UDATE}"
+													editable			=	"false" 
+													displayFormat		= 	"dd.MM.yyyy"
+													placeholder 		=	" "/>
+									<Text			text				=	"{	path: 'History>UTIME',
+																			formatter:'.formatter.formatTime'}"
+													class				=	"sapUiTinyMarginBegin"/>
+								</VBox>
+								
+								<Text 		text				=	"{History>USERN}"/>
+						
+							</cells>
+						
+						</ColumnListItem>
+					
+					</items>
+
+				</Table>
+				<footer >
+				<Toolbar 		>
+					<content>
+						<ToolbarSpacer />
+						<Button 	text		=	"{i18n>GESTION}" 
+									icon		=	"sap-icon://quality-issue" 
+									type		=	"Accept" 
+									press		=	"gestionAlerte"/>
+					</content>
+				</Toolbar>
+			</footer>
+		<!--<t:Table 	id						=	"table" -->
+		<!--			rows 					=	"{AlerteService>/AlerteServiceSet}"-->
+		<!--			selectionMode 			=	"Single"  -->
+		<!--			editable				=	"false" -->
+		<!--			visibleRowCount	 		=	"{OverviewScreenModel>/Screen}"-->
+		<!--			showNoData 				=	"true"-->
+		<!--			noData					=	"{i18n>NO_DATA}"-->
+		<!--			threshold				=	"99999999"-->
+		<!--			enableBusyIndicator 	=	"true"-->
+		<!--			rowSelectionChange 		=	"onSelectedRow">-->
+		<!--	<t:toolbar>	-->
+		<!--		<Toolbar>-->
+		<!--			<Label 		text   	=	"{i18n>CARTES}"-->
+		<!--						design 	=	"Bold"-->
+		<!--						class 	=	"sapUiTinyMarginBegin"/>-->
+
+		<!--			<ToolbarSpacer/>-->
+					
+		<!--			<Button 	text 	=	"{i18n>DUPLICATE}"-->
+		<!--						press 	=	"DuplicateCarte"-->
+		<!--						icon 	=	"sap-icon://copy"-->
+		<!--						type 	=	"Default"-->
+		<!--						id 		=	"duplicateButton"-->
+		<!--						visible =	"false"/>-->
+		<!--			<Button 	text 	=	"{i18n>NEW_PRODUCT}"-->
+		<!--						press 	=	"NewCartePress"-->
+		<!--						icon 	=	"sap-icon://add"-->
+		<!--						class 	=	"sapUiSmallMarginEnd"-->
+		<!--						type 	=	"Default"-->
+		<!--						visible	=	"{Edit>/Create}"/>-->
+
+		<!--		</Toolbar>-->
+		<!--	</t:toolbar>-->
+
+		<!--	<t:columns>-->
+				
+		<!--		<t:Column 	sortProperty	 	=	"CTNUM">-->
+		<!--			<Label 			text 				=	"{i18n>CARTE}" />-->
+		<!--			<t:template>-->
+		<!--				<Link 		text				= 	"{CarteService>CTNUM}" -->
+		<!--							emphasized 			= 	"true"-->
+		<!--							press 				= 	"onPressArticle" />-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+					
+		<!--		<t:Column 	sortProperty	 	=	"DESCR" >-->
+		<!--			<Label 			text 				=	"{i18n>DESCRIPTION}"/>-->
+		<!--			<t:template>-->
+		<!--				<Text 		text				=	"{CarteService>DESCR}"/>					-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+
+
+		<!--		<t:Column 	sortProperty	 	=	"DSHIE" >-->
+		<!--			<Label 			text 				=	"{i18n>HIERARCHY}"/>-->
+		<!--			<t:template>-->
+		<!--				<Text 		text 				=	"{CarteService>DSHIE}" />-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+
+		<!--		<t:Column 	sortProperty	 	=	"APDEB" >-->
+		<!--			<Label 			text 				=	"{i18n>VALIDE_FROM}"/>-->
+		<!--			<t:template>-->
+		<!--				<DatePicker displayFormat 		= 	"dd.MM.yyyy"-->
+		<!--							value				=	"{CarteService>APDEB}"-->
+		<!--							editable			=	"false"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>						-->
+
+		<!--		<t:Column 	sortProperty	 	=	"APFIN" >-->
+		<!--			<Label 			text 				=	"{i18n>VALIDE_TO}"/>-->
+		<!--			<t:template>-->
+		<!--				<DatePicker displayFormat 		= 	"dd.MM.yyyy"-->
+		<!--							value				=	"{CarteService>APFIN}"-->
+		<!--							editable			=	"false"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+				
+		<!--		<t:Column 	sortProperty	 	=	"RSTAT" >-->
+		<!--			<Label 			text 				=	"{i18n>STATUS}"/>-->
+		<!--			<t:template>-->
+		<!--				<ComboBox	items			=	"{VHService>/VHCAStatusSet/}"-->
+		<!--							editable		=	"false"-->
+		<!--							selectedKey 	=	"{CarteService>STATS}">-->
+		<!--					<c:Item 	key 		=	"{VHService>STATS}"-->
+		<!--								text 		= 	"{VHService>VTEXT}"/>-->
+		<!--				</ComboBox>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+
+		<!--	</t:columns>					-->
+		<!--</t:Table>		-->
+	</Page>
+</mvc:View>
+	<!--	<t:Table	id				=	"GTable"  -->
+		<!--			visibleRowCount		=	"13" -->
+		<!--			rows				=	"{AlerteService>/HistorySet}" -->
+		<!--			selectionMode		=	"None" -->
+		<!--			editable			=	"false" -->
+		<!--			noData				=	"{i18n>NO_DATA}"-->
+		<!--			minAutoRowCount		=	"3" -->
+		<!--			showNoData			=	"true" -->
+		<!--			enableBusyIndicator	=	"true" -->
+		<!--			threshold			=	"9999999">-->
+		<!--	<t:columns>-->
+		<!--		<t:Column	width		=	"7.5%">-->
+		<!--			<Label text="{i18n>APP}"/>-->
+		<!--			<t:template>-->
+		<!--				<Text 		text				=	"{	path: 'AlerteService>PRNUM',-->
+		<!--																formatter:'.formatter.appName'}"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+					
+		<!--		<t:Column	width		=	"7.5%">-->
+		<!--			<Label text="{i18n>NOTIFY_NUMBER}"/>-->
+		<!--			<t:template>-->
+		<!--				<Text 		text				=	"{AlerteService>CHANGENR}"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+
+
+		<!--		<t:Column	width		=	"25%">-->
+		<!--			<Label text="{i18n>PRODUIT}"/>-->
+		<!--			<t:template>-->
+		<!--				<ObjectIdentifier	title		=	"{AlerteService>PRNUM}" -->
+		<!--									text		=	"{AlerteService>DESCR}"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+
+		<!--		<t:Column	width	=	"7.5%">-->
+		<!--			<Label text="{i18n>CHANGE_TYPE}"/>-->
+		<!--			<t:template>-->
+		<!--				<c:Icon		src					=	"{	path: 'AlerteService>CHNGT',-->
+		<!--														formatter:'.formatter.iconChange'}"-->
+		<!--							color				=	"{	path: 'AlerteService>CHNGT',-->
+		<!--														formatter:'.formatter.colorChange'}"/>-->
+						
+		<!--			</t:template>-->
+		<!--		</t:Column>	-->
+				
+		<!--		<t:Column	width			=	"7.5%">-->
+		<!--			<Label text="{i18n>FIELD_NAME}"/>-->
+		<!--			<t:template>-->
+		<!--				<Text 		text				=	"{AlerteService>FNAME}"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+
+		<!--		<t:Column	width	=	"10%">-->
+		<!--			<Label text="{i18n>OLD_VALUE}"/>-->
+		<!--			<t:template>-->
+		<!--				<Text 		text				=	"{AlerteService>OLDVL}"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+		<!--		<t:Column	hAlign	=	"Center"-->
+		<!--					width	=	"10%">-->
+		<!--			<Label text="{i18n>NEW_VALUE}"/>-->
+		<!--			<t:template>-->
+		<!--				<Text 		text				=	"{AlerteService>NEWVL}"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+		<!--		<t:Column	hAlign	=	"Center"-->
+		<!--					 width	=	"10%">-->
+		<!--			<Label text="{i18n>DATE}"/>-->
+		<!--			<t:template>-->
+		<!--				<VBox>-->
+		<!--					<DatePicker 	dateValue 			=	"{AlerteService>UDATE}"-->
+		<!--									editable			=	"false" -->
+		<!--									displayFormat		= 	"dd.MM.yyyy"-->
+		<!--									placeholder 		=	" "/>-->
+		<!--					<Text			text				=	"{	path: 'AlerteService>UTIME',-->
+		<!--															formatter:'.formatter.formatTime'}"-->
+		<!--									class				=	"sapUiTinyMarginBegin"/>-->
+		<!--				</VBox>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+				
+		<!--		<t:Column width="10%">-->
+		<!--			<Label text="{i18n>USER}"/>-->
+		<!--			<t:template>-->
+		<!--				<Image	src					=	"{CatRectService>IMSRC}" -->
+		<!--						width 				=	"50px"-->
+		<!--						height				=	"50px" -->
+		<!--						press				=	"onImagePreview"/>-->
+		<!--			</t:template>-->
+		<!--		</t:Column>-->
+
+
+		<!--	</t:columns>					-->
+		<!--</t:Table>-->
+<!--	<semantic:FullscreenPage-->
+<!--		id="page"-->
+<!--		navButtonPress="onNavBack"-->
+<!--		showNavButton="true"-->
+<!--		title="{i18n>worklistViewTitle}">-->
+<!--		<semantic:content>-->
+<!--			<Table-->
+<!--				id="table"-->
+<!--				width="auto"-->
+<!--				class="sapUiResponsiveMargin"-->
+<!--				items="{-->
+<!--					path: '/HistorySet',-->
+<!--					sorter: {-->
+<!--						path: 'Matnr',-->
+<!--						descending: false-->
+<!--					}-->
+<!--				}"-->
+<!--				noDataText="{worklistView>/tableNoDataText}"-->
+<!--				busyIndicatorDelay="{worklistView>/tableBusyDelay}"-->
+<!--				growing="true"-->
+<!--				growingScrollToLoad="true"-->
+<!--				updateFinished="onUpdateFinished">-->
+
+<!--				<headerToolbar>-->
+<!--					<Toolbar>-->
+<!--						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>-->
+<!--						<ToolbarSpacer />-->
+<!--						<SearchField-->
+<!--							id="searchField"-->
+<!--							tooltip="{i18n>worklistSearchTooltip}"-->
+<!--							search="onSearch"-->
+<!--							width="auto">-->
+<!--						</SearchField>-->
+<!--					</Toolbar>-->
+<!--				</headerToolbar>-->
+
+<!--				<columns>-->
+<!--					<Column id="nameColumn">-->
+<!--						<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>-->
+<!--					</Column>-->
+<!--					<Column id="unitNumberColumn" hAlign="Right">-->
+<!--						<Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/>-->
+<!--					</Column>-->
+<!--				</columns>-->
+
+<!--				<items>-->
+<!--					<ColumnListItem-->
+<!--						type="Navigation"-->
+<!--						press="onPress">-->
+<!--						<cells>-->
+<!--							<ObjectIdentifier-->
+<!--								title="{Matnr}"/>-->
+<!--							<ObjectNumber-->
+<!--								unit="{Matnr}"/>-->
+<!--						</cells>-->
+<!--					</ColumnListItem>-->
+<!--				</items>-->
+<!--			</Table>-->
+<!--		</semantic:content>-->
+
+<!--		<semantic:sendEmailAction>-->
+<!--			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>-->
+<!--		</semantic:sendEmailAction>-->
+
+<!--		<semantic:shareInJamAction>-->
+<!--			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress"/>-->
+<!--		</semantic:shareInJamAction>-->
+
+<!--		<semantic:saveAsTileAction>-->
+<!--			<footerbar:AddBookmarkButton id ="shareTile" title="{worklistView>/saveAsTileTitle}" />-->
+<!--		</semantic:saveAsTileAction>-->
+
+<!--	</semantic:FullscreenPage>-->
+
+<!--</mvc:View>-->

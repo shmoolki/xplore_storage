@@ -1,0 +1,43 @@
+<core:FragmentDefinition 	xmlns:layout 	= "sap.ui.layout"
+							xmlns:forms 	= "sap.ui.layout.form"
+							xmlns:core 		= "sap.ui.core"
+							xmlns:c			= "sap.suite.ui.commons"
+							xmlns:t 		= "sap.ui.table"
+							xmlns 			= "sap.m"
+							xmlns:uxap		= "sap.uxap">
+	<layout:VerticalLayout>
+		<FlexBox	fitContainer	=	"true"
+	            	direction		=	"Column"
+	            	alignItems		=	"Center"
+	            	alignContent	=	"Stretch"
+	            	renderType		=	"Bare">
+			<c:Timeline     id				=	"idTimeline"
+			                enableScroll	=	"false"
+			                showFilterBar	=	"false"
+			                axisOrientation =	"Vertical"
+			                sort			=	"true"
+			                sortOldestFirst	=	"false"
+			                showIcons		=	"true"
+			                content			=	"{journalTable>/}">
+	            <c:content>
+	                <c:TimelineItem id					=	"idTemplateItem"
+			                        dateTime			=	"{	parts		:	[	{	path	:	'journalTable>UDATE'},
+																					{	path	:	'journalTable>UTIME'}],	
+																formatter	:	'CatalogMat.util.Formatter.addTimeToDate'}"
+			                        userName			=	"{journalTable>USERN}"
+			                        title				=	"{i18n>FIELD}: {journalTable>FNAME}"
+			                        userNameClickable	=	"true"
+			                        text				=	"{	parts		:	[	{	path	:	'journalTable>FNAME'},
+																					{	path	:	'journalTable>OLDVL'},
+																					{	path	:	'journalTable>NEWVL'}],	
+																formatter	:	'CatalogMat.util.Formatter.textChange'}"
+			                        icon				=	"{	path:		'journalTable>CHNGT',
+																formatter:	'CatalogMat.util.Formatter.iconChange'}">
+	              <!--  	{	path:		'journalTable>EVTYP',-->
+															<!--formatter:	'.formatter.iconTimeLine'}-->
+	                </c:TimelineItem>
+	            </c:content>
+	        </c:Timeline>
+    	</FlexBox>
+	</layout:VerticalLayout>
+</core:FragmentDefinition>

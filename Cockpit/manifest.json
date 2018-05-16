@@ -1,0 +1,182 @@
+{
+	"_version": "1.4.0",
+	"sap.app": {
+		"id": "cockpitalerte",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/sap/opu/odata/sap/ZFT_GW_COCKPIT_ALERTE_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml",
+					"odataVersion": "2.0",
+					"loadMetadataAsync": true,
+					"json": true,
+					"bJSON": true,
+					"defaultBindingMode": "TwoWay",
+					"useBatch": false,
+					"refreshAfterChange": false,
+					"defaultCountMode": "None",
+					"defaultOperationMode": "Server",
+					"annotations": []
+				}
+			},
+			"ZFT_GW_VALUE_HELP_SRV": {
+				"uri": "/sap/opu/odata/sap/ZFT_GW_VALUE_HELP_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/VHmetadata.xml",
+					"annotations": []
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "sap.ui.ui5-template-plugin.1worklist",
+			"version": "1.38.13"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://task",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "cockpitalerte.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.38.0",
+			"libs": {
+				"sap.ui.core": {
+					"minVersion": "1.38.0"
+				},
+				"sap.m": {
+					"minVersion": "1.38.0"
+				},
+				"sap.ushell": {
+					"minVersion": "1.38.0"
+				},
+				"sap.collaboration": {
+					"minVersion": "1.38",
+					"lazy": true
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "cockpitalerte.i18n.i18n"
+				}
+			},
+			"VHService": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"loadMetadataAsync": true,
+					"json": true,
+					"bJSON": true,
+					"defaultBindingMode": "TwoWay",
+					"useBatch": false,
+					"refreshAfterChange": false,
+					"defaultCountMode": "None",
+					"defaultOperationMode": "Server"
+				},
+				"dataSource": "ZFT_GW_VALUE_HELP_SRV",
+				"preload": true
+			},
+			"AlerteService": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"loadMetadataAsync": true,
+					"json": true,
+					"bJSON": true,
+					"defaultBindingMode": "TwoWay",
+					"useBatch": false,
+					"refreshAfterChange": false,
+					"defaultCountMode": "None",
+					"defaultOperationMode": "Server"
+				},
+				"dataSource": "mainService",
+				"preload": true
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "cockpitalerte.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "overview",
+					"target": [
+						"Overview"
+					]
+				},
+				{
+					"pattern": "HistorySet/{objectId}",
+					"name": "object",
+					"target": [
+						"object"
+					]
+				}
+			],
+			"targets": {
+				"Overview": {
+					"viewName": "Overview",
+					"viewId": "Overview",
+					"viewLevel": 1
+				},
+				"objectNotFound": {
+					"viewName": "ObjectNotFound",
+					"viewId": "objectNotFound"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zmob_ft_cockpit/webapp",
+		"_version": "1.1.0"
+	}
+}

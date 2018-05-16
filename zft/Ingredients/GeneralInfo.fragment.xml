@@ -1,0 +1,242 @@
+<core:FragmentDefinition 	xmlns:layout 	= "sap.ui.layout"
+							xmlns:forms 	= "sap.ui.layout.form"
+							xmlns:core 		= "sap.ui.core"
+							xmlns 			= "sap.m"
+							xmlns:u 		= "sap.ui.unified"
+							xmlns:uxap		= "sap.uxap"
+							id 				= "generalInfo">
+			
+
+	<layout:VerticalLayout>
+		<layout:BlockLayout 	id			=	"BlockLayout" 
+								background	=	"Dashboard">
+			<layout:BlockLayoutRow	>
+				<layout:BlockLayoutCell		width			=	"50">
+					<forms:SimpleForm 		maxContainerCols		=	"12" 
+											width					=	"100%" 
+											editable				=	"true" 
+											labelMinWidth			=	"192" 
+											layout					=	"ResponsiveGridLayout" 
+											labelSpanL				=	"6" 
+											labelSpanM				=	"6"
+											labelSpanS				=	"6" 
+											emptySpanL				=	"0" 
+											emptySpanM				=	"0" 
+											emptySpanS				=	"0" 
+											columnsL				=	"2" 
+											columnsM				=	"2">
+						<Label 			text 				=	"{i18n>DESIGNATION_ARTICLE}"
+										width 				=	"100%"/>
+						<Input 			editable 			=	"{Edit>/EditOn}"
+										value 				=	"{articleData>/MAKTX}"
+										width 				=	"90%"/>
+						<Label 			text 				=	"{i18n>TYPOLOGY}"
+										width 				=	"100%"
+										visible				=	"{	path: 'articleData>/FICTF',
+																	formatter:'CatalogMat.util.Formatter.visibleTypologie'}"/>
+						<!--{= ${articleData>/FICTF} === false}-->
+						<Input 			editable 			=	"false"
+										value 				=	"{articleData>/ATWTB}"
+										tooltip 			=	"{articleData>/ATWTB}"
+										width 				=	"90%"
+										visible				=	"{	path: 'articleData>/FICTF',
+																	formatter:'CatalogMat.util.Formatter.visibleTypologie'}"/>
+						
+						<Label	text				=	"{i18n>BASE_UNIT_QTY}"/>
+						<Select	forceSelection		=	"false"
+								selectedKey 		=	"{articleData>/MEINS}"
+								enabled				=	"{= ${Edit>/EditOn} &amp;&amp; ${Edit>/Unit}}"
+								width		 		=	"90%">
+						<items>
+							<core:Item key="L" 		text="{i18n>LITRE}" />
+							<core:Item key="PCE"	text="{i18n>PIECE}" />
+							<core:Item key="KG"		text="{i18n>KILO}" />
+							<!--<core:Item key="VL"		text="{i18n>VL}" />-->
+							<!--<core:Item key="CRN"	text="{i18n>CRN}" />-->
+						</items>
+					</Select>
+							
+							<!--<Label 			text		=	"{i18n>STATUS}"/>-->
+							<!--<Select items				=	"{VHService>/VHMPStatusSet/}"-->
+							<!--		width				=	"85%"-->
+							<!--		enabled 			=	"{Edit>/EditOn}"-->
+							<!--		forceSelection		=	"false"-->
+							<!--		templateShareable	=	"true"-->
+							<!--		selectedKey 		=	"{articleData>/STATS}">-->
+							<!--	<core:Item 	key 		=	"{VHService>STATS}"-->
+							<!--				text 		= 	"{VHService>VTEXT}"/>-->
+							<!--</Select>-->
+							
+							<Label 			text 				=	"{i18n>CONTRAT_DATE}"
+											width 				=	"100%"/>
+							<Input 			editable 			=	"{Edit>/EditOn}"
+											value 				=	"{articleData>/MHDRZ}"
+											width 				=	"90%"/>
+			
+							<Label 			text 				= 	"{i18n>OPE/GAMME}"
+											width 				=	"100%"/>
+							<Input 			editable 			=	"{Edit>/EditOn}"
+											showValueHelp 		= 	"true"
+											width 				=	"90%"
+											valueHelpOnly 		=	"true"
+											valueHelpRequest 	= 	"onOpeGammeList"
+					       					value 				=	"{articleData>/DESCR}"/>
+
+							<Label 			text 				=	"{i18n>PRODUCT_DESCRIPTION}"
+											width 				=	"100%"/>
+							<TextArea		editable 			=	"{Edit>/EditOn}"
+											enabled 			=	"{Edit>/EditOn}"
+											value 				=	"{articleData>/DESCP}"
+											rows				=	"4"
+											maxLength			=	"400"
+											width 				=	"90%"/>
+			
+						</forms:SimpleForm>
+					</layout:BlockLayoutCell>
+					<layout:BlockLayoutCell		width			=	"50">
+						<forms:SimpleForm 	maxContainerCols	=	"12" 
+											width				=	"100%" 
+											editable			=	"true" 
+											labelMinWidth		=	"192" 
+											layout				=	"ResponsiveGridLayout" 
+											labelSpanL			=	"6" 
+											labelSpanM			=	"6" 
+											labelSpanS			=	"6" 
+											emptySpanL			=	"0" 
+											emptySpanM			=	"0" 
+											emptySpanS			=	"0" 
+											columnsL			=	"2" 
+											columnsM			=	"2">
+							<Label 			text 				=	"{i18n>CREATION_DATE}"
+											width 				=	"100%"/>
+							<DatePicker		editable 			=	"false"
+											value 				=	"{path:	'articleData>/ERSDA', 
+																		type		: 'sap.ui.model.odata.type.Date'}" 	
+											width 				=	"90%"
+											displayFormat 		=	"dd.MM.yyyy"
+											valueFormat	 		=	"yyyyMMdd"/>
+			
+							<Label 			text 				=	"{i18n>USER}"
+											width 				=	"100%"/>
+							<Input 			editable 			=	"false"
+											value 				=	"{articleData>/AENAM}"
+											width 				=	"90%"/>
+							<Label 			text 				=	"{i18n>CHANGE_DATE}"
+											width 				=	"100%"/>
+							<DatePicker		editable 			=	"false"
+											value 				=	"{path:'articleData>/LAEDA', 
+																		type		: 'sap.ui.model.odata.type.Date'}" 	
+											width 				=	"90%"
+											displayFormat 		=	"dd.MM.yyyy"
+											valueFormat	 		=	"yyyyMMdd"/>
+			
+							<Label 			text 				=	"{i18n>REFERENCE_ARTICLE}"
+											width 				=	"100%"/>
+							<Input 			editable 			=	"false"
+											value 				=	"{articleData>/RFMAT}"
+											width 				=	"90%"/>
+							
+							<Label 		text 				= 	"{i18n>BUYER}"/>
+							<Input 		showValueHelp 		= 	"true"
+										editable			=	"false"
+										valueLiveUpdate		=	"true"
+										valueHelpOnly 		=	"true"
+										valueHelpRequest 	= 	"onBuyerList"
+				       					value 				=	"{articleData>/ACHTS}"
+				       					tooltip				=	"{articleData>/ACHTS}"/>
+											
+							<Label			text			=	"{i18n>APPROCHE_TARIFAIRE_RD}"
+											visible			=	"{	path		:	'Edit>/TARAP',
+																	formatter	:	'CatalogMat.util.Formatter.Tarap'}"/>
+							<HBox>
+								<Text			text			=	"N/A"
+												visible			=	"{	parts		:	[	{	path	:	'Edit>/TARAP'},
+																							{	path	:	'articleData>/FICTF'}],
+																		formatter	:	'CatalogMat.util.Formatter.nonVisibleFieldTarap'}"
+												class			=	"sapUiNoMarginTop"/>
+								<Input			value			=	"{articleData>/TARAP}"
+												visible			=	"{	parts		:	[	{	path	:	'Edit>/TARAP'},
+																							{	path	:	'articleData>/FICTF'}],
+																		formatter	:	'CatalogMat.util.Formatter.visibleFieldTarap'}"
+												editable		=	"{	parts		:	[	{	path	:	'Edit>/EditOn'},
+																							{	path	:	'Edit>/TARAP'}],	
+																		formatter	:	'CatalogMat.util.Formatter.modifAutorisation'}"/>
+							</HBox>
+						</forms:SimpleForm>
+					</layout:BlockLayoutCell>
+				</layout:BlockLayoutRow>
+		
+				<layout:BlockLayoutRow>
+					<layout:BlockLayoutCell>
+						<Table 			inset				=	"false"
+									    items				=	"{articleFileTable>/}"
+									    mode				= 	"{Edit>/FileDelete}"
+									    id					=	"FileTable"
+									    delete 				= 	"onFileDelete"> 
+							<headerToolbar>	
+									<Toolbar>
+										<Label 	text 				=	"{i18n>FILES}"
+												class				=	"sapUiTinyMarginTop"
+												design				=	"Bold"/>
+										
+										<ToolbarSpacer/>
+										<Button 	text		=	"{i18n>ADD_FILE}"
+													icon 		=	"sap-icon://add-document"
+													press		=	"GeneralInfoAddFilePopOver"
+													type		=	"Emphasized"
+													visible 	=	"{Edit>/FileEdit}"
+													class		=	"sapUiTinyMarginTop"/>
+									</Toolbar>
+								</headerToolbar>		         
+							<columns>
+								
+								<Column 	width 		=	"25px">
+									<Text text 		=	"{i18n>NAME}" />
+								</Column>
+								
+								<Column  	width 		=	"25px">
+									<Text text 		=	"{i18n>DESCRIPTION}" />
+								</Column>
+									 
+								<Column 	width 		=	"25px">
+									<Text text 		=	"{i18n>TYPE}" />
+								</Column>
+								
+								<!--<Column 	width 		=	"25px">-->
+								<!--	<Text text 		=	"{i18n>SIZE}" />-->
+								<!--</Column>-->
+								
+							</columns>
+							
+							<items>
+								
+								<ColumnListItem>
+								
+									<cells>
+								
+										<Text 		text 	=	"{articleFileTable>FNAME}"/>
+				
+										<Input 		value 	=	"{articleFileTable>DESCR}"
+													editable=	"false"/>
+				
+										<core:Icon	src 	=	"{	path: 'articleFileTable>FTYPE',
+																				formatter:'CatalogMat.util.Formatter.iconType'}" 
+													color	=	"{	path: 'articleFileTable>FTYPE',
+																				formatter:'CatalogMat.util.Formatter.iconTypeColor'}"
+													press	=	"onFilePreview"
+													tooltip	=	"{articleFileTable>FISRC}"/>
+				
+										<!--<Text  		text 	=	"{articleFileTable>FSIZE}"/>-->
+									
+									</cells>
+								
+								</ColumnListItem>
+							
+							</items>
+							
+						</Table>
+					</layout:BlockLayoutCell>
+				</layout:BlockLayoutRow>
+			</layout:BlockLayout>
+	</layout:VerticalLayout>
+</core:FragmentDefinition>

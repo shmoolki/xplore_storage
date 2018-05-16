@@ -23,16 +23,16 @@
 	                <c:TimelineItem id				=	"idTemplateItem"
 			                        dateTime			=	"{	parts		:	[	{	path	:	'journalTable>UDATE'},
 																					{	path	:	'journalTable>UTIME'}],	
-																formatter	:	'formatter.addTimeToDate'}"
+																formatter	:	'CatalogCartes.util.Formatter.addTimeToDate'}"
 			                        userName			=	"{journalTable>USERN}"
 			                        title				=	"{i18n>FIELD}: {journalTable>FNAME}"
 			                        userNameClickable	=	"true"
 			                        text				=	"{	parts		:	[	{	path	:	'journalTable>FNAME'},
 																					{	path	:	'journalTable>OLDVL'},
 																					{	path	:	'journalTable>NEWVL'}],	
-																formatter	:	'formatter.textChange'}"
+																formatter	:	'CatalogCartes.util.Formatter.textChange'}"
 			                        icon				=	"{	path:		'journalTable>CHNGT',
-																formatter:	'formatter.iconChange'}">
+																formatter:	'CatalogCartes.util.Formatter.iconChange'}">
 	                </c:TimelineItem>
 	            </c:content>
 	        </c:Timeline>

@@ -21,6 +21,8 @@
 * 18.02.2014 | XPLORE       | CR0269 - Exclure les articles non gérés en stock
 *            |              | CR0270 - Prévoir les articles simples dans xxx_PST
 * ----------------------------------------------------------------------
+* 06.06.2018 | XPLORE       | Projet Refonte FT Fiori: Changer valo MATNR par MATAC
+* ----------------------------------------------------------------------
 
   DATA: lv_factr    TYPE mb_erfmg,
         lv_isaft    TYPE xfeld,
@@ -32,7 +34,7 @@
         lv_taxm1    TYPE taxm1,
         lv_vente    TYPE char4,
         ls_cndat    TYPE komv,
-        ls_fting    TYPE zmm_s_ft_ingredient,
+        ls_fting    TYPE zft_s_gw_cat_recette_ing,"zmm_s_ft_ingredient,
         ls_idc02    TYPE edidd,
         ls_idcxx    TYPE edidd,
         ls_messg    TYPE wpupl_error_message,
@@ -43,7 +45,7 @@
         ls_tmara    TYPE mara,
         ls_wxx01    TYPE e1wxx01,
         lt_cndat    TYPE TABLE OF komv,
-        lt_fting    TYPE zmm_t_ft_ingredient,
+        lt_fting    TYPE zft_t_gw_cat_recette_ing,"zmm_t_ft_ingredient,
         lt_idc02    TYPE TABLE OF edidd,
         lt_idcxx    TYPE TABLE OF edidd,
         lt_mmdat    TYPE TABLE OF imseg,
@@ -116,10 +118,16 @@
     CLEAR:  ls_mmdat-sgtxt.
 *<<<CR0159 - Refonte POSDM - Lot 3
 
-    zmm_ft=>explode( EXPORTING  iv_ftnum = ls_mmdat-matnr
+*>>> Projet Refonte FT 06.2018
+*****    zmm_ft=>explode( EXPORTING  iv_ftnum = ls_mmdat-matnr
+*****                                iv_bdate = ls_mmhdr-bldat
+*****                     IMPORTING  et_ingre = lt_fting
+*****                                ev_reslt = lv_isaft       ).
+    zmm_fr=>explode( EXPORTING  iv_ftnum = ls_mmdat-matnr
                                 iv_bdate = ls_mmhdr-bldat
                      IMPORTING  et_ingre = lt_fting
                                 ev_reslt = lv_isaft       ).
+*<<< Projet Refonte FT 06.2018
 
 *>>>CR0159 - Refonte POSDM
     CLEAR:  ls_vente , ls_vlpxc , lt_vlpmp[].
@@ -133,7 +141,8 @@
     ls_vente-erfme                = ls_mmdat-erfme.
 
 *   Calcul de la valeur au PMP
-    CALL FUNCTION 'ZMM_FT_VAL_PMP'
+****    CALL FUNCTION 'ZMM_FT_VAL_PMP'
+    CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
       EXPORTING
         iv_bdate                  = ls_vente-bdate
         iv_ftnum                  = ls_vente-matnr
@@ -146,19 +155,34 @@
     ENDLOOP.
 
 *   Calcul de la valeur au Prix de Cession (ou moyenne des FIAs)
-    ls_vlpxc                      = zmm_ft=>load_valor( iv_matnr = ls_vente-matnr
-                                                        iv_bdate = ls_vente-bdate
-                                                        iv_isaft = lv_isaft
-                                                        iv_pltyp = lv_pltyp
-*>>> 19.10.2014 - Mantis 1093 & Mantis 1101
-                                                        iv_land1 = lv_land1
-*<<< 19.10.2014 - Mantis 1093 & Mantis 1101
-                                                        iv_vkorg = 'ZLOG'
-                                                        iv_vtweg = '10'
-                                                        iv_qtite = 1
-                                                        iv_unite = ls_vente-erfme
-                                                        iv_perte = 0                ).
+*>>> Projet Refonte FT 06.2018
+****    ls_vlpxc                      = zmm_ft=>load_valor( iv_matnr = ls_vente-matnr
+****                                                        iv_bdate = ls_vente-bdate
+****                                                        iv_isaft = lv_isaft
+****                                                        iv_pltyp = lv_pltyp
+*****>>> 19.10.2014 - Mantis 1093 & Mantis 1101
+****                                                        iv_land1 = lv_land1
+*****<<< 19.10.2014 - Mantis 1093 & Mantis 1101
+****                                                        iv_vkorg = 'ZLOG'
+****                                                        iv_vtweg = '10'
+****                                                        iv_qtite = 1
+****                                                        iv_unite = ls_vente-erfme
+****                                                        iv_perte = 0                ).
 
+    ls_vlpxc                      =   zcl_zft_gw_ft_utilities=>get_valorisation(  iv_matnr = ls_vente-matnr
+                                                                                  iv_bdate = ls_vente-bdate
+*                                                                                  iv_isaft = lv_isaft
+                                                                                  iv_itype = 'FT'
+                                                                                  iv_pltyp = lv_pltyp
+*                          >>> 19.10.2014 - Mantis 1093 & Mantis 1101
+                                                                                  iv_land1 = lv_land1
+*                          <<< 19.10.2014 - Mantis 1093 & Mantis 1101
+                                                                                  iv_vkorg = 'ZLOG'
+                                                                                  iv_vtweg = '10'
+                                                                                  iv_qtite = 1
+                                                                                  iv_unite = ls_vente-erfme
+                                                                                  iv_perte = 0                ).
+*<<< Projet Refonte FT 06.2018
     ls_vente-vlpxc                = ls_vlpxc-kbetr.
 
     APPEND ls_vente TO lt_vente.
@@ -184,7 +208,8 @@
           IMPORTING
             output                = ls_mmdat-ilinr.
 
-        ls_mmdat-matnr            = ls_fting-matnr.
+****        ls_mmdat-matnr            = ls_fting-matnr.
+        ls_mmdat-matnr            = ls_fting-matac.
         ls_mmdat-erfme            = ls_fting-unite.
 
 *       Mantis 1446 - Utilisation d'une quantite avec plus de decimales pour gerer les arrondis sur plusieurs niveaux
@@ -199,12 +224,14 @@
         ls_vnpst-bdate            = ls_vente-bdate.
         ls_vnpst-bwart            = ls_vente-bwart.
         ls_vnpst-ftnum            = ls_vente-matnr.
-        ls_vnpst-matnr            = ls_fting-matnr.
+****        ls_vnpst-matnr            = ls_fting-matnr.
+        ls_vnpst-matnr            = ls_fting-matac.
         ls_vnpst-erfmg            = ls_mmdat-erfmg.
         ls_vnpst-erfme            = ls_mmdat-erfme.
 
 *       Calcul de la valeur au PMP
-        CALL FUNCTION 'ZMM_FT_VAL_PMP'
+****        CALL FUNCTION 'ZMM_FT_VAL_PMP'
+        CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
           EXPORTING
             iv_bdate              = ls_vnpst-bdate
             iv_ftnum              = ls_vnpst-matnr
@@ -217,18 +244,31 @@
         ENDLOOP.
 
 *       Calcul de la valeur au Prix de Cession (ou moyenne des FIAs)
-        ls_vlpxc                  = zmm_ft=>load_valor( iv_matnr = ls_vnpst-matnr
-                                                        iv_bdate = ls_vnpst-bdate
-                                                        iv_isaft = ' '
-                                                        iv_pltyp = lv_pltyp
-*>>> 19.10.2014 - Mantis 1093 & Mantis 1101
-                                                        iv_land1 = lv_land1
-*>>> 19.10.2014 - Mantis 1093 & Mantis 1101
-                                                        iv_vkorg = 'ZLOG'
-                                                        iv_vtweg = '10'
-                                                        iv_qtite = 1
-                                                        iv_unite = ls_vnpst-erfme
-                                                        iv_perte = 0                ).
+******        ls_vlpxc                  = zmm_ft=>load_valor( iv_matnr = ls_vnpst-matnr
+******                                                        iv_bdate = ls_vnpst-bdate
+******                                                        iv_isaft = ' '
+******                                                        iv_pltyp = lv_pltyp
+*******>>> 19.10.2014 - Mantis 1093 & Mantis 1101
+******                                                        iv_land1 = lv_land1
+*******>>> 19.10.2014 - Mantis 1093 & Mantis 1101
+******                                                        iv_vkorg = 'ZLOG'
+******                                                        iv_vtweg = '10'
+******                                                        iv_qtite = 1
+******                                                        iv_unite = ls_vnpst-erfme
+******                                                        iv_perte = 0                ).
+      ls_vlpxc                      =   zcl_zft_gw_ft_utilities=>get_valorisation(  iv_matnr = ls_vnpst-matnr
+                                                                                    iv_bdate = ls_vnpst-bdate
+*                                                                                    iv_isaft = lv_isaft
+                                                                                    iv_itype = 'AR'
+                                                                                    iv_pltyp = lv_pltyp
+*                            >>> 19.10.2014 - Mantis 1093 & Mantis 1101
+                                                                                    iv_land1 = lv_land1
+*                            <<< 19.10.2014 - Mantis 1093 & Mantis 1101
+                                                                                    iv_vkorg = 'ZLOG'
+                                                                                    iv_vtweg = '10'
+                                                                                    iv_qtite = 1
+                                                                                    iv_unite = ls_vnpst-erfme
+                                                                                    iv_perte = 0                ).
 
         ls_vnpst-vlpxc            = ls_vlpxc-kbetr.
 

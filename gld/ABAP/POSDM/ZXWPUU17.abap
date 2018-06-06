@@ -250,18 +250,18 @@
           ENDLOOP.
 
 *         Calcul de la valeur au Prix de Cession (ou moyenne des FIAs)
-          ls_vlpxc                    = zmm_ft=>load_valor( iv_matnr = ls_anpst-matnr
-                                                            iv_bdate = ls_anpst-bdate
-                                                            iv_isaft = ' '
-                                                            iv_pltyp = lv_pltyp
-*>>> 19.10.2014 - Mantis 1093 & Mantis 1101
-                                                            iv_land1 = lv_land1
-*<<< 19.10.2014 - Mantis 1093 & Mantis 1101
-                                                            iv_vkorg = 'ZLOG'
-                                                            iv_vtweg = '10'
-                                                            iv_qtite = 1
-                                                            iv_unite = ls_anpst-erfme
-                                                            iv_perte = 0                ).
+*****          ls_vlpxc                    = zmm_ft=>load_valor( iv_matnr = ls_anpst-matnr
+*****                                                            iv_bdate = ls_anpst-bdate
+*****                                                            iv_isaft = ' '
+*****                                                            iv_pltyp = lv_pltyp
+******>>> 19.10.2014 - Mantis 1093 & Mantis 1101
+*****                                                            iv_land1 = lv_land1
+******<<< 19.10.2014 - Mantis 1093 & Mantis 1101
+*****                                                            iv_vkorg = 'ZLOG'
+*****                                                            iv_vtweg = '10'
+*****                                                            iv_qtite = 1
+*****                                                            iv_unite = ls_anpst-erfme
+*****                                                            iv_perte = 0                ).
 
           ls_vlpxc                      =   zcl_zft_gw_ft_utilities=>get_valorisation(  iv_matnr = ls_anpst-matnr
                                                                                         iv_bdate = ls_anpst-bdate

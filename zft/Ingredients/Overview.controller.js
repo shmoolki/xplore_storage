@@ -428,7 +428,7 @@ sap.ui.controller("CatalogMat.Controller.Overview", {
 			content[2].getFields()[0].setValueState( "Error" );
 			content[2].getFields()[0].setValueStateText( oBundle.getText( "THE_FIELD" ) + " '" + oBundle.getText( "DESCRIPTIF" ) + "' " + oBundle.getText( "IS_REQUIRED" ) );
 		}
-		if( newProductModel.ACNUM_DESCR.length === 0 || !newProductModel.ACNUM_DESCR ){
+		if( !newProductModel.ACNUM_DESCR || newProductModel.ACNUM_DESCR.length === 0 ){
 			check	=	true;
 			content[3].getFields()[0].setValueState( "Error" );
 			content[3].getFields()[0].setValueStateText( oBundle.getText( "THE_FIELD" ) + " '" + oBundle.getText( "BUYER" ) + "' " + oBundle.getText( "IS_REQUIRED" ) );

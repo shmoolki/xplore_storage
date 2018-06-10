@@ -324,7 +324,7 @@ sap.ui.controller( "CatalogMat.Controller.Detail" , {
 			//
 			model[i].statut	=	status[ model[i].SOKEY ];
 			if(!isNaN(model[i].VLCRN)){
-				model[i].VLCRN  =	parseInt(model[i].VLCRN, 10);
+				model[i].VLCRN  =	parseInt(model[i].VLCRN, 10).toString();
 			}
 		}
 		this.statusTable	=	status[ "000" ];
@@ -1542,7 +1542,7 @@ sap.ui.controller( "CatalogMat.Controller.Detail" , {
 			"MAKTX": data.MAKTX,
 			"MEINS": data.MEINS,
 			"SRCLC": false,
-			"TARAP": "",
+			"TARAP": data.TARAP,
 			"DESFL": "",
 			"ACNUM_DESCR" : ""
 		});

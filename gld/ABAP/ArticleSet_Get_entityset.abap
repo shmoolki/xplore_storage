@@ -27,6 +27,7 @@ METHOD articleset_get_entityset.
         lv_brgew    TYPE brgew VALUE '1.00',
         lv_count    TYPE i,
         lv_distb    TYPE c,
+        lv_dupli    TYPE xfeld,
         lv_filtr    TYPE string,
         lv_flpmd    TYPE xfeld,               " Fiori Launchpad mode (requete allegee)
         lv_lnobj    TYPE int4,
@@ -971,6 +972,10 @@ METHOD articleset_get_entityset.
             READ TABLE et_entityset ASSIGNING <artcl> WITH KEY matnr = ls_artc2-rmatn.
             IF sy-subrc NE 0.
               ls_artc2-rmatn        = ls_artc2-matnr.
+            ELSE.
+              IF lv_srcvs EQ abap_true.
+                lv_dupli            = abap_true.
+              ENDIF.
             ENDIF.
           ENDIF.
           IF ls_artc2-rmatn IS INITIAL OR lv_artty EQ 'F'.
@@ -1088,6 +1093,11 @@ METHOD articleset_get_entityset.
           ENDIF.
 
           APPEND ls_entit TO et_entityset.
+          IF lv_dupli EQ abap_true.  " Dupliquer une ligne du AF si il a un RMATN d'un article reel faisant parti de l'entitySet
+            ls_entit-rmatn        = ls_entit-matnr.
+            APPEND ls_entit TO et_entityset.
+            lv_dupli              = abap_false.
+          ENDIF.
 
         ENDLOOP.
       ENDIF.
@@ -1476,6 +1486,7 @@ METHOD articleset_get_entityset.
   ENDIF.
 **************Get fict. items**********************************************  END *
   IF lv_srcvs EQ abap_true AND lv_artty NE 'F'.
+
     LOOP AT et_entityset ASSIGNING <artc2>.
       IF <artc2>-matnr NE <artc2>-rmatn.
         READ TABLE et_entityset ASSIGNING <artcl> WITH KEY matnr = <artc2>-rmatn.

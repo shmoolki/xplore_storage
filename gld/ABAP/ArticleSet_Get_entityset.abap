@@ -9,6 +9,7 @@ METHOD articleset_get_entityset.
                    umren  TYPE umren,
                    bstme  TYPE bstme,
                    sokey  TYPE zft_gw_sokey,
+                   gewei  TYPE gewei,
           END OF tt_artcl,
           BEGIN OF ts_tempb.
             TYPES: tempb TYPE tempb,
@@ -235,9 +236,6 @@ METHOD articleset_get_entityset.
 *    ENDIF.
   ENDIF.
 
-  IF lt_statf IS INITIAL.
-    lt_statf                      = me->get_status( ).
-  ENDIF.
 * Get TEMPB
   LOOP AT it_filter_select_options INTO ls_filtr WHERE property = 'TEMPB'.
     LOOP AT ls_filtr-select_options INTO ls_selop.
@@ -377,7 +375,7 @@ METHOD articleset_get_entityset.
 **************Get real items**********************************************  BEG *
     IF lv_dispn IS NOT INITIAL.
       lv_nblin                    = lv_dispn * 30.
-      SELECT m~matnr, m~matnr AS rmatn, m~laeda AS laed2, m~ersda AS ersd2, m~mhdrz, k~maktx, m~matkl, k~maktg, l~name1 AS mfrnm, m~tempb, m~aenam, m~ntgew,
+      SELECT m~matnr, m~matnr AS rmatn, m~laeda AS laed2, m~ersda AS ersd2, m~mhdrz, k~maktx, m~matkl, k~maktg, l~name1 AS mfrnm, m~tempb, m~aenam, m~ntgew, m~gewei,
 ****             w~bbtyp, e~lifnr AS mfrnr, m~meins, m~mstae, r~umrez, r~umren , p~meins AS bstme, h~lv3nm AS wwghb
              w~bbtyp, e~lifnr AS mfrnr, m~meins, m~mstae, r~umrez, r~umren , e~meins AS bstme, h~lv3nm AS wwghb
       INTO CORRESPONDING FIELDS OF TABLE @lt_artcl
@@ -404,7 +402,7 @@ METHOD articleset_get_entityset.
       AND ( l~lifnr IN @lt_mfrnr OR l~name1 IN @lt_mfrnr )
       ORDER BY ersda DESCENDING.
     ELSE.
-      SELECT m~matnr, m~matnr AS rmatn, m~laeda AS laed2, m~ersda AS ersd2, m~mhdrz, k~maktx, m~matkl, k~maktg, l~name1 AS mfrnm, m~tempb, m~aenam, m~ntgew,
+      SELECT m~matnr, m~matnr AS rmatn, m~laeda AS laed2, m~ersda AS ersd2, m~mhdrz, k~maktx, m~matkl, k~maktg, l~name1 AS mfrnm, m~tempb, m~aenam, m~ntgew, m~gewei,
 ****             w~bbtyp, e~lifnr AS mfrnr, m~meins, m~mstae, r~umrez, r~umren , p~meins AS bstme, h~lv3nm AS wwghb
              w~bbtyp, e~lifnr AS mfrnr, m~meins, m~mstae, r~umrez, r~umren , e~meins AS bstme, h~lv3nm AS wwghb
       INTO CORRESPONDING FIELDS OF TABLE @lt_artcl
@@ -431,6 +429,61 @@ METHOD articleset_get_entityset.
     ENDIF.
 
 
+*    ********************************************************************** 23/05/01 bug sur fournisseur dans Overview
+    DATA: lt_tmpar  TYPE  TABLE OF tt_artcl,
+          lt_teina  TYPE  TABLE OF eina,
+          ls_teina  TYPE  eina,
+          lv_lines  TYPE  i.
+    FIELD-SYMBOLS: <fs_artcl> TYPE tt_artcl.
+
+    SORT lt_artcl BY matnr mfrnr.
+    DELETE ADJACENT DUPLICATES FROM lt_artcl COMPARING matnr mfrnr.
+
+    lt_tmpar[]                    = lt_artcl[]. " Table temporaire
+
+    LOOP AT lt_tmpar INTO ls_artcl.
+      CLEAR: lv_vkorg.
+
+      IF ls_artcl-bbtyp EQ 'L'.
+        lv_vkorg                  = '2000'.
+      ELSE.
+        lv_vkorg                  = '1000'.
+      ENDIF.
+
+      SELECT  *
+      INTO    CORRESPONDING FIELDS OF TABLE lt_teina
+      FROM    eina  AS a
+      INNER   JOIN  eine AS e ON e~infnr EQ a~infnr
+      WHERE   a~matnr   EQ ls_artcl-matnr
+      AND     a~loekz   NE 'X'
+      AND     e~ekorg   EQ lv_vkorg
+      AND     e~loekz   NE 'X'.
+
+      IF sy-subrc EQ 0.
+        DESCRIBE TABLE lt_teina LINES lv_lines.
+        LOOP AT lt_teina INTO ls_teina.
+          IF ls_artcl-bbtyp EQ 'L'.
+            IF lv_lines GT 1.
+              LOOP AT lt_artcl ASSIGNING <fs_artcl> WHERE matnr EQ ls_artcl-matnr.
+                CLEAR : <fs_artcl>-mfrnr, <fs_artcl>-mfrnm.
+                <fs_artcl>-mfrnm           = text-020.
+              ENDLOOP.
+            ENDIF.
+          ELSE.
+            READ TABLE lt_tmpar INTO ls_artc2 WITH KEY matnr = ls_artcl-matnr mfrnr = ls_teina-lifnr.
+            IF sy-subrc EQ 0.
+              DELETE lt_artcl WHERE matnr EQ ls_artcl-matnr AND mfrnr NE ls_artc2-mfrnr.
+            ENDIF.
+          ENDIF.
+        ENDLOOP.
+      ELSE.
+        LOOP AT lt_artcl ASSIGNING <fs_artcl> WHERE matnr EQ ls_artcl-matnr.
+          CLEAR : <fs_artcl>-mfrnr, <fs_artcl>-mfrnm.
+        ENDLOOP.
+      ENDIF.
+    ENDLOOP.
+
+*    **********************************************************************
     SORT lt_artcl BY matnr.
     DELETE ADJACENT DUPLICATES FROM lt_artcl COMPARING matnr.
 
@@ -479,7 +532,8 @@ METHOD articleset_get_entityset.
         AND     matnr EQ ls_artcl-matnr.
 
         IF sy-subrc EQ 0.
-          lv_brgew                = ls_artcl-ntgew.
+
+           lv_brgew                = ls_artcl-ntgew.
 
           CALL FUNCTION 'OIB_MATERIAL_UNIT_CONVERSION'
             EXPORTING
@@ -495,8 +549,12 @@ METHOD articleset_get_entityset.
               OTHERS              = 3.
 
           IF sy-subrc EQ 0.
+            IF ls_artcl-gewei EQ 'G'.
+              lv_qntty                = lv_qntty / 1000.
+            ENDIF.
             ls_artcl-ntgew        = lv_qntty.
           ENDIF.
+
           lv_brgew                = '1.00'.
           CALL FUNCTION 'OIB_MATERIAL_UNIT_CONVERSION'
             EXPORTING
@@ -521,13 +579,29 @@ METHOD articleset_get_entityset.
         ENDIF.
 
         IF ls_artcl-bbtyp NE 'L'.
-          IF ls_artcl-bstme NE 'CRN' AND ls_artcl-bstme NE 'KAR'.
-            ls_artcl-dcdtd        = 'O'.
-          ELSE.
-            ls_artcl-dcdtd        = 'N'.
+*            IF ls_artcl-bstme NE 'CRN' AND ls_artcl-bstme NE 'KAR'.
+*              ls_artcl-dcdtd        = 'O'.
+*            ELSE.
+*              ls_artcl-dcdtd        = 'N'.
+*            ENDIF.
+          SELECT  SINGLE *
+          INTO    CORRESPONDING FIELDS OF ls_teina
+          FROM    eina  AS a
+          INNER   JOIN  eine AS e ON e~infnr EQ a~infnr
+          WHERE   a~matnr   EQ ls_artcl-matnr
+          AND     a~loekz   NE 'X'
+          AND     e~ekorg   EQ '2000'
+          AND     e~loekz   NE 'X'.
+
+          IF sy-subrc EQ 0.
+            IF ls_teina-meins NE  'CRN' AND ls_teina-meins NE 'KAR'.
+              ls_artcl-dcdtd       = 'O'.
+            ELSE.
+               ls_artcl-dcdtd      = 'N'.
+            ENDIF.
           ENDIF.
         ELSE.
-          ls_artcl-dcdtd          = 'O'.
+          ls_artcl-dcdtd          = '-'.
         ENDIF.
 
         IF  ls_artcl-distb EQ 'L'.
@@ -821,6 +895,10 @@ METHOD articleset_get_entityset.
 
   IF ( lv_artty EQ 'F' OR lv_artty IS INITIAL )  AND lt_atwrt IS INITIAL AND lt_wwghb IS INITIAL.
     IF lv_srcvs EQ abap_true.
+
+      IF lt_statf IS INITIAL.
+        lt_statf                      = me->get_status( ).
+      ENDIF.
 
       IF lv_dispn IS NOT INITIAL.
         SELECT   d~matnr, s~meins, d~laeda AS laed2, d~ersda AS ersd2, d~mhdrz, s~dcdtd, d~maktx, s~rmatn, d~maktg, s~mfrnr, s~distb, s~distt, d~vendr, s~kbetr, s~stats, d~tarap,

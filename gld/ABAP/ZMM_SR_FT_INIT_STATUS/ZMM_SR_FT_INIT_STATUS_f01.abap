@@ -24,19 +24,20 @@ FORM 1main .
     ELSE.
       PERFORM migration_status.
     ENDIF.
+
+    IF gt_prlog IS NOT INITIAL.
+      PERFORM display_log.
+    ELSE.
+      IF pr_simul EQ abap_true.
+        MESSAGE text-009 TYPE 'S' DISPLAY LIKE 'S'. "Aucune modification
+      ELSE.
+        MESSAGE text-008 TYPE 'S' DISPLAY LIKE 'S'. "Aucune modification
+      ENDIF.
+    ENDIF.
   ELSE.
     CLEAR: gt_prlog.
   ENDIF.
 
-  IF gt_prlog IS NOT INITIAL.
-    PERFORM display_log.
-  ELSE.
-    IF pr_simul EQ abap_true.
-      MESSAGE text-009 TYPE 'S' DISPLAY LIKE 'S'. "Aucune modification
-    ELSE.
-      MESSAGE text-008 TYPE 'S' DISPLAY LIKE 'S'. "Aucune modification
-    ENDIF.
-  ENDIF.
 ENDFORM.
 *&---------------------------------------------------------------------*
 *&      Form  CHECK_IF_UPDATE_DONE

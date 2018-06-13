@@ -12,16 +12,14 @@ ENDFORM.
 *&---------------------------------------------------------------------*
 FORM 1main .
 
-***  IF ''= 'eer'.
-
   PERFORM get_mapping_object.
 
   PERFORM make_enseigne_backup.
 
   PERFORM migrate_main_table.
-***
+
   PERFORM migrate_ft_table.
-***
+
   PERFORM migrate_sr_table.
 
   PERFORM migrate_alert_table.
@@ -31,16 +29,6 @@ FORM 1main .
   IF gt_prlog[] IS NOT INITIAL.
     PERFORM log_display.
   ENDIF.
-
-***  ENDIF.
-***
-***  DATA: is_ensgn TYPE zmm_ft_ens,
-***        lt_chara TYPE tt_typol.
-***
-***  is_ensgn-ftnum    = 'FT000044'.
-***  is_ensgn-ensgn    = 'FDP'.
-***
-***  PERFORM get_char_ft USING is_ensgn CHANGING lt_chara.
 
 
 ENDFORM.
@@ -56,21 +44,20 @@ FORM get_mapping_object .
   FIELD-SYMBOLS: <fs_gamme>     TYPE ty_gamme,
                  <fs_ensgn>     TYPE zgld_enseigne.
 
-  SELECT *
-  INTO TABLE gt_ensgn
-  FROM zgld_enseigne
-  WHERE ensgn IN so_ensgn.
+  SELECT  *
+  INTO    TABLE gt_ensgn
+  FROM    zgld_enseigne.
 
   LOOP AT gt_ensgn ASSIGNING <fs_ensgn>.
 
     CLEAR: lt_gamme.
     lv_vkorg                      = |Z{ <fs_ensgn>-ensgn }|.
     <fs_ensgn>-vkorg              = lv_vkorg.
-     IF sy-mandt EQ 140 AND <fs_ensgn>-ensgn EQ 'BD'.
+     IF sy-mandt EQ 140 AND <fs_ensgn>-ensgn EQ 'BD'.  "Pour la migration en Dev avec les mauvaise donnees existante
        lv_vkorg                   = 'ZBDO'.
        <fs_ensgn>-vkorg           = lv_vkorg.
     ENDIF.
-    IF sy-mandt EQ 140 AND <fs_ensgn>-ensgn EQ 'FP'.
+    IF sy-mandt EQ 140 AND <fs_ensgn>-ensgn EQ 'FP'.  "Pour la migration en Dev avec les mauvaise donnees existante
       lv_vkorg                   = 'ZFDP'.
       <fs_ensgn>-vkorg           = lv_vkorg.
     ENDIF.
@@ -210,6 +197,7 @@ FORM migrate_ft_table.
                 APPEND ls_prlog TO gt_prlog.
                 COMMIT WORK.
               ENDIF.
+
             ELSE. "Il existe des typologies
               READ TABLE lt_chara INTO ls_chara  WITH KEY vkorg = ls_gamm2-vkorg. "Verification typologie pour cette VKORG
               IF sy-subrc EQ 0. "Oui => on inscrit que celle-ci
@@ -224,10 +212,15 @@ FORM migrate_ft_table.
                     REPLACE '&2' WITH ls_ensft-ensgn INTO ls_prlog-messg.
                     APPEND ls_prlog TO gt_prlog.
                     COMMIT WORK.
+
                   ENDIF.
+
                 ENDIF.
+
               ENDIF.
+
             ENDIF.
+
           ENDLOOP.
         ENDIF.
       ENDLOOP.
@@ -291,9 +284,9 @@ FORM migrate_alert_table .
         ls_ensgn  TYPE zgld_enseigne.
   FIELD-SYMBOLS: <fs_ftalt>   TYPE zmm_ft_alt.
 
-  SELECT *
-  INTO TABLE lt_ftalt
-  FROM zmm_ft_alt.
+  SELECT  *
+  INTO    TABLE lt_ftalt
+  FROM    zmm_ft_alt.
 
   LOOP AT lt_ftalt  ASSIGNING  <fs_ftalt>.
     IF <fs_ftalt>-ensgn IS NOT INITIAL.
@@ -301,23 +294,31 @@ FORM migrate_alert_table .
       IF sy-subrc EQ 0.
         <fs_ftalt>-vkorg          = ls_ensgn-vkorg.
       ENDIF.
+
     ENDIF.
+
   ENDLOOP.
 
   IF pr_simul NE 'X'.
     DELETE FROM zmm_ft_alt WHERE ensgn IS NOT NULL.
-    MODIFY zmm_ft_alt FROM TABLE lt_ftalt.
-    IF sy-subrc EQ 0.
-      ls_prlog-icons      = icon_led_green.
-      ls_prlog-messg      =  text-010. "Migration de la table ZMM_FT_ALT effectuée
-      APPEND ls_prlog TO gt_prlog.
-      COMMIT WORK.
-    ELSE.
-      ls_prlog-icons      = icon_led_red.
-      ls_prlog-messg      =  text-011. "Migration de la table ZMM_FT_ALT impossible
-      APPEND ls_prlog TO gt_prlog.
-      ROLLBACK WORK.
+    IF  lt_ftalt IS NOT INITIAL.
+      MODIFY zmm_ft_alt FROM TABLE lt_ftalt.
+      IF sy-subrc EQ 0.
+        ls_prlog-icons      = icon_led_green.
+        ls_prlog-messg      =  text-010. "Migration de la table ZMM_FT_ALT effectuée
+        APPEND ls_prlog TO gt_prlog.
+        COMMIT WORK.
+
+      ELSE.
+        ls_prlog-icons      = icon_led_red.
+        ls_prlog-messg      =  text-011. "Migration de la table ZMM_FT_ALT impossible
+        APPEND ls_prlog TO gt_prlog.
+        ROLLBACK WORK.
+
+      ENDIF.
+
     ENDIF.
+
   ENDIF.
 
 ENDFORM.
@@ -331,9 +332,9 @@ FORM migrate_hie_table .
         ls_ensgn  TYPE zgld_enseigne.
   FIELD-SYMBOLS: <fs_cahie>   TYPE zmm_ca_hie.
 
-  SELECT *
-  INTO TABLE lt_cahie
-  FROM zmm_ca_hie.
+  SELECT  *
+  INTO    TABLE lt_cahie
+  FROM    zmm_ca_hie.
 
   LOOP AT lt_cahie  ASSIGNING  <fs_cahie>.
     IF <fs_cahie>-ensgn IS NOT INITIAL.
@@ -345,19 +346,23 @@ FORM migrate_hie_table .
   ENDLOOP.
 
   IF pr_simul NE 'X'.
-    DELETE FROM zmm_ca_hie WHERE ensgn IS NOT NULL.
-    MODIFY zmm_ca_hie FROM TABLE lt_cahie.
-    IF sy-subrc EQ 0.
-      ls_prlog-icons      = icon_led_green.
-      ls_prlog-messg      =  text-012. "Migration de la table ZMM_CA_HIE effectuée
-      APPEND ls_prlog TO gt_prlog.
-      COMMIT WORK.
-    ELSE.
-      ls_prlog-icons      = icon_led_red.
-      ls_prlog-messg      =  text-013. "Migration de la table ZMM_CA_HIE impossible
-      APPEND ls_prlog TO gt_prlog.
-      ROLLBACK WORK.
+    IF lt_cahie IS NOT INITIAL.
+      DELETE FROM zmm_ca_hie WHERE ensgn IS NOT NULL.
+      MODIFY zmm_ca_hie FROM TABLE lt_cahie.
+      IF sy-subrc EQ 0.
+        ls_prlog-icons      = icon_led_green.
+        ls_prlog-messg      =  text-012. "Migration de la table ZMM_CA_HIE effectuée
+        APPEND ls_prlog TO gt_prlog.
+        COMMIT WORK.
+      ELSE.
+        ls_prlog-icons      = icon_led_red.
+        ls_prlog-messg      =  text-013. "Migration de la table ZMM_CA_HIE impossible
+        APPEND ls_prlog TO gt_prlog.
+        ROLLBACK WORK.
+      ENDIF.
+
     ENDIF.
+
   ENDIF.
 
 ENDFORM.

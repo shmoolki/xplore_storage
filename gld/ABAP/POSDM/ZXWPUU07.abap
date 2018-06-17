@@ -191,8 +191,8 @@
           IMPORTING
             output                = ls_mmdat-ilinr.
 
-****        ls_mmdat-matnr            = ls_fting-matnr.
-        ls_mmdat-matnr            = ls_fting-matac.
+        ls_mmdat-matnr            = ls_fting-matnr.
+****        ls_mmdat-matnr            = ls_fting-matac.
         ls_mmdat-erfme            = ls_fting-unite.
 
 *       Mantis 1446 - Utilisation d'une quantite avec plus de decimales pour gerer les arrondis sur plusieurs niveaux
@@ -207,8 +207,8 @@
         ls_vnpst-bdate            = ls_vente-bdate.
         ls_vnpst-bwart            = ls_vente-bwart.
         ls_vnpst-ftnum            = ls_vente-matnr.
-****        ls_vnpst-matnr            = ls_fting-matnr.
-        ls_vnpst-matnr            = ls_fting-matac.
+        ls_vnpst-matnr            = ls_fting-matnr.
+****        ls_vnpst-matnr            = ls_fting-matac.
         ls_vnpst-erfmg            = ls_mmdat-erfmg.
         ls_vnpst-erfme            = ls_mmdat-erfme.
 
@@ -227,7 +227,7 @@
         ENDLOOP.
 
 *       Calcul de la valeur au Prix de Cession (ou moyenne des FIAs)
-      ls_vlpxc                      =   zcl_zft_gw_ft_utilities=>get_valorisation(  iv_matnr = ls_vnpst-matnr
+      ls_vlpxc                      =   zcl_zft_gw_ft_utilities=>get_valorisation(  iv_matnr = ls_fting-matac "ls_vnpst-matnr
                                                                                     iv_bdate = ls_vnpst-bdate
 *                                                                                    iv_isaft = lv_isaft
                                                                                     iv_itype = 'AR'

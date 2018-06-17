@@ -193,8 +193,8 @@
             IMPORTING
               output              = ls_mmdat-ilinr.
 
-****          ls_mmdat-matnr          = ls_fting-matnr.
-          ls_mmdat-matnr          = ls_fting-matac.
+          ls_mmdat-matnr          = ls_fting-matnr.
+****          ls_mmdat-matnr          = ls_fting-matac.
           ls_mmdat-erfme          = ls_fting-unite.
           ls_mmdat-erfmg          = lv_factr * ls_fting-qtite.
 
@@ -213,8 +213,8 @@
           ls_anpst-bdate              = ls_aninv-bdate.
           ls_anpst-bwart              = ls_aninv-bwart.
           ls_anpst-ftnum              = ls_aninv-matnr.
-****          ls_anpst-matnr              = ls_fting-matnr.
-          ls_anpst-matnr              = ls_fting-matac.
+          ls_anpst-matnr              = ls_fting-matnr.
+****          ls_anpst-matnr              = ls_fting-matac.
           ls_anpst-erfmg              = ls_mmdat-erfmg.
           ls_anpst-erfme              = ls_mmdat-erfme.
 
@@ -233,7 +233,7 @@
           ENDLOOP.
 
 *         Calcul de la valeur au Prix de Cession (ou moyenne des FIAs)
-          ls_vlpxc                      =   zcl_zft_gw_ft_utilities=>get_valorisation(  iv_matnr = ls_anpst-matnr
+          ls_vlpxc                      =   zcl_zft_gw_ft_utilities=>get_valorisation(  iv_matnr = ls_fting-matac "ls_anpst-matnr
                                                                                         iv_bdate = ls_anpst-bdate
 *                                                                                        iv_isaft = lv_isaft
                                                                                         iv_itype = 'AR'

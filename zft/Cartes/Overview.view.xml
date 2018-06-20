@@ -1,0 +1,305 @@
+<mvc:View 	xmlns:mvc		=	"sap.ui.core.mvc"
+			xmlns 			=	"sap.m"
+			xmlns:uxap 		=	"sap.uxap"
+			xmlns:c 		=	"sap.ui.core"
+			xmlns:t 		=	"sap.ui.table"
+			xmlns:layout 	= 	"sap.ui.layout"
+			xmlns:fb 		= 	"sap.ui.comp.filterbar"
+			xmlns:var 		=	"sap.ui.comp.variants"
+			controllerName 	= 	"CatalogCartes.controller.Overview" 
+			height 			=	"100%">
+			
+	<Page 		enableScrolling	=	"true" 
+				title 			=	"{i18n>APP_TITLE}" 
+				class 			=	"sapMSampleFioriListReportPageOverflow">
+
+		<Panel 	expanded 		=	"true"
+				expandable 		=	"false">
+				<FlexBox>
+					
+					<!--<FlexBox	direction 	=	"Column"-->
+					<!--		  	width 		= 	"90%"-->
+					<!--			class 		=	"sapUiNoMarginBegin">					-->
+					<!--	<Label 			text 				=	"{i18n>CARTE}"/>-->
+					<!--	<SearchField 	liveChange			=	"handleSearch"-->
+					<!--					class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"-->
+					<!--					width 				=	"85%"-->
+					<!--					value				=	"{QuickFilter>/Carte}"-->
+					<!--					showSearchButton	=	"false"/>-->
+					<!--</FlexBox>-->
+					
+					<FlexBox	direction 	=	"Column"
+							  	width 		= 	"90%"
+								class 		=	"sapUiNoMarginBegin">					
+						<Label 			text 				=	"{i18n>DESCRIPTION}"/>
+						<SearchField 	liveChange			=	"handleSearch"
+										class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+										width 				=	"85%"
+										value				=	"{QuickFilter>/Description}"
+										showSearchButton	=	"false"/>
+					</FlexBox>
+						
+					<FlexBox	direction 	=	"Column"
+							 	width 		= 	"90%"
+								class 		=	"sapUiNoMarginBegin">
+						<Label 	text		=	"{i18n>RECETTE}"/>
+						<!--<Input	id			=	"RecetteInput"-->
+						<!--		type		=	"Text"-->
+						<!--		showSuggestion	=	"true"-->
+						<!--		change		=	"handleSearch"-->
+						<!--		value		=	"{QuickFilter>/Recette}"-->
+						<!--		width		=	"85%"-->
+						<!--		startSuggestion	=	"3"-->
+						<!--		suggestionItems	=	"{VHService>/VHRecettesSet/}" >-->
+							
+						<!--	<suggestionItems>-->
+						<!--		<c:Item text	=	"{VHService>FRNUM} - {VHService>TITRE}" />-->
+						<!--	</suggestionItems>-->
+						<!--</Input>-->
+						<SearchField 	liveChange			=	"handleSearch"
+										class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+										width 				=	"85%"
+										value				=	"{QuickFilter>/Recette}"
+										showSearchButton	=	"false"/>
+					</FlexBox>
+					
+					<FlexBox	direction 	=	"Column"
+							 	width 		= 	"90%"
+								class 		=	"sapUiNoMarginBegin">
+						<Label 			text 				=	"{i18n>DATE_VALIDE}"/>
+						<DateRangeSelection	class 			=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+										id					=	"dateRange"
+										value				=	"{QuickFilter>/DateValide}"
+										width 				=	"85%"
+										change				=	"handleSearch"
+										displayFormat 		= 	"dd.MM.yyyy"
+										valueFormat 		=	"yyyyMMdd"/>
+					</FlexBox>
+					
+					<FlexBox	direction 	=	"Column"
+							 	width 		= 	"90%">
+						<HBox	alignItems	=	"Start"
+								width		=	"200px"
+								justifyContent	=	"SpaceBetween">
+							<Label	text				=	"{i18n>HIERARCHY}"/>
+							<HBox>
+								<c:Icon		src				=	"sap-icon://multiselect-all"
+											size			=	"0.8rem"
+											id				=	"HierarchyLi"
+											press			=	"selectAll"
+											class			=	"sapUiTinyMarginEnd"/>
+								
+								<c:Icon		src				=	"sap-icon://clear-filter"
+											color			=	"Red"
+											size			=	"0.8rem"
+											visible			=	"{	path: 'QuickFilter>/Hierarchy',
+																		formatter:'CatalogCartes.util.Formatter.filterLabel'}"
+											id				=	"Hierarchy"
+											press			=	"removeFilter"
+											class			=	"sapUiTinyMarginBegin"/>
+							</HBox>
+						</HBox>
+						<MultiComboBox	id					=	"HierarchyList"
+										items				=	"{VhHierarchy>/}"
+						 				selectedKeys 		=	"{QuickFilter>/Hierarchy}"
+										selectionFinish		=	"handleSearch"
+										width 				=	"200px"
+										selectionChange		=	"checkAllSelected">
+							<c:Item 	key			 		=	"{VhHierarchy>DSHIE}"
+										text 				= 	"{VhHierarchy>DSHIE}"/>
+						</MultiComboBox>
+					</FlexBox>
+					
+						
+					
+					<FlexBox	direction 	=	"Column"
+							 	width 		= 	"90%">
+						<HBox	alignItems	=	"Start"
+								width		=	"200px"
+								justifyContent	=	"SpaceBetween">
+							<Label	text				=	"{i18n>STATUS}"/>
+							<HBox>
+								<c:Icon		src				=	"sap-icon://multiselect-all"
+											size			=	"0.8rem"
+											id				=	"StatusLi"
+											press			=	"selectAll"
+											class			=	"sapUiTinyMarginEnd"/>
+								
+								<c:Icon		src				=	"sap-icon://clear-filter"
+											color			=	"Red"
+											size			=	"0.8rem"
+											visible			=	"{	path: 'QuickFilter>/Status',
+																		formatter:'CatalogCartes.util.Formatter.filterLabel'}"
+											id				=	"Status"
+											press			=	"removeFilter"
+											class			=	"sapUiTinyMarginBegin"/>
+							</HBox>
+						</HBox>
+						<MultiComboBox	id					=	"StatusList"
+										items				=	"{VHCAStatusSet>/}"
+						 				selectedKeys 		=	"{QuickFilter>/Status}"
+										selectionFinish		=	"handleSearch"
+										width 				=	"200px"
+										selectionChange		=	"checkAllSelected">
+							<c:Item 	key			 		=	"{VHCAStatusSet>STATS}"
+										text 				= 	"{VHCAStatusSet>VTEXT}"/>
+						</MultiComboBox>
+						<!--<Label 				text 			=	"{i18n>STATUS}"/>-->
+						<!--<Select items				=	"{VHService>/VHCAStatusSet/}"-->
+						<!--		class				=	"sapUiTinyMarginEnd" -->
+						<!--		width				=	"85%" -->
+						<!--		forceSelection		=	"false"-->
+						<!--		selectedKey 		=	"{QuickFilter>/Status}"-->
+						<!--		change				=	"handleSearch">-->
+						<!--	<c:Item 	key 		=	"{VHService>STATS}"-->
+						<!--				text 		= 	"{VHService>VTEXT}"/>-->
+						<!--</Select>-->
+					</FlexBox>
+											
+					<!--<FlexBox direction="Column" width="90%" class="sapUiNoMarginBegin">-->
+					<!--	<HBox	alignItems	=	"Start"-->
+					<!--			justifyContent	=	"SpaceBetween"-->
+					<!--			width				=	"85%">-->
+					<!--		<Label 	text 				=	"{i18n>FAMILY}"/>-->
+					<!--		<c:Icon		src				=	"sap-icon://clear-filter"-->
+					<!--					color			=	"Red"-->
+					<!--					size			=	"0.8rem"-->
+					<!--					visible			=	"{	path: 'QuickFilter>/Family',-->
+					<!--												formatter:'CatalogCartes.util.Formatter.filterLabel'}"-->
+					<!--					id				=	"Family"-->
+					<!--					press			=	"removeFilter"/>-->
+					<!--	</HBox>-->
+					<!--	<Select items				=	"{VHService>/VHFamillesSet/}"-->
+					<!--			class				=	"sapUiTinyMarginEnd" -->
+					<!--			width				=	"85%" -->
+					<!--			forceSelection		=	"false" -->
+					<!--			selectedKey 		=	"{QuickFilter>/Family}"-->
+					<!--			change				=	"handleSearch">-->
+					<!--		<c:Item 	key 		=	"{VHService>CLASS}"-->
+					<!--					text 		= 	"{VHService>KSCHL}"/>-->
+					<!--	</Select>-->
+					<!--</FlexBox>-->
+					<FlexBox	direction 	=	"Column"
+							 	width 		= 	"5%"
+								class 		=	"sapUiNoMarginBegin">
+						<Label 			text 				=	""/>
+						<Button id		=	"clearFilter"
+									tooltip	=	"{i18n>CLEAR_FILTERS}"
+									class 	=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+									icon	=	"sap-icon://clear-filter"
+									type	=	"Reject"
+									press	=	"onClearFilter"/>
+					</FlexBox>
+				</FlexBox>
+			</Panel>
+		<t:Table 	id						=	"Table" 
+					rows 					=	"{CarteService>/MenuSet}"
+					selectionMode 			=	"Single"  
+					editable				=	"false" 
+					visibleRowCount	 		=	"{OverviewScreenModel>/Screen}"
+					showNoData 				=	"true"
+					noData					=	"{i18n>NO_DATA}"
+					threshold				=	"99999999"
+					enableBusyIndicator 	=	"true"
+					rowSelectionChange 		=	"onSelectedRow">
+			<t:toolbar>	
+				<Toolbar>
+					<Label 		text   	=	"{i18n>CARTES}"
+								design 	=	"Bold"
+								class 	=	"sapUiTinyMarginBegin"/>
+
+					<ToolbarSpacer/>
+					
+					<ObjectStatus	text	=	"{i18n>ADD_CRITERE}"
+									id		=	"addCritere"
+									visible	=	"false"
+									state	=	"Error"/>
+					
+					<ToolbarSpacer/>
+					
+					<Button 	text 	=	"{i18n>DUPLICATE}"
+								press 	=	"DuplicateCarte"
+								icon 	=	"sap-icon://copy"
+								type 	=	"Default"
+								id 		=	"duplicateButton"
+								visible =	"false"/>
+					<Button 	text 	=	"{i18n>NEW_PRODUCT}"
+								press 	=	"NewCartePress"
+								icon 	=	"sap-icon://add"
+								class 	=	"sapUiSmallMarginEnd"
+								type 	=	"Default"
+								visible	=	"{Edit>/Create}"/>
+
+				</Toolbar>
+			</t:toolbar>
+
+			<t:columns>
+				
+				<t:Column 	sortProperty	 	=	"CTNUM">
+					<Label 			text 				=	"{i18n>CARTE}" />
+					<t:template>
+						<Link 		text				= 	"{CarteService>CTNUM}" 
+									emphasized 			= 	"true"
+									press 				= 	"onPressArticle" />
+					</t:template>
+				</t:Column>
+					
+				<t:Column 	sortProperty	 	=	"DESCR" >
+					<Label 			text 				=	"{i18n>DESCRIPTION}"/>
+					<t:template>
+						<Text 		text				=	"{CarteService>DESCR}"/>					
+					</t:template>
+				</t:Column>
+
+
+				<t:Column 	sortProperty	 	=	"DSHIE" >
+					<Label 			text 				=	"{i18n>HIERARCHY}"/>
+					<t:template>
+						<Text 		text 				=	"{CarteService>DSHIE}" />
+					</t:template>
+				</t:Column>
+
+				<t:Column 	sortProperty	 	=	"APDEB" >
+					<Label 			text 				=	"{i18n>VALIDE_FROM}"/>
+					<t:template>
+						<DatePicker displayFormat 		= 	"dd.MM.yyyy"
+									value				=	"{CarteService>APDEB}"
+									editable			=	"false"/>
+					</t:template>
+				</t:Column>						
+
+				<t:Column 	sortProperty	 	=	"APFIN" >
+					<Label 			text 				=	"{i18n>VALIDE_TO}"/>
+					<t:template>
+						<DatePicker displayFormat 		= 	"dd.MM.yyyy"
+									value				=	"{CarteService>APFIN}"
+									editable			=	"false"/>
+					</t:template>
+				</t:Column>
+				
+				<t:Column 	sortProperty	 	=	"RSTAT" >
+					<Label 			text 				=	"{i18n>STATUS}"/>
+					<t:template>
+						<ComboBox	items			=	"{VHService>/VHCAStatusSet/}"
+									editable		=	"false"
+									selectedKey 	=	"{CarteService>STATS}">
+							<c:Item 	key 		=	"{VHService>STATS}"
+										text 		= 	"{VHService>VTEXT}"/>
+						</ComboBox>
+					</t:template>
+				</t:Column>
+
+				<!--<t:Column>-->
+				<!--	<Label 			text				=	"{i18n>PHOTO}" />-->
+				<!--	<t:template>-->
+				<!--		<Image 		src 				=	"{CarteService>IMSRC}" -->
+				<!--					width 				=	"50px"-->
+				<!--					height				=	"50px"-->
+				<!--					press 				=	"onImagePreview"/>-->
+				<!--	</t:template>-->
+				<!--</t:Column>-->
+
+			</t:columns>					
+		</t:Table>		
+	</Page>
+</mvc:View>

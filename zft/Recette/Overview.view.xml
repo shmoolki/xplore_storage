@@ -9,7 +9,7 @@
 			controllerName		=	"CatalogRecette.controller.Overview" 
 			height				=	"100%">
 			
-	<Page enableScrolling="true" title="{i18n>APP_TITLE}" class="sapMSampleFioriListReportPageOverflow">
+	<Page enableScrolling="false" title="{i18n>APP_TITLE}" class="sapMSampleFioriListReportPageOverflow">
 		<Panel expanded="true" expandable="false">
 
 				<FlexBox>

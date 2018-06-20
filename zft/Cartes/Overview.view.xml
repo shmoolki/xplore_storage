@@ -9,7 +9,7 @@
 			controllerName 	= 	"CatalogCartes.controller.Overview" 
 			height 			=	"100%">
 			
-	<Page 		enableScrolling	=	"true" 
+	<Page 		enableScrolling	=	"false" 
 				title 			=	"{i18n>APP_TITLE}" 
 				class 			=	"sapMSampleFioriListReportPageOverflow">
 

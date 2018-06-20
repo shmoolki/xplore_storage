@@ -1,0 +1,461 @@
+<mvc:View	xmlns:mvc			=	"sap.ui.core.mvc" 
+			xmlns				=	"sap.m" 
+			xmlns:uxap			=	"sap.uxap" 
+			xmlns:c				=	"sap.ui.core" 
+			xmlns:t				=	"sap.ui.table" 
+			xmlns:layout		=	"sap.ui.layout" 
+			xmlns:fb			=	"sap.ui.comp.filterbar" 
+			xmlns:var			=	"sap.ui.comp.variants" 
+			controllerName		=	"CatalogRecette.controller.Overview" 
+			height				=	"100%">
+			
+	<Page enableScrolling="true" title="{i18n>APP_TITLE}" class="sapMSampleFioriListReportPageOverflow">
+		<Panel expanded="true" expandable="false">
+
+				<FlexBox>
+					<FlexBox direction="Column" width="90%" class="sapUiNoMarginBegin">
+						<Label text="{i18n>RECETTE}"/>
+						<SearchField liveChange="handleSearch" class="sapUiTinyMarginEnd sapUiNoMarginTop" width="85%" showSearchButton="false" value="{QuickFilter>/Recette}"/>
+					</FlexBox>	
+					
+					<FlexBox direction="Column" width="90%" class="sapUiNoMarginBegin">					
+						<Label text="{i18n>DESIGNATION}"/>
+						<SearchField liveChange="handleSearch" class="sapUiTinyMarginEnd sapUiNoMarginTop" width="85%" showSearchButton="false" value="{QuickFilter>/Designation}"/>
+					</FlexBox>
+					
+				
+					<FlexBox direction="Column" width="90%" class="sapUiNoMarginBegin">
+						<Label text="{i18n>CARTE_OPE}"/>
+						<Input	id						=	"opeGammeId"
+								showSuggestion			=	"true"
+								suggestionItems			=	"{VHModel>/VHCartesSet/}" 
+								maxSuggestionWidth		=	"auto"
+								value					=	"{QuickFilter>/Carte}"
+								change					=	"handleSearch"
+								class					=	"sapUiTinyMarginEnd sapUiNoMarginTop" 
+								width					=	"85%">
+							<suggestionItems>
+								<c:Item	text=	"{VHModel>DESCR} - {VHModel>CTNUM}" />
+							</suggestionItems>
+						</Input>
+						<!--<SearchField liveChange="handleSearch" class="sapUiTinyMarginEnd sapUiNoMarginTop" width="85%" showSearchButton="false" value="{QuickFilter>/Carte}"/>-->
+					</FlexBox>	
+					
+					<FlexBox direction="Column" width="90%" class="sapUiNoMarginBegin">
+						<HBox	alignItems	=	"Start"
+								width		=	"147px"
+								justifyContent	=	"SpaceBetween">
+							<Label	text				=	"{i18n>FAMILY}"/>
+							<HBox>
+								<c:Icon		src				=	"sap-icon://multiselect-all"
+											size			=	"0.8rem"
+											id				=	"FamilyLi"
+											press			=	"selectAll"
+											class			=	"sapUiTinyMarginEnd"/>
+								
+								<c:Icon		src				=	"sap-icon://clear-filter"
+											color			=	"Red"
+											size			=	"0.8rem"
+											visible			=	"{	path: 'QuickFilter>/Family',
+																		formatter:'CatalogRecette.util.Formatter.filterLabel'}"
+											id				=	"Family"
+											press			=	"removeFilter"
+											class			=	"sapUiTinyMarginBegin"/>
+							</HBox>
+						</HBox>
+						<MultiComboBox	id					=	"FamilyList"
+										items				=	"{VHRecFamillesSet>/}"
+						 				selectedKeys 		=	"{QuickFilter>/Family}"
+										selectionFinish		=	"handleSearch"
+										width 				=	"147px"
+										selectionChange		=	"checkAllSelected">
+							<c:Item 	key			 		=	"{VHRecFamillesSet>KSCHL}"
+										text 				= 	"{VHRecFamillesSet>KSCHL}"/>
+						</MultiComboBox>
+						
+					</FlexBox>
+					
+					<FlexBox direction="Column" width="90%" class="sapUiNoMarginBegin">
+						<HBox	alignItems	=	"Start"
+								width		=	"147px"
+								justifyContent	=	"SpaceBetween">
+							<Label	text				=	"{i18n>ENSEIGNE}"/>
+							<HBox>
+								<c:Icon		src				=	"sap-icon://multiselect-all"
+											size			=	"0.8rem"
+											id				=	"EnseigneLi"
+											press			=	"selectAll"
+											class			=	"sapUiTinyMarginEnd"/>
+								
+								<c:Icon		src				=	"sap-icon://clear-filter"
+											color			=	"Red"
+											size			=	"0.8rem"
+											visible			=	"{	path: 'QuickFilter>/Enseigne',
+																		formatter:'CatalogRecette.util.Formatter.filterLabel'}"
+											id				=	"Enseigne"
+											press			=	"removeFilter"
+											class			=	"sapUiTinyMarginBegin"/>
+							</HBox>
+						</HBox>
+						<MultiComboBox	id					=	"EnseigneList"
+										items				=	"{VHEnseignesSet>/}"
+						 				selectedKeys 		=	"{QuickFilter>/Enseigne}"
+										selectionFinish		=	"handleSearch"
+										width 				=	"147px"
+										selectionChange		=	"checkAllSelected">
+							<c:Item 	key			 		=	"{VHEnseignesSet>ENSGN}"
+										text 				= 	"{VHEnseignesSet>ENTXT}"/>
+						</MultiComboBox>
+								
+					</FlexBox>
+					
+					<FlexBox direction="Column" width="90%" class="sapUiNoMarginBegin">
+						<HBox	alignItems	=	"Start"
+								width		=	"147px"
+								justifyContent	=	"SpaceBetween">
+							<Label	text				=	"{i18n>STATUS}"/>
+							<HBox>
+								<c:Icon		src				=	"sap-icon://multiselect-all"
+											size			=	"0.8rem"
+											id				=	"StatusLi"
+											press			=	"selectAll"
+											class			=	"sapUiTinyMarginEnd"/>
+								
+								<c:Icon		src				=	"sap-icon://clear-filter"
+											color			=	"Red"
+											size			=	"0.8rem"
+											visible			=	"{	path: 'QuickFilter>/Status',
+																		formatter:'CatalogRecette.util.Formatter.filterLabel'}"
+											id				=	"Status"
+											press			=	"removeFilter"
+											class			=	"sapUiTinyMarginBegin"/>
+							</HBox>
+						</HBox>
+						<MultiComboBox	id					=	"StatusList"
+										items				=	"{VHStatutsSet>/}"
+						 				selectedKeys 		=	"{QuickFilter>/Status}"
+										selectionFinish		=	"handleSearch"
+										width 				=	"147px"
+										selectionChange		=	"checkAllSelected">
+							<c:Item 	key			 		=	"{VHStatutsSet>STATS}"
+										text 				= 	"{VHStatutsSet>VTEXT}"/>
+						</MultiComboBox>
+						
+					</FlexBox>
+					
+					<FlexBox direction="Column" width="90%" class="sapUiNoMarginBegin">
+						<Label text="{i18n>WITH_VERSION}"/>
+						<HBox>
+							<SegmentedButton	id					=	"withVersion"
+												selectedKey			=	"{Overview>/Version}" 
+												class				=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+												select				=	"onVersionClick">
+								<items>
+									<SegmentedButtonItem	width	=	"auto"
+															text	=	"{i18n>NO}" 
+															key		=	"false"/>
+									<SegmentedButtonItem	width	=	"auto"
+															text	=	"{i18n>YES}" 
+															key		=	"true"/>
+								</items>
+							</SegmentedButton>
+							
+							<Button icon	=	"sap-icon://add-filter"
+									press	=	"addFilter"
+									id		=	"customFilterButton"
+									class	=	"sapUiMediumMarginBegin"/>
+							<Button id		=	"clearFilter"
+									tooltip	=	"{i18n>CLEAR_FILTERS}"
+									class 	=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+									icon	=	"sap-icon://clear-filter"
+									type	=	"Reject"
+									press	=	"onClearFilter"/>
+						</HBox>
+					</FlexBox>
+					
+					<!--<FlexBox direction="Column" width="15%" class="sapUiNoMarginBegin">-->
+					<!--	<Label text=""/>-->
+						
+					<!--</FlexBox>-->
+				</FlexBox>
+			</Panel>
+			<Panel	expandable	=	"false"
+					visible 	=	"false"
+					id			=	"customFilter">
+				<FlexBox>
+					<FlexBox direction="Column" width="100%" class="sapUiNoMarginBegin">
+						<Label text						=	"{i18n>INGREDIENT_MULTI}"/>
+						<MultiInput	id					=	"multiIngredients"
+									width				=	"1115px"
+									suggestionItems		=	"{	path:	'VHModel>/VHIngredientsSet',
+							                                	sorter: { path: 'VHModel>MAKTX' }
+							                                }"
+							        maxTokens			=	"3"
+							        enableMultiLineMode	=	"true"
+							       	showValueHelp		=	"false"
+							       	tokenChange			=	"handleSearch">
+							<c:Item key					=	"{VHModel>MATNR}" 
+									text				=	"{VHModel>MAKTX} - {VHModel>MATNR}" />
+						</MultiInput>
+						
+					</FlexBox>	
+					<FlexBox direction="Column" width="10%" class="sapUiNoMarginBegin">
+						<Label		text					=	"{i18n>EXCLURE_SR_FT}"/>
+						<CheckBox	selected				=	"{QuickFilter>/SR_FT}"
+									select					=	"includeSrFt"/>
+					</FlexBox>
+				</FlexBox>
+			</Panel>
+			<Toolbar>
+					<Label	text			=	"{i18n>RECETTES}" 
+							design			=	"Bold" 
+							class			=	"sapUiTinyMarginBegin"/>
+
+					<ToolbarSpacer/>
+					
+					<ObjectStatus	text	=	"{i18n>ADD_CRITERE}"
+									id		=	"addCritere"
+									visible	=	"false"
+									state	=	"Error"/>
+					<ObjectStatus	text	=	"{i18n>COMPLETE_CARTE_ID}"
+									id		=	"completeCarteId"
+									visible	=	"false"
+									state	=	"Error"/>
+					
+					<ToolbarSpacer/>
+					
+					<Button 	text		=	"{i18n>DUPLICATE}" 
+								press		=	"DuplicateActionSheet" 
+								icon		=	"sap-icon://copy" 
+								type		=	"Transparent" 
+								id			=	"duplicateButton"
+								visible		=	"false"/>
+					<Button 	text		=	"{i18n>NEW_PRODUCT}" 
+								press		=	"DuplicateActionSheet" 
+								icon		=	"sap-icon://add" 
+								class		=	"sapUiSmallMarginEnd" 
+								type		=	"Transparent"
+								id			=	"NewRecipe"
+								visible 	=	"{Edit>/Create}"/>
+
+					<!--<ToolbarSeparator visible="false"/>-->
+
+					<!--<Button press="NewProductPress" icon="sap-icon://sort" visible="false"/>-->
+
+					<!--<Button press="NewProductPress" icon="sap-icon://group-2" visible="false"/>-->
+
+					<!--<Button press="NewProductPress" icon="sap-icon://action-settings" visible="false"/>-->
+
+				</Toolbar>
+		<t:Table	id					=	"GTable"  
+					rows				=	"{CatRectService>/RecetteSet}" 
+					selectionMode		=	"Single" 
+					editable			=	"false" 
+					noData				=	"{i18n>NO_DATA}"
+					enableCellFilter	=	"true" 
+					minAutoRowCount		=	"3" 
+					visibleRowCount 	=	"{OverviewScreenModel>/Screen}"
+					showNoData			=	"true" 
+					enableBusyIndicator	=	"true" 
+					threshold			=	"9999999"
+					rowSelectionChange	=	"onSelectedRow"
+					visible 			=	"false">
+			<t:columns>
+				<t:Column	width		=	"8%"
+							sortProperty=	"FRNUM">
+					<Label text="{i18n>RECETTE}"/>
+					<t:template>
+						<Link text="{CatRectService>FRNUM}" emphasized="true" press="onPressArticle"/>
+					</t:template>
+				</t:Column>
+					
+				<t:Column	sortProperty=	"TITRE">
+					<Label text="{i18n>DESCRIPTION}"/>
+					<t:template>
+						<ObjectStatus	text			=	"{CatRectService>TITRE}" 
+										state			=	"{	parts:	[	{path	:	'CatRectService>CNFIC'},
+																			{path	:	'CatRectService>ISFIC'},
+																			{path	:	'CatRectService>NBING'}],
+																formatter:'CatalogRecette.util.Formatter.State'}" />
+					</t:template>
+				</t:Column>
+
+
+				<t:Column	width		=	"12%"
+							sortProperty=	"TSTAT">
+					<Label text="{i18n>STATUS}"/>
+					<t:template>
+						<Text text="{CatRectService>TSTAT}"/>
+					</t:template>
+				</t:Column>
+
+				<t:Column	sortProperty=	"FAMTX"
+							width	=	"8%">
+					<Label text="{i18n>FAMILY}"/>
+					<t:template>
+						<Text text="{CatRectService>FAMTX}"/>
+					</t:template>
+				</t:Column>	
+				
+				<!--<t:Column>-->
+				<!--	<Label text="{i18n>ENSEIGNE}"/>-->
+				<!--	<t:template>-->
+				<!--		<Text text="{CatRectService>ENSGN}"/>-->
+				<!--	</t:template>-->
+				<!--</t:Column>	-->
+
+				<t:Column	width			=	"8%"
+							sortProperty	=	"VALOR">
+					<Label text="{i18n>VALORISATION}"/>
+					<t:template>
+						<Text text="{CatRectService>VALOR}"/>
+					</t:template>
+				</t:Column>
+
+				<t:Column	width	=	"6%">
+					<Label text="{i18n>NBR_INGREDIENT}"/>
+					<t:template>
+						<Text text="{CatRectService>NBING}"/>
+					</t:template>
+				</t:Column>
+				<t:Column	hAlign	=	"Center"
+							width	=	"13%">
+					<Label text="{i18n>PRODUCTION_TIME}"/>
+					<t:template>
+						<!--<Text		text				=	"{-->
+						<!--										path: 'CatRectService>TMPPR',-->
+						<!--										type: 'sap.ui.model.type.Time'-->
+						<!--									}" />-->
+						<Text text="{path:'CatRectService>TMPPR',                 formatter:'CatalogRecette.util.Formatter.DateFormat'}"/>
+						
+					</t:template>
+				</t:Column>
+				<t:Column	hAlign	=	"Center"
+							 width	=	"8%">
+					<Label text="{i18n>NBR_GESTURE}"/>
+					<t:template>
+						<Text text="{CatRectService>NBGST}"/>
+						
+					</t:template>
+				</t:Column>
+				
+				<t:Column width="6%">
+					<Label text="{i18n>PHOTO}"/>
+					<t:template>
+						<Image	src					=	"{	path: 'CatRectService>IMSRC',
+															formatter:'CatalogRecette.util.Formatter.imagePlaceHolder'}"
+								width 				=	"50px"
+								height				=	"50px" 
+								press				=	"onImagePreview"/>
+					</t:template>
+				</t:Column>
+
+
+			</t:columns>					
+		</t:Table>		
+		
+		<t:TreeTable	id					=	"Table"
+						visibleRowCount		=	"{OverviewScreenModel>/Screen}"
+						rows				=	"{	path: 'articleTable>/',
+			    										parameters: {arrayNames:['items']}}"
+						selectionMode		=	"Single" 
+						editable			=	"false" 
+						enableCellFilter	=	"true" 
+						minAutoRowCount		=	"3" 
+						showNoData			=	"true" 
+						noData				=	"{i18n>NO_DATA}"
+						enableBusyIndicator	=	"true" 
+						rowSelectionChange	=	"onSelectedRow"
+						visible 			=	"false">
+			
+			<t:columns>
+				
+				<t:Column	sortProperty=	"FRNUM"
+							width	=	"12%">
+					<Label text="{i18n>RECETTE}"/>
+					<t:template>
+						<Link text="{articleTable>FRNUM}" emphasized="true" press="onPressArticle"/>
+					</t:template>
+				</t:Column>
+					
+				<t:Column	sortProperty=	"TITRE">
+					<Label text="{i18n>DESCRIPTION}"/>
+					<t:template>
+						<ObjectStatus	text			=	"{articleTable>TITRE}" 
+										state			=	"{	parts:	[	{path	:	'articleTable>CNFIC'},
+																			{path	:	'articleTable>ISFIC'}],
+																formatter:'CatalogRecette.util.Formatter.State'}" />
+					</t:template>
+				</t:Column>
+
+
+				<t:Column	sortProperty=	"TSTAT"
+							width	=	"11%">
+					<Label text="{i18n>STATUS}"/>
+					<t:template>
+						<Text text="{articleTable>TSTAT}"/>
+					</t:template>
+				</t:Column>
+
+				<t:Column	sortProperty=	"FAMIL"
+							width	=	"8%">
+					<Label text="{i18n>FAMILY}"/>
+					<t:template>
+						<Text text="{articleTable>FAMTX}"/>
+					</t:template>
+				</t:Column>	
+				
+				<!--<t:Column	width	=	"9%">-->
+				<!--	<Label text="{i18n>ENSEIGNE}"/>-->
+				<!--	<t:template>-->
+				<!--		<Text text="{articleTable>ENSGN}"/>-->
+				<!--	</t:template>-->
+				<!--</t:Column>	-->
+
+				<t:Column	sortProperty=	"VALOR"
+							width	=	"8%">
+					<Label text="{i18n>VALORISATION}"/>
+					<t:template>
+						<Text text="{articleTable>VALOR}"/>
+					</t:template>
+				</t:Column>
+
+				<t:Column	width	=	"6%">
+					<Label text="{i18n>NBR_INGREDIENT}"/>
+					<t:template>
+						<Text text="{articleTable>NBING}"/>
+					</t:template>
+				</t:Column>
+				<t:Column 	width	=	"11%"
+							hAlign	=	"Center">
+					<Label text="{i18n>PRODUCTION_TIME}"/>
+					<t:template>
+						<!--<Text		text				=	"{-->
+						<!--										path: 'articleTable>TMPPR',-->
+						<!--										type: 'sap.ui.model.type.Time'-->
+						<!--									}" />-->
+						<Text text="{path:'articleTable>TMPPR',                 formatter:'CatalogRecette.util.Formatter.DateFormat'}"/>
+						
+					</t:template>
+				</t:Column>
+				<t:Column	hAlign	=	"Center"
+							width	=	"9%">
+					<Label text="{i18n>NBR_GESTURE}"/>
+					<t:template>
+						<Text text="{articleTable>NBGST}"/>
+						
+					</t:template>
+				</t:Column>
+				
+				<t:Column width="5%">
+					<Label text="{i18n>PHOTO}"/>
+					<t:template>
+						<Image src="{articleTable>IMSRC}" width="50px" height= "40px" press="onImagePreview"/>
+					</t:template>
+				</t:Column>
+
+
+			</t:columns>					
+		</t:TreeTable>		
+	</Page>
+</mvc:View>

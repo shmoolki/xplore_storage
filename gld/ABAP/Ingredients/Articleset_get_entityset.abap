@@ -1344,7 +1344,7 @@ METHOD articleset_get_entityset.
           ENDIF.
 
 *         Get data from the best status
-          SELECT  s~dcdtd s~distb s~kbetr s~meins s~ntgew s~recip s~stats s~tempb s~vlcrn o~ordre
+          SELECT  s~mfrnr s~mfrnm s~dcdtd s~distb s~kbetr s~meins s~ntgew s~recip s~stats s~tempb s~vlcrn o~ordre
           INTO    CORRESPONDING FIELDS OF TABLE lt_afsrc
           FROM    zmm_af_src AS s
           INNER   JOIN zmm_stats_order AS o ON s~stats EQ o~stats
@@ -1387,7 +1387,8 @@ METHOD articleset_get_entityset.
                     ls_entit-kbetr          = ls_afsr2-kbetr.
                     ls_entit-tarap          = ls_afsr2-kbetr.
                     ls_entit-meins          = ls_afsr2-meins.
-
+                    ls_entit-mfrnr          = ls_afsr2-mfrnr.
+                    ls_entit-mfrnm          = ls_afsr2-mfrnm.
                     ls_entit-distb          = ls_afsr2-distb.
 
                     IF ls_entit-distb EQ 'L'.
@@ -1445,6 +1446,8 @@ METHOD articleset_get_entityset.
                     ls_entit-kbetr          = ls_afsrc-kbetr.
                     ls_entit-tarap          = ls_afsrc-kbetr.
                     ls_entit-meins          = ls_afsrc-meins.
+                    ls_entit-mfrnr          = ls_afsrc-mfrnr.
+                    ls_entit-mfrnm          = ls_afsrc-mfrnm.
 
                     ls_entit-distb          = ls_afsrc-distb.
 

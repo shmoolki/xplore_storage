@@ -160,7 +160,7 @@
 																		formatter	:	'CatalogMat.util.Formatter.visibleFieldTarap'}"
 												editable		=	"{	parts		:	[	{	path	:	'Edit>/EditOn'},
 																							{	path	:	'Edit>/TARAP'}],	
-																		formatter	:	'CatalogMat.util.Formatter.modifAutorisation'}"/>
+																		formatter	:	'CatalogMat.util.Formatter.modifTarap'}"/>
 							</HBox>
 						</forms:SimpleForm>
 					</layout:BlockLayoutCell>

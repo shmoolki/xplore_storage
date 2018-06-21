@@ -917,6 +917,26 @@ sap.ui.controller( "CatalogMat.Controller.Detail" , {
 			if( artHeadr.MHDRZ	===	""	|| !artHeadr.MHDRZ ){
 				artHeadr.MHDRZ	=	"0";
 			}
+			if(artHeadr.MAKTX.length > 40){
+				var designationDialog	= new sap.m.Dialog({
+						title: oBundle.getText( "INVALID_MAKTX" ),
+						type: 'Message',
+						content: new sap.m.Text({ text: oBundle.getText( "MAKTX_TOO_LONG" ) }),
+			
+						endButton: new sap.m.Button({
+							icon : "sap-icon://decline",
+							type: "Reject",
+							press: function () {
+								designationDialog.close();
+							}
+						}),
+						afterClose: function () {
+							designationDialog.destroy();
+						}
+					});
+					designationDialog.open();
+					return;	
+			}
 			for (var i=0; i<artSourcing.length; i++) {
 				if( artSourcing[i].NTGEW === ""	||	!artSourcing[i].NTGEW || artSourcing[i].NTGEW === "0" ){
 					artSourcing[i].NTGEW	=	"0.000";

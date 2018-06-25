@@ -236,7 +236,7 @@ METHOD vhingredientsach_get_entityset.
       INNER   JOIN zmm_sr_ens AS e ON d~srnum EQ e~srnum
       WHERE   e~ensgn IN @lr_rgens
       AND     d~stats NE '25'  "Exclut les SR transformees
-      AND     ( v~srnum IN @lt_maktx OR v~descr IN @lt_maktx )
+      AND     ( v~srnum IN @lt_maktx OR v~descr IN @lt_maktx OR d~titrg IN @lt_maktx )
       AND     d~srnum NE @lv_frnum
       ORDER   BY d~erdat DESCENDING.
 

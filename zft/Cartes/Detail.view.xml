@@ -1,0 +1,208 @@
+<core:View	xmlns:core 			= "sap.ui.core" 
+			xmlns:mvc 			= "sap.ui.core.mvc"
+			xmlns:m 			= "sap.m" 	
+			xmlns 				= "sap.uxap"
+			xmlns:layout 	 	= "sap.ui.layout"
+			xmlns:forms 		= "sap.ui.layout.form"
+			xmlns:html 			= "http://www.w3.org/1999/xhtml" 
+			xmlns:t 			= "sap.ui.table"
+			xmlns:u 			= "sap.ui.unified"
+			xmlns:suite 		= "sap.suite.ui.commons"
+			xmlns:commons		= "sap.ui.commons"
+			controllerName 		= "CatalogCartes.controller.Detail" 
+			height 			 	= "100%">
+	
+	<m:Page id					=	"DetailPage"
+			title 				=	"{infoGeneral>/DESCR} - {infoGeneral>/CTNUM}"
+			showNavButton		=	"true"
+			navButtonPress 		=	"handleNavButtonPress">
+		
+		<m:VBox	id 				= 	"msgArea" />	
+		
+		<ObjectPageLayout	id 							= "ObjectPageLayout"
+							enableLazyLoading			= "false" 
+							useTwoColumnsForLargeScreen = "true"
+							showAnchorBar 				= "false"
+							useIconTabBar 				= "true">
+			<headerTitle>
+				<ObjectPageHeader 	objectTitle 	 	= "{infoGeneral>/DESCR}"/>
+
+			</headerTitle>
+
+			<headerContent >
+				<!--<m:Image 	src 	= "{	path: 'infoGeneral>/IMSRC',-->
+				<!--							formatter:'CatalogCartes.util.Formatter.imagePlaceHolder'}" -->
+				<!--			height 	= "10%" -->
+				<!--			width 	= "10%"/>-->
+
+				<forms:SimpleForm 		maxContainerCols		=	"12" 
+										width					=	"250px" 
+										editable				=	"true" 
+										labelMinWidth			=	"192" 
+										backgroundDesign		=	"Transparent"
+										layout					=	"ResponsiveGridLayout" 
+										labelSpanL				=	"4" 
+										labelSpanM				=	"4" 
+										labelSpanS				=	"6" 
+										emptySpanL				=	"0" 
+										emptySpanM				=	"0" 
+										emptySpanS				=	"0" 
+										columnsL				=	"2" 
+										columnsM				=	"2">
+					
+						<m:Label			text 				=	"{i18n>CARTE_CODE}"
+											width 				=	"100%"/>
+						
+						<m:Text				text				=	"{infoGeneral>/CTNUM}"/>	
+					
+						<m:Label			text 				=	"{i18n>ORG_COM}"
+											width 				=	"100%"/>
+						
+						<m:ComboBox			items				=	"{VHService>/VHOrgComSet/}"
+							 				selectedKey	 		=	"{infoGeneral>/VKORG}"
+											editable			=	"false"
+											class				=	"sapUiTinyMarginTop"
+											width 				=	"90%">
+							<core:Item 		key			 		=	"{VHService>VKORG}"
+											text 				= 	"{VHService>VTEXT}"/>
+						</m:ComboBox>	
+					</forms:SimpleForm>
+					<forms:SimpleForm 		maxContainerCols		=	"12" 
+											width					=	"250px" 
+											editable				=	"true" 
+											labelMinWidth			=	"192" 
+											backgroundDesign		=	"Transparent"
+											layout					=	"ResponsiveGridLayout" 
+											labelSpanL				=	"4" 
+											labelSpanM				=	"4" 
+											labelSpanS				=	"6" 
+											emptySpanL				=	"0" 
+											emptySpanM				=	"0" 
+											emptySpanS				=	"0" 
+											columnsL				=	"2" 
+											columnsM				=	"2">
+						<m:Label			text 				=	"{i18n>VALIDE_FROM}"
+											width 				=	"100%"/>
+						
+						<m:Text				text				=	"{	path: 'infoGeneral>/APDEB',
+																			formatter:'CatalogCartes.util.Formatter.displayFormat'}"/>	
+					
+						<m:Label			text 				=	"{i18n>VALIDE_TO}"
+											width 				=	"100%"/>
+						
+						<m:Text				text				=	"{	path: 'infoGeneral>/APFIN',
+																			formatter:'CatalogCartes.util.Formatter.displayFormat'}"/>	
+					</forms:SimpleForm>
+					<forms:SimpleForm 		maxContainerCols		=	"12" 
+											width					=	"500px" 
+											editable				=	"true" 
+											labelMinWidth			=	"192" 
+											backgroundDesign		=	"Transparent"
+											layout					=	"ResponsiveGridLayout" 
+											labelSpanL				=	"2" 
+											labelSpanM				=	"2" 
+											labelSpanS				=	"2" 
+											emptySpanL				=	"0" 
+											emptySpanM				=	"0" 
+											emptySpanS				=	"0" 
+											columnsL				=	"2" 
+											columnsM				=	"2">
+						<m:Label	text			=	"{i18n>STATUS}"/>	
+						<m:HBox>
+							<m:Select	items			=	"{StatList>/}" 
+									selectedKey			=	"{infoGeneral>/STATS}"
+									enabled				=	"false">
+								<m:items>
+									<core:Item text	=	"{StatList>VTEXT}" key	=	"{StatList>STATS}"/>
+								</m:items>
+							</m:Select>
+							<m:Button 	text			=	"{i18n>DUPLICATE}" 
+										icon			=	"sap-icon://copy"
+										type			=	"Emphasized"
+										visible			=	"{= ${Edit>/buttonOn} &amp;&amp; ${Edit>/Modif}}"
+										class			=	"sapUiTinyMarginBegin"
+										press			=	"DuplicateCarte" />
+						</m:HBox>			
+					</forms:SimpleForm>
+					
+			</headerContent>
+			<sections>
+				
+				<ObjectPageSection>
+			
+					<subSections>
+			
+						<ObjectPageSubSection>
+								
+								<m:IconTabBar	expandable 			= 	"false"
+												expanded			= 	"true"
+												id 					=	"iconTabDetail">
+									<m:items>
+										<m:IconTabFilter 	text 	=	"{i18n>GENERAL_INFO}"
+															icon	= 	"sap-icon://activity-items"
+															key		=	"infoGeneralTab">
+											<core:Fragment fragmentName="CatalogCartes.DetailViewFragment.GeneralInfo" type="XML" />
+										</m:IconTabFilter>
+
+										<m:IconTabFilter 	text 	=	"{i18n>RECETTES}"
+															icon 	= 	"sap-icon://measurement-document">
+											<core:Fragment fragmentName="CatalogCartes.DetailViewFragment.RecetteTab" type="XML" />
+										</m:IconTabFilter>
+
+										<m:IconTabFilter 	text 	=	"{i18n>JOURNAL}"
+															icon 	= 	"sap-icon://timesheet">
+											<core:Fragment fragmentName="CatalogCartes.DetailViewFragment.Journal" type="XML" />
+										</m:IconTabFilter>
+										
+										<!--<m:IconTabFilter 	text 	=	"{i18n>TEST}"-->
+										<!--					icon 	= 	"sap-icon://developer-settings">-->
+										<!--	<core:Fragment fragmentName="CatalogCartes.DetailViewFragment.testAndDev" type="XML" />-->
+										<!--</m:IconTabFilter>-->
+										
+									</m:items>
+								</m:IconTabBar>								
+						
+						</ObjectPageSubSection>
+					
+					</subSections>
+				
+				</ObjectPageSection>
+		
+			</sections>
+		
+		</ObjectPageLayout>
+			
+		<m:footer>
+			<m:Toolbar>
+				<m:content>
+					<m:ToolbarSpacer />
+					
+					<m:Button 	icon	 	=	"sap-icon://edit" 
+								text 		=	"{i18n>EDIT}" 
+								press 		=	"onEdit"
+								type		=	"Emphasized"
+								visible		=	"{	parts		:	[	{	path	:	'Edit>/buttonOn'},
+																		{	path	:	'infoGeneral>/STATS'},
+																		{	path	:	'Edit>/Modif'}],	
+													formatter	:	'CatalogCartes.util.Formatter.buttonModifAutorisation'}"/>
+					
+					<m:Button 	text		=	"{i18n>SAVE}" 
+								icon		=	"sap-icon://save" 
+								type		=	"Accept" 
+								visible 	=	"{Edit>/EditOn}"
+								enabled 	=	"{	parts		:	[	{	path	:	'Edit>/EditOn'},
+																		{	path	:	'infoGeneral>/DESCR'}],	
+													formatter	:	'CatalogCartes.util.Formatter.enabledSave'}"
+								press		=	"onModifCarteCompleted"/>
+							
+								
+					<m:Button 	text		=	"{i18n>CANCEL}" 
+								icon		=	"sap-icon://sys-cancel" 
+								type		=	"Reject" 
+								press		=	"onCancel" 
+								visible 	=	"{Edit>/EditOn}"/>
+				</m:content>
+			</m:Toolbar>
+		</m:footer>
+	</m:Page>
+</core:View>

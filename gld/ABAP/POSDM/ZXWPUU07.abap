@@ -239,7 +239,7 @@
                                                                                     iv_vtweg = '10'
                                                                                     iv_qtite = 1
                                                                                     iv_unite = ls_vnpst-erfme
-                                                                                    iv_perte = ls_fting-perte                ).
+                                                                                    iv_perte = ls_fting-perte               ).
 
         ls_vnpst-vlpxc            = ls_vlpxc-kbetr.
 

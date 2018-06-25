@@ -137,8 +137,8 @@
     ls_vente-erfme                = ls_mmdat-erfme.
 
 *   Calcul de la valeur au PMP
-****    CALL FUNCTION 'ZMM_FT_VAL_PMP'
-    CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
+    CALL FUNCTION 'ZMM_FT_VAL_PMP'
+****    CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
       EXPORTING
         iv_bdate                  = ls_vente-bdate
         iv_ftnum                  = ls_vente-matnr
@@ -213,8 +213,8 @@
         ls_vnpst-erfme            = ls_mmdat-erfme.
 
 *       Calcul de la valeur au PMP
-****        CALL FUNCTION 'ZMM_FT_VAL_PMP'
-        CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
+        CALL FUNCTION 'ZMM_FT_VAL_PMP'
+****        CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
           EXPORTING
             iv_bdate              = ls_vnpst-bdate
             iv_ftnum              = ls_vnpst-matnr
@@ -239,7 +239,7 @@
                                                                                     iv_vtweg = '10'
                                                                                     iv_qtite = 1
                                                                                     iv_unite = ls_vnpst-erfme
-                                                                                    iv_perte = 0                ).
+                                                                                    iv_perte = ls_fting-perte                ).
 
         ls_vnpst-vlpxc            = ls_vlpxc-kbetr.
 

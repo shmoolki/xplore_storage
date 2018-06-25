@@ -140,8 +140,8 @@
       ls_aninv-erfme              = ls_mmdat-erfme.
 
 *     Calcul de la valeur au PMP
-****      CALL FUNCTION 'ZMM_FT_VAL_PMP'
-      CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
+      CALL FUNCTION 'ZMM_FT_VAL_PMP'
+****      CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
         EXPORTING
           iv_bdate                = ls_aninv-bdate
           iv_ftnum                = ls_aninv-matnr
@@ -219,8 +219,8 @@
           ls_anpst-erfme              = ls_mmdat-erfme.
 
 *         Calcul de la valeur au PMP
-****          CALL FUNCTION 'ZMM_FT_VAL_PMP'
-          CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
+          CALL FUNCTION 'ZMM_FT_VAL_PMP'
+****          CALL FUNCTION 'ZMM_FT_NEW_VAL_PMP'
             EXPORTING
               iv_bdate                = ls_anpst-bdate
               iv_ftnum                = ls_anpst-matnr

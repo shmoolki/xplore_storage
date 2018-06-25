@@ -13,6 +13,7 @@
 			height 			 	= "100%">
 	
 	<m:Page id					=	"DetailPage"
+			enableScrolling		=	"false" 
 			title 				=	"{infoGeneral>/DESCR} - {infoGeneral>/CTNUM}"
 			showNavButton		=	"true"
 			navButtonPress 		=	"handleNavButtonPress">

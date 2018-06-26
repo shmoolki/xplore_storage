@@ -222,7 +222,7 @@ sap.ui.controller(  "CatalogRecette.controller.Detail", {
 				// Error if the article is lock for edit by another user
 				// can't lock or unlock this article for edit 
 				else{	
-					that.onEdit( "lock" );
+					that.onEdit( "locked" );
 					sap.m.MessageToast.show( result.MessageText );
 					// reset the UI edit mode
 					
@@ -235,7 +235,7 @@ sap.ui.controller(  "CatalogRecette.controller.Detail", {
 		    		}else{
 			    		// Disable busy indicator
 						that.getView().setBusy( false );
-						that.onEdit( "lock" );
+						that.onEdit( "locked" );
 						// that.getView().getModel( "Edit" ).setProperty( "/EditOn" , false );
 						// that.getView().getModel( "Edit" ).setProperty( "/buttonOn" , true );			
 						
@@ -1099,9 +1099,14 @@ sap.ui.controller(  "CatalogRecette.controller.Detail", {
 			model.setProperty( "/deleteVersion" , "None" );
 			this.byId( "removeVersion" ).setVisible( false );
 		}
-		if( source !== "lock" ){
-			this.onLockEdit("L", this.RCNUM, OEdit, model);
+		if( source === "unlock"){
+			this.onLockEdit("U", this.RCNUM, OEdit, model);
+		}else{
+			if( source !== "locked" ){
+				this.onLockEdit("L", this.RCNUM, OEdit, model);
+			}
 		}
+		
 	
 		
 		// if( !OEdit ){
@@ -1968,7 +1973,7 @@ sap.ui.controller(  "CatalogRecette.controller.Detail", {
 	},
 	onCancel:function(){
 		var model	=	this.getView().getModel( "articleData" ).getData();
-		this.onEdit();
+		this.onEdit( "unlock" );
 		if( this.pageName !== "Detail" ){
 			this.navigationTo("Overview", "", false);
 		}else{
@@ -2294,7 +2299,7 @@ sap.ui.controller(  "CatalogRecette.controller.Detail", {
 				// 	sap.m.MessageToast.show( message.message , {duration: 3000});
 				
 				// }
-			thisDetail.onEdit();
+			thisDetail.onEdit( "unlock" );
 			if( thisDetail.pageName === "Detail" ){
 				thisDetail.readModel( "(FTVER='" + data.FTVER +"',FRNUM='" + data.FRNUM + "')" );
 			}else{

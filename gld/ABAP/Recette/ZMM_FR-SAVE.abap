@@ -284,6 +284,10 @@ METHOD save.
         lv_matnr                    = ls_alert-matnr."me->gv_frnum.
       ENDIF.
 
+      IF ls_alert-evtid EQ 'MP11'.
+        lv_descr                    = |{ me->gv_frnum } - "{ lv_descr }"|.
+      ENDIF.
+
       CALL FUNCTION 'ZMM_FT_ALERT_MNGMT'
         EXPORTING
           iv_evtid                = ls_alert-evtid

@@ -720,7 +720,9 @@ METHOD save_sr.
 
 *     Save History ******************************************************************
       IF sy-subrc EQ 0.
-        ls_alert-matnr            = ls_ingre-matnr.
+***Mantis 1617**************************************************************
+        ls_alert-matnr            = ls_ingre-matac.
+***Mantis 1617**************************************************************
         ls_alert-evtid            = 'MP11'. "Alerte : Modification volume article
         APPEND ls_alert TO me->gt_alert.
 
@@ -853,8 +855,9 @@ METHOD save_sr.
         ENDIF.
 
         IF ls_srng2-qtite NE ls_sring-qtite.
-
-          ls_alert-matnr              = ls_sring-sring.
+***Mantis 1617**************************************************************
+          ls_alert-matnr              = ls_sring-matac.
+***Mantis 1617**************************************************************
           ls_alert-evtid              = 'MP11'. "ALerte : Modification volume article
           ls_alert-vdesc              = ls_sring-srnum.
           APPEND ls_alert TO me->gt_alert.

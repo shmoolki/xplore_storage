@@ -800,7 +800,11 @@ METHOD save_gldtb.
 
         IF ls_ftng2-qtite NE ls_fting-qtite.
 
-          ls_alert-matnr              = ls_fting-fting.
+***Mantis 1617******************************************************
+***          ls_alert-matnr              = ls_fting-fting.
+          ls_alert-matnr              = ls_fting-matac.
+          ls_alert-vdesc              = ls_fting-ftnum.
+***Mantis 1617******************************************************
           ls_alert-evtid              = 'MP11'. "ALerte : Modification volume article
           APPEND ls_alert TO me->gt_alert.
           ls_histo-fname          = 'QTITE'.
@@ -950,7 +954,10 @@ METHOD save_gldtb.
 
 *       Save History ******************************************************************
         IF sy-subrc EQ 0.
-          ls_alert-matnr          = ls_ingre-matnr.
+***Mantis 1617******************************************************
+          ls_alert-matnr          = ls_ingre-matac.
+          ls_alert-vdesc          = ls_ingre-frnum.
+***Mantis 1617******************************************************
           ls_alert-evtid          = 'MP11'. "ALerte : Modification volume article
           APPEND ls_alert TO me->gt_alert.
           CLEAR:  lv_chgnr,

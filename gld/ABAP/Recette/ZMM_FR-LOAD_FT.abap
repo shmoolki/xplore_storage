@@ -337,6 +337,7 @@ METHOD load_ft.
       me->get_ing_stat(
             EXPORTING
               iv_matnr            = ls_rc2in-matnr
+              iv_matac            = ls_rc2in-matac
               iv_typea            = ls_rc2in-typea
               iv_frnum            = me->gs_recet-frnum
             IMPORTING

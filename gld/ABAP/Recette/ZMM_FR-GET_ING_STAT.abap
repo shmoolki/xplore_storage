@@ -99,6 +99,7 @@
         INTO    CORRESPONDING FIELDS OF ls_fting
         FROM    zmm_ft_ing
         WHERE   fting EQ iv_matnr
+        AND     matac EQ iv_matac
         AND     ftnum EQ iv_frnum.
 
         SELECT  SINGLE *

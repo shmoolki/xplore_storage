@@ -310,6 +310,7 @@ sap.ui.controller("CatalogMat.Controller.Overview", {
 					result[item.RMATN].MEINS = item.MEINS;
 					result[item.RMATN].IMSRC = item.IMSRC;
 					result[item.RMATN].MFRNR = item.MFRNR;
+					result[item.RMATN].MFRNM = item.MFRNM;
 					result[item.RMATN].TARAP = item.TARAP;
 					result[item.RMATN].ERSDA = item.ERSDA;
 					result[item.RMATN].ISPRT = item.ISPRT;

@@ -49,17 +49,21 @@ sap.ui.controller(  "CatalogCartes.controller.Overview", {
 	 *	Fonction qui defini le nombre de ligne en fonction de la taille de l'ecran
 	 */
 	_screenSize:function(){
-		// récupere la taille de l'ecran
+			// récupere la taille de l'ecran
 		var screenR		=	window.innerHeight,
 			edit		=	this.getView().getModel( "OverviewScreenModel" );
-		if( screenR < 800 ){
-			edit.setProperty( "/Screen" , 14 );
+		if( screenR <= 680 ){
+			edit.setProperty( "/Screen" , 18 );
+		}else if( screenR >	680	&& screenR	<	750 ){
+			edit.setProperty( "/Screen" , 19 );
+		}else if( screenR >	750	&& screenR	<	800 ){
+			edit.setProperty( "/Screen" , 20 );
 		}else if( screenR >	800	&& screenR	<	850 ){
-			edit.setProperty( "/Screen" , 15 );
+			edit.setProperty( "/Screen" , 21 );
 		}else if( screenR >	850	&& screenR	<	900 ){
-			edit.setProperty( "/Screen" , 16 );
+			edit.setProperty( "/Screen" , 22 );
 		}else{
-			edit.setProperty( "/Screen" , 17 );
+			edit.setProperty( "/Screen" , 23 );
 		}	
 	},
 	

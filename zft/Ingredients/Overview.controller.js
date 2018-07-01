@@ -213,14 +213,18 @@ sap.ui.controller("CatalogMat.Controller.Overview", {
 		// récupere la taille de l'ecran
 		var screenR		=	window.innerHeight,
 			edit		=	this.getView().getModel( "OverviewScreenModel" );
-		if( screenR < 800 ){
-			edit.setProperty( "/Screen" , 14 );
+		if( screenR <= 680 ){
+			edit.setProperty( "/Screen" , 9 );
+		}else if( screenR >	680	&& screenR	<	750 ){
+			edit.setProperty( "/Screen" , 10 );
+		}else if( screenR >	750	&& screenR	<	800 ){
+			edit.setProperty( "/Screen" , 11 );
 		}else if( screenR >	800	&& screenR	<	850 ){
-			edit.setProperty( "/Screen" , 15 );
+			edit.setProperty( "/Screen" , 12 );
 		}else if( screenR >	850	&& screenR	<	900 ){
-			edit.setProperty( "/Screen" , 16 );
+			edit.setProperty( "/Screen" , 13 );
 		}else{
-			edit.setProperty( "/Screen" , 17 );
+			edit.setProperty( "/Screen" , 14 );
 		}	
 	},
 	

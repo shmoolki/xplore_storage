@@ -1050,6 +1050,23 @@ sap.ui.controller( "CatalogMat.Controller.Detail" , {
 						//	Display message
 						if( response.headers["sap-message"] ){
 							var message 	=	JSON.parse(response.headers["sap-message"]);
+							if(message.details !== undefined){
+								message.details.some(function(itm){
+									if(itm.code === "ZMM/140" ){
+										oMsgStrip		= new sap.m.MessageStrip({
+												text: 				itm.message,
+												showCloseButton: 	true,
+												showIcon: 			true,
+												type: 				"Warning"
+											});
+						
+										//	Add Message to VBox
+										msgArea.addItem( oMsgStrip );
+										return true;
+									}
+									
+								});
+							}
 							sap.m.MessageToast.show( message.message , {duration: 3000});
 						}
 					// //	Create Message

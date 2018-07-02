@@ -346,7 +346,7 @@ METHOD /iwbep/if_mgw_appl_srv_runtime~create_deep_entity.
                                                                            iv_error_category         = /iwbep/if_message_container=>gcs_error_category-no_error
                                                                            iv_add_to_response_header = abap_true
                                                                            iv_message_target         = 'E' ).
-          RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception.
+*          RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception.
         ENDIF.
 
         SELECT COUNT( * )

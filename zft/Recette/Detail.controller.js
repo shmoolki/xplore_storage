@@ -536,6 +536,9 @@ sap.ui.controller(  "CatalogRecette.controller.Detail", {
 	},
 	_InitSelectVersion: function( version ){
 		var versionModel = this.getView().getModel( "versionTable" ).getData();
+		if( version === "" ){
+			version = this._getActualVersion(versionModel);
+		}
 		if( version === "" || versionModel.length === 1 ){
 			this.byId( "versionTable" ).setSelectedIndex(0);
 			var path	=	this.byId( "versionTable" ).getContextByIndex(0).getPath();
@@ -552,6 +555,17 @@ sap.ui.controller(  "CatalogRecette.controller.Detail", {
 		if( this.pageName !==	"Detail" ){
 			this.getView().getModel( "Edit" ).setProperty( "/TotalValo", "" );	
 		}
+	},
+	_getActualVersion: function (versionData){
+		var todayDate	= this.Formatter.formatDate( new Date() , "" ),
+			version		= "";
+		for (var i=0; i<versionData.length; i++) {
+				if( todayDate >= versionData[i].APDEB  && todayDate <= versionData[i].APFIN ){
+					version = versionData[i].FTVER;
+					break;
+				}
+			}
+		return version;
 	},
 	
 	readModel: function ( article ) {

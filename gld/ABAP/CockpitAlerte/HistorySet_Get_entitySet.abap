@@ -38,74 +38,74 @@ METHOD historyset_get_entityset.
   WHERE   name EQ 'ZFT_COCKPIT_N'.
 
 * Get real
-  SELECT  objectclas objectid AS prnum username AS usern udate utime changenr m~maktx AS descr
-  INTO    CORRESPONDING FIELDS OF TABLE lt_histr
-  UP      TO lv_dispn ROWS
-  FROM    cdhdr AS c
-  LEFT    OUTER JOIN makt AS m ON c~objectid EQ m~matnr
-  WHERE   objectclas EQ 'MAT_FULL'
-  ORDER   BY udate DESCENDING utime DESCENDING.
-
-  DELETE ADJACENT DUPLICATES FROM lt_histr COMPARING changenr.
-
-  SELECT  *
-  INTO    CORRESPONDING FIELDS OF TABLE lt_cdpos
-  FROM    cdpos
-  FOR     ALL ENTRIES IN lt_histr
-  WHERE   objectclas EQ lt_histr-objectclas
-  AND     objectid EQ lt_histr-prnum
-  AND     changenr EQ lt_histr-changenr.
-
-  SELECT  fieldname tabname scrtext_l
-  INTO    CORRESPONDING FIELDS OF TABLE lt_field
-  FROM    dd03l AS l
-  INNER   JOIN dd04t AS t ON t~rollname EQ l~rollname
-  FOR     ALL ENTRIES IN lt_cdpos
-  WHERE   l~tabname EQ lt_cdpos-tabname
-  AND     t~ddlanguage EQ sy-langu.
-
-  LOOP AT lt_histr INTO ls_histr.
-*    CALL FUNCTION 'CHANGEDOCUMENT_READ_POSITIONS'
-*      EXPORTING
-*        archive_handle            = 0
-*        changenumber              = ls_histr-changenr
-*        i_prep_unit               = 'X'
-*      TABLES
-*        editpos                   = lt_editp
-*      EXCEPTIONS
-*        OTHERS                    = 1.
-*
-*    IF sy-subrc EQ 0.
-*      LOOP AT lt_editp INTO ls_editp.
-      LOOP AT lt_cdpos INTO ls_cdpos WHERE objectclas EQ ls_histr-objectclas
-                                       AND objectid EQ ls_histr-prnum
-                                       AND changenr EQ ls_histr-changenr
-                                       AND fname NE 'LAEDA'
-                                       AND fname NE 'KEY'
-                                       AND fname IS NOT INITIAL.
-*        IF ls_editp-fname NE 'LAEDA'.
-          ls_histr-chngt          = ls_cdpos-chngind.
-          ls_histr-fname          = ls_cdpos-fname.
-          ls_histr-oldvl          = ls_cdpos-value_old.
-          ls_histr-newvl          = ls_cdpos-value_new.
-
-          READ TABLE lt_field INTO ls_field WITH KEY fieldname = ls_histr-fname.
-          IF sy-subrc EQ 0.
-            ls_histr-ftext        = ls_field-scrtext_l.
-          ENDIF.
-
-          CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
-            EXPORTING
-              input               = ls_histr-prnum
-            IMPORTING
-              output              = ls_histr-prnum.
-
-          APPEND ls_histr TO lt_hist2.
-*        ENDIF.
-      ENDLOOP.
-*    ENDIF.
-
-  ENDLOOP.
+*****  SELECT  objectclas objectid AS prnum username AS usern udate utime changenr m~maktx AS descr
+*****  INTO    CORRESPONDING FIELDS OF TABLE lt_histr
+*****  UP      TO lv_dispn ROWS
+*****  FROM    cdhdr AS c
+*****  LEFT    OUTER JOIN makt AS m ON c~objectid EQ m~matnr
+*****  WHERE   objectclas EQ 'MAT_FULL'
+*****  ORDER   BY udate DESCENDING utime DESCENDING.
+*****
+*****  DELETE ADJACENT DUPLICATES FROM lt_histr COMPARING changenr.
+*****
+*****  SELECT  *
+*****  INTO    CORRESPONDING FIELDS OF TABLE lt_cdpos
+*****  FROM    cdpos
+*****  FOR     ALL ENTRIES IN lt_histr
+*****  WHERE   objectclas EQ lt_histr-objectclas
+*****  AND     objectid EQ lt_histr-prnum
+*****  AND     changenr EQ lt_histr-changenr.
+*****
+*****  SELECT  fieldname tabname scrtext_l
+*****  INTO    CORRESPONDING FIELDS OF TABLE lt_field
+*****  FROM    dd03l AS l
+*****  INNER   JOIN dd04t AS t ON t~rollname EQ l~rollname
+*****  FOR     ALL ENTRIES IN lt_cdpos
+*****  WHERE   l~tabname EQ lt_cdpos-tabname
+*****  AND     t~ddlanguage EQ sy-langu.
+*****
+*****  LOOP AT lt_histr INTO ls_histr.
+******    CALL FUNCTION 'CHANGEDOCUMENT_READ_POSITIONS'
+******      EXPORTING
+******        archive_handle            = 0
+******        changenumber              = ls_histr-changenr
+******        i_prep_unit               = 'X'
+******      TABLES
+******        editpos                   = lt_editp
+******      EXCEPTIONS
+******        OTHERS                    = 1.
+******
+******    IF sy-subrc EQ 0.
+******      LOOP AT lt_editp INTO ls_editp.
+*****      LOOP AT lt_cdpos INTO ls_cdpos WHERE objectclas EQ ls_histr-objectclas
+*****                                       AND objectid EQ ls_histr-prnum
+*****                                       AND changenr EQ ls_histr-changenr
+*****                                       AND fname NE 'LAEDA'
+*****                                       AND fname NE 'KEY'
+*****                                       AND fname IS NOT INITIAL.
+******        IF ls_editp-fname NE 'LAEDA'.
+*****          ls_histr-chngt          = ls_cdpos-chngind.
+*****          ls_histr-fname          = ls_cdpos-fname.
+*****          ls_histr-oldvl          = ls_cdpos-value_old.
+*****          ls_histr-newvl          = ls_cdpos-value_new.
+*****
+*****          READ TABLE lt_field INTO ls_field WITH KEY fieldname = ls_histr-fname.
+*****          IF sy-subrc EQ 0.
+*****            ls_histr-ftext        = ls_field-scrtext_l.
+*****          ENDIF.
+*****
+*****          CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+*****            EXPORTING
+*****              input               = ls_histr-prnum
+*****            IMPORTING
+*****              output              = ls_histr-prnum.
+*****
+*****          APPEND ls_histr TO lt_hist2.
+******        ENDIF.
+*****      ENDLOOP.
+******    ENDIF.
+*****
+*****  ENDLOOP.
 
 * Get fictives
   SELECT  *

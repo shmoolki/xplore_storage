@@ -260,12 +260,41 @@
 								direction	=	"Column"
 								class =	"sapUiNoMarginBegin">
 						<Label 		text 	=	""/>
-						<Button 	id 		=	"clearFilter"
-									class 	=	"sapUiTinyMarginEnd sapUiNoMarginTop sapUiTinyMarginBegin"
-									icon	=	"sap-icon://clear-filter"
-									type	=	"Reject"
-									press	=	"onClearFilter"/>
+						<HBox>
+							<Button icon	=	"sap-icon://add-filter"
+										press	=	"addFilter"
+										id		=	"customFilterButton"
+										class	=	"sapUiMediumMarginBegin"/>
+							<Button 	id 		=	"clearFilter"
+										class 	=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+										icon	=	"sap-icon://clear-filter"
+										type	=	"Reject"
+										press	=	"onClearFilter"/>
+						</HBox>
 					</FlexBox>
+				</FlexBox>
+			</Panel>
+			<Panel	expandable	=	"false"
+					visible 	=	"false"
+					id			=	"customFilter">
+				<FlexBox>
+					<FlexBox direction="Column" width="100%" class="sapUiNoMarginBegin">
+						<Label text="{i18n>CARTE_OPE}"/>
+						<Input	id						=	"opeGammeId"
+								showSuggestion			=	"true"
+								suggestionItems			=	"{VHModel>/VHCartesSet/}" 
+								maxSuggestionWidth		=	"auto"
+								value					=	"{QuickFilter>/Carte}"
+								change					=	"handleSearch"
+								class					=	"sapUiTinyMarginEnd sapUiNoMarginTop" 
+								width					=	"85%">
+							<suggestionItems>
+								<c:Item	text=	"{VHModel>DESCR} - {VHModel>CTNUM}" />
+							</suggestionItems>
+						</Input>
+						
+					</FlexBox>	
+				
 				</FlexBox>
 			</Panel>
 		

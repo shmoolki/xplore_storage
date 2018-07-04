@@ -107,6 +107,19 @@
 					"bundleName": "CatalogMat.i18n.i18n"
 				}
 			},
+			"VHModel": {
+				"dataSource": "ZFT_GW_VALUE_HELP_SRV",
+				"settings": {
+					"loadMetadataAsync": true,
+					"json": true,
+					"bJSON": true,
+					"defaultBindingMode": "TwoWay",
+					"useBatch": false,
+					"refreshAfterChange": false,
+					"defaultCountMode": "None",
+					"defaultOperationMode": "Server"
+				}
+			},
 			"VHService": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {

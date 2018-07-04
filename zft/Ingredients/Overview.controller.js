@@ -1015,6 +1015,11 @@ sap.ui.controller("CatalogMat.Controller.Overview", {
 			// 	filters.push(new sap.ui.model.Filter("FICTF", sap.ui.model.FilterOperator.EQ, filterData.Actif));
 			// }
 		}
+		if( filterData.Carte ) {
+			//	Filter on reference number
+			filters.push(new sap.ui.model.Filter("CTNUM", sap.ui.model.FilterOperator.Contains , filterData.Carte.split( " - " )[1]));	
+			this.search	=	true;
+		}
 
 		return filters;
 	},
@@ -1206,5 +1211,14 @@ sap.ui.controller("CatalogMat.Controller.Overview", {
 		this.getView().getModel("QuickFilter").setProperty( "/" + id[ id.length - 1 ] , "" );
 		this.checkAllSelected( event );
 		this.handleSearch();
+	},
+	addFilter: function(){
+		var filter	=	this.byId( "customFilter" );
+		
+		if( filter.getVisible() ){
+			filter.setVisible( false );
+		}else{
+			filter.setVisible( true );
+		}
 	}
 });

@@ -35,7 +35,8 @@ sap.ui.define([
 			
 			//	Set Service Size limit
 			this.getModel( "VHService" ).setSizeLimit( 100000 );
-		this.initModel();
+			this.getModel( "VHModel" ).setSizeLimit( 100000 );
+			this.initModel();
 		},
 		
 		initModel:function(){

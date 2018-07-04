@@ -94,6 +94,7 @@ METHOD articleset_get_entityset.
         ls_tempb    TYPE /iwbep/s_cod_select_option,
 *        ls_distb    TYPE /iwbep/s_cod_select_option,
         lt_wwghb    TYPE /iwbep/t_cod_select_options,
+        lt_ctnum    TYPE /iwbep/t_cod_select_options,
         lt_afsrc    TYPE TABLE OF tt_afsrc.
 
 
@@ -287,6 +288,16 @@ METHOD articleset_get_entityset.
 *      REPLACE ALL OCCURRENCES OF '*' IN ls_selop-low WITH ''.
 *      lv_wwghb                        = ls_selop-low.
 *    ENDIF.
+  ENDIF.
+
+* Get CTNUM
+  READ TABLE it_filter_select_options INTO ls_filtr WITH KEY property = 'CTNUM'.
+  IF sy-subrc EQ 0 AND ls_filtr-select_options[] IS NOT INITIAL.
+    READ TABLE ls_filtr-select_options INTO ls_selop INDEX 1.
+    IF sy-subrc EQ 0 AND ls_selop IS NOT INITIAL.
+      TRANSLATE ls_selop-low TO UPPER CASE.
+      APPEND ls_selop TO lt_ctnum.
+    ENDIF.
   ENDIF.
 **************Get filters*************************************************  END *
 
@@ -916,6 +927,7 @@ METHOD articleset_get_entityset.
 *        AND   d~atwrt IN @lt_atwrt
 *        AND   d~wwghb IN @lt_wwghb
         AND   s~distb IN @lt_distb
+        AND   d~ctnum IN @lt_ctnum
         ORDER BY ersda DESCENDING.
       ELSE.
         SELECT   d~matnr, s~meins, d~laeda AS laed2, d~ersda AS ersd2, d~mhdrz, s~dcdtd, d~maktx, s~rmatn, d~maktg, s~mfrnr, s~distb, s~distt, d~vendr, s~kbetr, s~stats, d~tarap,
@@ -930,6 +942,7 @@ METHOD articleset_get_entityset.
         AND   s~tempb IN @lt_tempb
 *        AND   d~atwrt IN @lt_atwrt
 *        AND   d~wwghb IN @lt_wwghb
+        AND   d~ctnum IN @lt_ctnum
         AND   s~distb IN @lt_distb
         ORDER BY ersda DESCENDING.
       ENDIF.
@@ -1114,6 +1127,7 @@ METHOD articleset_get_entityset.
       AND   s~tempb IN @lt_tempb
 *      AND   d~atwrt IN @lt_atwrt
 *      AND   d~wwghb IN @lt_wwghb
+      AND   d~ctnum IN @lt_ctnum
       AND   s~distb IN @lt_distb
       ORDER BY ersda DESCENDING.
 

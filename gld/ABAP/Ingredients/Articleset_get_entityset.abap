@@ -383,7 +383,7 @@ METHOD articleset_get_entityset.
   AND     spras   EQ sy-langu.
 
 **************Initialisation*************************************************  END *
-  IF lv_artty EQ 'R' OR lv_artty IS INITIAL.
+  IF lv_artty EQ 'R' OR lv_artty IS INITIAL AND lt_ctnum IS INITIAL.
 **************Get real items**********************************************  BEG *
     IF lv_dispn IS NOT INITIAL.
       lv_nblin                    = lv_dispn * 30.

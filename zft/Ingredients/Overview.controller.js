@@ -27,6 +27,21 @@ sap.ui.controller("CatalogMat.Controller.Overview", {
 			this
 		);
 		this.getView().addDependent(this._BusyDialog);
+		this.byId("opeGammeId").setFilterFunction(function(sTerm, oItem) {
+			var check	=	false;
+			sTerm	=	sTerm.toUpperCase();
+			if( sTerm.startsWith( "CR" ) ){
+				if( sTerm.length > 5 ){
+					check	=	true;	
+				}
+			}else if( sTerm.length > 2 ){
+				check		=	true;
+			}
+			if( check ){
+				// A case-insensitive 'string contains' style filter
+				return oItem.getText().match(new RegExp(sTerm, "i"));
+			}
+		});
 		this.InitModels();
 
 		// this.byId("fournisseurInput").setFilterFunction(function(sTerm, oItem) {

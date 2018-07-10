@@ -196,7 +196,7 @@
         ls_mmdat-erfme            = ls_fting-unite.
 
 *       Mantis 1446 - Utilisation d'une quantite avec plus de decimales pour gerer les arrondis sur plusieurs niveaux
-        ls_mmdat-erfmg            = lv_factr * ls_fting-qte_7.
+        ls_mmdat-erfmg            = lv_factr * ls_fting-qtite.
         APPEND ls_mmdat TO lt_mmdat.
 
 *>>>    CR0159 - Refonte POSDM
@@ -239,7 +239,7 @@
                                                                                     iv_vtweg = '10'
                                                                                     iv_qtite = 1
                                                                                     iv_unite = ls_vnpst-erfme
-                                                                                    iv_perte = ls_fting-perte               ).
+                                                                                    iv_perte = ls_fting-perte                ).
 
         ls_vnpst-vlpxc            = ls_vlpxc-kbetr.
 

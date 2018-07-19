@@ -16,6 +16,7 @@ METHOD historyset_get_entityset.
         lv_numln    TYPE i VALUE '1',
         ls_cdhdr    TYPE cdhdr,
         ls_cdpos    TYPE cdpos,
+        ls_dmntx    TYPE dd07v,
         ls_editp    TYPE cdshw,
         ls_field    TYPE ty_field,
         ls_filtr    TYPE /iwbep/s_mgw_select_option,
@@ -24,6 +25,12 @@ METHOD historyset_get_entityset.
         lt_cdpos    TYPE SORTED TABLE OF cdpos WITH NON-UNIQUE KEY objectclas objectid changenr tabname tabkey fname chngind,
         lt_histo    TYPE TABLE OF zmm_history,
         ls_selop    TYPE /iwbep/s_cod_select_option,
+        lt_stsrc    TYPE TABLE OF dd07v,
+        lt_sttft    TYPE TABLE OF dd07v,
+        lt_sttsr    TYPE TABLE OF dd07v,
+        lt_sttca    TYPE TABLE OF dd07v,
+        lt_strcc    TYPE TABLE OF dd07v,
+        lt_dmntt    TYPE TABLE OF dd07v,
         lt_cdhdr    TYPE TABLE OF cdhdr,
         lt_editp    TYPE TABLE OF cdshw,
         lt_field    TYPE TABLE OF ty_field,
@@ -36,6 +43,83 @@ METHOD historyset_get_entityset.
   INTO    lv_dispn
   FROM    tvarvc
   WHERE   name EQ 'ZFT_COCKPIT_N'.
+
+  CALL FUNCTION 'DD_DOMA_GET'
+    EXPORTING
+      domain_name                 = 'ZFT_GW_STATS '
+      get_state                   = 'M  '
+      langu                       = sy-langu
+      prid                        = 0
+      withtext                    = 'X'
+    TABLES
+      dd07v_tab_a                 = lt_stsrc
+      dd07v_tab_n                 = lt_dmntt
+    EXCEPTIONS
+      illegal_value               = 1
+      op_failure                  = 2
+      OTHERS                      = 3.
+
+    CALL FUNCTION 'DD_DOMA_GET'
+    EXPORTING
+      domain_name                 = 'ZMM_FT_STATS '
+      get_state                   = 'M  '
+      langu                       = sy-langu
+      prid                        = 0
+      withtext                    = 'X'
+    TABLES
+      dd07v_tab_a                 = lt_stTFT
+      dd07v_tab_n                 = lt_dmntt
+    EXCEPTIONS
+      illegal_value               = 1
+      op_failure                  = 2
+      OTHERS                      = 3.
+
+    CALL FUNCTION 'DD_DOMA_GET'
+    EXPORTING
+      domain_name                 = 'ZMM_SR_STATS '
+      get_state                   = 'M  '
+      langu                       = sy-langu
+      prid                        = 0
+      withtext                    = 'X'
+    TABLES
+      dd07v_tab_a                 = lt_sttsr
+      dd07v_tab_n                 = lt_dmntt
+    EXCEPTIONS
+      illegal_value               = 1
+      op_failure                  = 2
+      OTHERS                      = 3.
+
+    CALL FUNCTION 'DD_DOMA_GET'
+    EXPORTING
+      domain_name                 = 'ZMM_CA_STATS '
+      get_state                   = 'M  '
+      langu                       = sy-langu
+      prid                        = 0
+      withtext                    = 'X'
+    TABLES
+      dd07v_tab_a                 = lt_sttca
+      dd07v_tab_n                 = lt_dmntt
+    EXCEPTIONS
+      illegal_value               = 1
+      op_failure                  = 2
+      OTHERS                      = 3.
+
+    CALL FUNCTION 'DD_DOMA_GET'
+    EXPORTING
+      domain_name                 = 'ZFT_GW_CSTAT '
+      get_state                   = 'M  '
+      langu                       = sy-langu
+      prid                        = 0
+      withtext                    = 'X'
+    TABLES
+      dd07v_tab_a                 = lt_strcc
+      dd07v_tab_n                 = lt_dmntt
+    EXCEPTIONS
+      illegal_value               = 1
+      op_failure                  = 2
+      OTHERS                      = 3.
+
+
 
 * Get real
 *****  SELECT  objectclas objectid AS prnum username AS usern udate utime changenr m~maktx AS descr
@@ -114,6 +198,62 @@ METHOD historyset_get_entityset.
   INNER   JOIN zmm_histo AS h ON y~tbnam EQ h~tabnm AND y~fname EQ h~fldnm.
 
   LOOP AT lt_histo INTO ls_histo.
+    CLEAR: ls_dmntx.
+    IF ls_histo-fname EQ 'STATS'.
+      CASE ls_histo-tbnam.
+        WHEN 'ZMM_AF_SRC'.
+          READ TABLE lt_stsrc INTO ls_dmntx WITH KEY domvalue_l = ls_histo-oldvl.
+          IF sy-subrc EQ 0.
+            ls_histo-oldvl              = ls_dmntx-ddtext.
+          ENDIF.
+
+          READ TABLE lt_stsrc INTO ls_dmntx WITH KEY domvalue_l = ls_histo-newvl.
+          IF sy-subrc EQ 0.
+            ls_histo-newvl              = ls_dmntx-ddtext.
+          ENDIF.
+        WHEN 'ZMM_FT_DEF'.
+          READ TABLE lt_sttft INTO ls_dmntx WITH KEY domvalue_l = ls_histo-oldvl.
+          IF sy-subrc EQ 0.
+            ls_histo-oldvl              = ls_dmntx-ddtext.
+          ENDIF.
+
+          READ TABLE lt_sttft INTO ls_dmntx WITH KEY domvalue_l = ls_histo-newvl.
+          IF sy-subrc EQ 0.
+            ls_histo-newvl              = ls_dmntx-ddtext.
+          ENDIF.
+        WHEN 'ZMM_SR_DEF'.
+          READ TABLE lt_sttsr INTO ls_dmntx WITH KEY domvalue_l = ls_histo-oldvl.
+          IF sy-subrc EQ 0.
+            ls_histo-oldvl              = ls_dmntx-ddtext.
+          ENDIF.
+
+          READ TABLE lt_sttsr INTO ls_dmntx WITH KEY domvalue_l = ls_histo-newvl.
+          IF sy-subrc EQ 0.
+            ls_histo-newvl              = ls_dmntx-ddtext.
+          ENDIF.
+        WHEN 'ZMM_CA_DEF'.
+          READ TABLE lt_sttca INTO ls_dmntx WITH KEY domvalue_l = ls_histo-oldvl.
+          IF sy-subrc EQ 0.
+            ls_histo-oldvl              = ls_dmntx-ddtext.
+          ENDIF.
+
+          READ TABLE lt_sttca INTO ls_dmntx WITH KEY domvalue_l = ls_histo-newvl.
+          IF sy-subrc EQ 0.
+            ls_histo-newvl              = ls_dmntx-ddtext.
+          ENDIF.
+        WHEN 'ZMM_CA_ITM'.
+          READ TABLE lt_strcc INTO ls_dmntx WITH KEY domvalue_l = ls_histo-oldvl.
+          IF sy-subrc EQ 0.
+            ls_histo-oldvl              = ls_dmntx-ddtext.
+          ENDIF.
+
+          READ TABLE lt_strcc INTO ls_dmntx WITH KEY domvalue_l = ls_histo-newvl.
+          IF sy-subrc EQ 0.
+            ls_histo-newvl              = ls_dmntx-ddtext.
+          ENDIF.
+        WHEN OTHERS.
+      ENDCASE.
+    ENDIF.
 
     ls_histr-appnm                = ls_histo-appnm.
     ls_histr-changenr             = ls_histo-chgnr.

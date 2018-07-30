@@ -1,0 +1,184 @@
+<core:FragmentDefinition 	xmlns:layout 	= "sap.ui.layout"
+							xmlns:forms 	= "sap.ui.layout.form"
+							xmlns:core 		= "sap.ui.core"
+							xmlns:t 		= "sap.ui.table"
+							xmlns 			= "sap.m"
+							xmlns:u 		= "sap.ui.unified"
+							xmlns:uxap		= "sap.uxap"
+							id 				= "generalInfo">
+	
+		<layout:BlockLayout  background="Dashboard">
+			<layout:BlockLayoutRow>
+				<layout:BlockLayoutCell		width			=	"50"
+											title			=	"{i18n>GENERAL}">
+					<forms:SimpleForm		maxContainerCols=	"12" 
+											width			=	"100%" 
+											editable		=	"true" 
+											labelMinWidth	=	"192" 
+											layout			=	"ResponsiveGridLayout" 
+											labelSpanL		=	"5" 
+											labelSpanM		=	"5" 
+											labelSpanS		=	"5" 
+											emptySpanL		=	"0" 
+											emptySpanM		=	"0" 
+											emptySpanS		=	"0" 
+											columnsL		=	"2" 
+											columnsM		=	"2">
+						<!--<Label					text			=	"{i18n>FOURNISSEUR}"/>-->
+						<!--<Input					editable		=	"{Edit>/EditOn}"-->
+						<!--						value			=	"{NAME1}"/>-->
+						
+						<Label					text			=	"{i18n>TEXTE_ENTETE}"
+												required		=	"true"/>
+						<TextArea				editable		=	"{Edit>/EditOn}"
+												value			=	"{HDTXT}"
+												rows			=	"4"/>
+						
+						<Label					text			=	"{i18n>SITE}"
+												required		=	"true"/>
+						<Select					selectedKey		=	"{WERKS}"
+												id				=	"selectStore"
+												forceSelection	=	"true"
+												enabled 		=	"{	path:		'ERDAT',
+																		formatter:	'.formatter.newDevis'}"
+												items			=	"{/VH_SITESSet}">
+							<core:Item			text			=	"{WERKS} - {NAME1}" 
+												key				=	"{WERKS}"/>
+						</Select>
+						
+						<!--<Label					text			=	"{i18n>MAIL}"/>-->
+						<!--<Input					editable		=	"{Edit>/EditOn}"-->
+						<!--						value			=	"{FMAIL}"-->
+						<!--						type			=	"Email"/>-->
+						
+						<Label					text			=	"{i18n>DATE_CRT}"/>
+						<DatePicker				editable		=	"false"
+												value			=	"{ERDAT}"
+												displayFormat	=	"dd.MM.yyyy"
+												valueFormat		=	"yyyyMMdd"/>
+						
+						<Label					text			=	"{i18n>DATE_LVR_PRVL}"
+												required		=	"true"/>
+						<DatePicker				editable		=	"{Edit>/EditOn}"
+												value			=	"{EINDT}"
+												displayFormat	=	"dd.MM.yyyy"
+												valueFormat		=	"yyyyMMdd"/>
+						
+						<Label					text			=	"{i18n>DATE_RCPT}"/>
+						<DatePicker				editable		=	"false"
+												value			=	"{WADAT}"
+												displayFormat	=	"dd.MM.yyyy"
+												valueFormat		=	"yyyyMMdd"/>
+					</forms:SimpleForm>
+				</layout:BlockLayoutCell>
+				<layout:BlockLayoutCell width			=	"50"
+										title			=	"{i18n>INFO_DEMAND}">
+					<forms:SimpleForm		maxContainerCols=	"12" 
+											width			=	"100%" 
+											editable		=	"true" 
+											labelMinWidth	=	"192" 
+											layout			=	"ResponsiveGridLayout" 
+											labelSpanL		=	"5" 
+											labelSpanM		=	"5" 
+											labelSpanS		=	"5" 
+											emptySpanL		=	"0" 
+											emptySpanM		=	"0" 
+											emptySpanS		=	"0" 
+											columnsL		=	"2" 
+											columnsM		=	"2">
+						
+						<Label		text			=	"{i18n>FNAME}"
+									required		=	"true"/>
+						<Input		value			=	"{FNAME}"
+									editable 		=	"{Edit>/EditOn}"/>
+						
+						<Label		text			=	"{i18n>LNAME}"
+									required		=	"true"/>
+						<Input		value			=	"{LNAME}"
+									editable 		=	"{Edit>/EditOn}"/>
+						
+						<Label		text			=	"{i18n>MAIL}"/>
+						<Input		value			=	"{EMAIL}"
+									type			=	"Email"
+									editable 		=	"{Edit>/EditOn}"/>
+						
+						<Label		text			=	"{i18n>TEL}"/>
+						<Input		value			=	"{TELEP}"
+									type			=	"Tel"
+									editable 		=	"{Edit>/EditOn}"/>
+					</forms:SimpleForm>
+				</layout:BlockLayoutCell>
+			</layout:BlockLayoutRow>
+			<layout:BlockLayoutRow>
+				<layout:BlockLayoutCell 	width			=	"50"
+											title			=	"{i18n>ADDRESS}">
+					<forms:SimpleForm		maxContainerCols=	"12" 
+											width			=	"100%" 
+											editable		=	"true" 
+											labelMinWidth	=	"192" 
+											layout			=	"ResponsiveGridLayout" 
+											labelSpanL		=	"5" 
+											labelSpanM		=	"5" 
+											labelSpanS		=	"5" 
+											emptySpanL		=	"0" 
+											emptySpanM		=	"0" 
+											emptySpanS		=	"0" 
+											columnsL		=	"2" 
+											columnsM		=	"2"
+											id				=	"generalInfoForm">
+						<Label		text			=	"{i18n>ADRS_LVRS}"/>
+						<Input		value			=	"{LADRS}"
+									editable 		=	"false"/>
+						
+						<Label		text			=	"{i18n>ADRS_FACTUR}"/>
+						<Input		value			=	"{FADRS}"
+									editable 		=	"false"/>
+						
+						<Label		text			=	"{i18n>CONDITION}"/>
+						<TextArea				editable		=	"{Edit>/EditOn}"
+												value			=	"{CDLIV}"
+												rows			=	"4"/>
+					</forms:SimpleForm>
+					
+				</layout:BlockLayoutCell>
+				<layout:BlockLayoutCell width			=	"50"
+										title			=	"{i18n>INFO_SUP}">
+					<forms:SimpleForm	maxContainerCols=	"12" 
+										width			=	"100%" 
+										editable		=	"true" 
+										labelMinWidth	=	"192" 
+										layout			=	"ResponsiveGridLayout" 
+										labelSpanL		=	"5" 
+										labelSpanM		=	"5" 
+										labelSpanS		=	"5" 
+										emptySpanL		=	"0" 
+										emptySpanM		=	"0" 
+										emptySpanS		=	"0" 
+										columnsL		=	"2" 
+										columnsM		=	"2">
+						
+						<Label		text			=	"{i18n>CONS_SINISTR}"/>
+						<CheckBox	selected		=	"{SINIS}"
+									editable 		=	"{Edit>/EditOn}"/>
+						
+						<Label		text			=	"{i18n>REBUS}"/>
+						<CheckBox	selected		=	"{REBUT}"
+									editable 		=	"{Edit>/EditOn}"/>
+						
+						<Label		text			=	"{i18n>AGE_APAREIL}"
+									required		=	"true"/>
+						<Input		value			=	"{AGAPP}"
+									maxLength		=	"2"
+									type			=	"Number"
+									editable 		=	"{Edit>/EditOn}"/>
+						
+						<Label		text			=	"{i18n>RESIDUEL_TIME}"/>
+						<Input		value			=	"{DUREE}"
+									maxLength		=	"2"
+									type			=	"Number"
+									editable 		=	"{Edit>/EditOn}"/>
+					</forms:SimpleForm>
+				</layout:BlockLayoutCell>
+			</layout:BlockLayoutRow>
+		</layout:BlockLayout>	
+</core:FragmentDefinition>

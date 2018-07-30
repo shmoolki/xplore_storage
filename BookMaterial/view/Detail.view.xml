@@ -1,0 +1,186 @@
+<mvc:View	controllerName	=	"iae.controller.Detail"
+			xmlns			=	"sap.m"
+			xmlns:c			=	"sap.suite.ui.commons"
+			xmlns:ux		=	"sap.uxap"
+			xmlns:core 		=	"sap.ui.core" 
+			xmlns:layout 	=	"sap.ui.layout"
+			xmlns:forms 	=	"sap.ui.layout.form"
+			xmlns:mvc		=	"sap.ui.core.mvc"
+			xmlns:semantic	=	"sap.m.semantic"
+			xmlns:footerbar	=	"sap.ushell.ui.footerbar">
+	<Page	id					=	"DetailPage"
+			title 				=	"{i18n>worklistViewTitle}"
+			showNavButton		=	"true"
+			navButtonPress 		=	"onNavBack">
+		
+		<VBox	id 				= 	"msgArea" />	
+		
+		<ux:ObjectPageLayout	id 							=	"ObjectPageLayout"
+								enableLazyLoading			=	"false"
+								showAnchorBar				=	"true"
+								useTwoColumnsForLargeScreen =	"true"
+								
+								useIconTabBar				=	"true">
+			<!--<ux:headerTitle>-->
+				
+			<!--</ux:headerTitle>-->
+
+			<ux:headerContent>
+				<layout:HorizontalLayout>
+					<VBox>
+						<ux:ObjectPageHeader	objectImageURI		=	""	
+												objectTitle 	 	=	"{DAMNB}"
+												objectSubtitle		=	"{WERKS} {SNAME}"
+												id					=	"objectHeader"/>
+						<HBox>
+							<Label 			text		=	"{i18n>MONTANT_DEMANDE}"
+											design		=	"Bold"
+											class		=	"sapUiTinyMarginEnd"/>
+							<Text			text		=	"{NETPR} {WAERS}"/>
+						</HBox>
+						
+						<Text  	text		=	"{HDTXT}"/>
+					</VBox>
+					
+						<c:ProcessFlow	id				=	"processflow" 
+										scrollable		=	"false"
+										foldedCorners	=	"false"
+										showLabels		=	"false"
+										wheelZoomable	=	"false"
+										lanes			=	"{Process>/lanes}">
+										
+					      <c:lanes>
+					        <c:ProcessFlowLaneHeader	laneId	=	"{Process>id}"
+					        							iconSrc	=	"{Process>icon}" 
+					        							state	=	"{Process>state}"
+														text	=	"{Process>label}" 
+					        							position=	"{Process>position}"/>
+					      </c:lanes>
+					    </c:ProcessFlow>	
+					
+				</layout:HorizontalLayout>
+			
+			</ux:headerContent>
+			
+			<ux:sections >
+				
+				<ux:ObjectPageSection 	title 	=	"{i18n>GENERAL_INFO}">
+					<ux:subSections	id		=	"generalInfo">
+						<ux:ObjectPageSubSection>
+							<ux:blocks>
+								<core:Fragment fragmentName="iae.DetailViewFragment.GeneralInfo" type="XML" />
+							</ux:blocks>
+						</ux:ObjectPageSubSection>
+					</ux:subSections>
+				</ux:ObjectPageSection>
+				<ux:ObjectPageSection 	title 	= "{i18n>POST_TAB}">
+					<ux:subSections>
+						<ux:ObjectPageSubSection>
+							<ux:blocks>
+								<core:Fragment fragmentName="iae.DetailViewFragment.Post" type="XML" />
+							</ux:blocks>
+						</ux:ObjectPageSubSection>
+					</ux:subSections>
+				</ux:ObjectPageSection>
+				<ux:ObjectPageSection 	title 	= "{i18n>DOCUMENT}">
+					<ux:subSections>
+						<ux:ObjectPageSubSection>
+							<ux:blocks>
+								<core:Fragment fragmentName="iae.DetailViewFragment.Document" type="XML" />
+							</ux:blocks>
+						</ux:ObjectPageSubSection>
+					</ux:subSections>
+				</ux:ObjectPageSection>
+				<ux:ObjectPageSection 	title 	= "{i18n>VALIDATION}">
+					<ux:subSections>
+						<ux:ObjectPageSubSection>
+							<ux:blocks>
+								<core:Fragment fragmentName="iae.DetailViewFragment.Validation" type="XML" />
+							</ux:blocks>
+						</ux:ObjectPageSubSection>
+					</ux:subSections>
+				</ux:ObjectPageSection>
+				<ux:ObjectPageSection 	title 	= "{i18n>JOURNAL}">
+					<ux:subSections>
+						<ux:ObjectPageSubSection>
+							<ux:blocks>
+								<core:Fragment fragmentName="iae.DetailViewFragment.Journal" type="XML" />
+							</ux:blocks>
+						</ux:ObjectPageSubSection>
+					</ux:subSections>
+				</ux:ObjectPageSection>
+			</ux:sections>
+		
+		</ux:ObjectPageLayout>
+			
+		<footer>
+			<Toolbar>
+				<content>
+					<Button 	text		=	"{i18n>BON}" 
+								icon		=	"sap-icon://order-status" 
+								type		=	"Accept" 
+								press		=	"bonValidation"
+								visible 	=	"{	parts: [	{path: 'VLDRS'},
+																{path: 'Edit>/EditOn'}],
+													formatter:'.formatter.buttonVisible'}"/>
+							
+					<Button 	text		=	"{i18n>CANCEL_ASK}" 
+								icon		=	"sap-icon://cancel" 
+								type		=	"Reject" 
+								press		=	"bonValidation" 
+								visible 	=	"{	parts: [	{path: 'VLDRS'},
+																{path: 'Edit>/EditOn'}],
+													formatter:'.formatter.buttonVisible'}" />
+									
+					<Button 	text		=	"{i18n>VALID}" 
+								icon		=	"sap-icon://accept" 
+								type		=	"Accept" 
+								press		=	"managerValidation" 
+								visible 	=	"{	parts: [	{path: 'VLDDR'},
+																{path: 'Edit>/EditOn'}],
+													formatter:'.formatter.buttonVisible'}"/>
+								
+								
+					<Button 	text		=	"{i18n>REFUS}" 
+								icon		=	"sap-icon://sys-cancel" 
+								type		=	"Reject" 
+								press		=	"managerValidation" 
+								visible 	=	"{	parts: [	{path: 'VLDDR'},
+																{path: 'Edit>/EditOn'}],
+													formatter:'.formatter.buttonVisible'}"/>
+								
+					<Button 	text		=	"{i18n>TO_CHECK}" 
+								icon		=	"sap-icon://check-availability" 
+								type		=	"Emphasized" 
+								press		=	"managerValidation" 
+								visible 	=	"{	parts: [	{path: 'VLDDR'},
+																{path: 'Edit>/EditOn'}],
+													formatter:'.formatter.buttonVisible'}"/>
+								 
+					<ToolbarSpacer />
+					<ToolbarSeparator />
+					<Button 	icon	 	=	"sap-icon://edit" 
+								text 		=	"{i18n>EDIT}" 
+								press 		=	"onEdit" 
+								type		=	"Emphasized"
+								visible		=	"{	parts: [	{path: 'MSTAT'},
+																{path: 'Edit>/buttonOn'}],
+													formatter:'.formatter.modifVisible'}"/>
+					
+					<Button 	text		=	"{i18n>SAVE}" 
+								icon		=	"sap-icon://save" 
+								type		=	"Accept" 
+								visible 	=	"{Edit>/EditOn}"
+								press		=	"onSave"/>
+								
+					<Button 	text		=	"{i18n>CANCEL}" 
+								icon		=	"sap-icon://sys-cancel" 
+								type		=	"Reject" 
+								press		=	"onCancel" 
+								visible 	=	"{Edit>/EditOn}"/>
+				</content>
+			</Toolbar>
+		</footer>
+	</Page>
+
+</mvc:View>

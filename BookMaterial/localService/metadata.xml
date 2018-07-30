@@ -1,0 +1,143 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZFT_GW_C_DEGUSTATION_SRV" xml:lang="fr" sap:schema-version="1">
+            <EntityType Name="Detail" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CDNUM"/>
+                </Key>
+                <Property Name="NBRCT" Type="Edm.Byte" Nullable="false" sap:label="Nombre Recette" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CDNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Code comité" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="CTNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Code carte" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="DESCR" Type="Edm.String" Nullable="false" MaxLength="128" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="RCNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Numero de recette" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="CDTYP" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Type de comité" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="CDATE" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="CTEXT" Type="Edm.String" Nullable="false" MaxLength="128" sap:label="Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AEDAT" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Modifié le" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AENAM" Type="Edm.String" Nullable="false" MaxLength="12" sap:label="Modifié par" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="DT2FL" Relationship="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2FILE" FromRole="FromRole_DETAIL2FILE" ToRole="ToRole_DETAIL2FILE"/>
+                <NavigationProperty Name="DT2CR" Relationship="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2CARTE" FromRole="FromRole_DETAIL2CARTE" ToRole="ToRole_DETAIL2CARTE"/>
+                <NavigationProperty Name="DT2EN" Relationship="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2ENSEIGNE" FromRole="FromRole_DETAIL2ENSEIGNE" ToRole="ToRole_DETAIL2ENSEIGNE"/>
+                <NavigationProperty Name="DT2RC" Relationship="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2RECETTE" FromRole="FromRole_DETAIL2RECETTE" ToRole="ToRole_DETAIL2RECETTE"/>
+                <NavigationProperty Name="DT2IN" Relationship="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2INTERVENANT" FromRole="FromRole_DETAIL2INTERVENANT" ToRole="ToRole_DETAIL2INTERVENANT"/>
+            </EntityType>
+            <EntityType Name="Intervenant" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CDNUM"/>
+                    <PropertyRef Name="INNUM"/>
+                </Key>
+                <Property Name="CDNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Code comité" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="INNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Intervenant" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="FNAME" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Prénom" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LNAME" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Nom" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ATTND" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Présent" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Recette" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CDNUM"/>
+                    <PropertyRef Name="FRNUM"/>
+                    <PropertyRef Name="FRVER"/>
+                </Key>
+                <Property Name="CDNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Code comité" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="VSLNT" Type="Edm.Decimal" Nullable="false" Precision="5" Scale="2" sap:label="Note visuelle" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TSTAT" Type="Edm.String" Nullable="false" MaxLength="60" sap:label="Statut" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FRNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Numero de recette" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="DGSNT" Type="Edm.Decimal" Nullable="false" Precision="5" Scale="2" sap:label="Note dégustation" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FRVER" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Numéro de version" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="TITRE" Type="Edm.String" Nullable="false" MaxLength="100" sap:label="Titre de la FT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="STATS" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Statut" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PRIXI" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:label="Prix de vente indic." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VALOR" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:label="Valorisation" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Enseigne" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CDNUM"/>
+                    <PropertyRef Name="ENSGN"/>
+                </Key>
+                <Property Name="CDNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Code comité" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="ENSGN" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Code enseigne" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="ENTXT" Type="Edm.String" Nullable="false" MaxLength="50" sap:label="Designation enseigne" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ACTIV" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Case à cocher" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Carte" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CDNUM"/>
+                    <PropertyRef Name="CTNUM"/>
+                </Key>
+                <Property Name="CDNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Code comité" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="CTNUM" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Code carte" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="DESCR" Type="Edm.String" Nullable="false" MaxLength="128" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+            </EntityType>
+            <EntityType Name="Files" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FIKEY"/>
+                </Key>
+                <Property Name="FIKEY" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Cle du fichier" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="OBJNR" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Numero" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="OBJTP" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Type" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="DESCR" Type="Edm.String" Nullable="false" MaxLength="128" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="FNAME" Type="Edm.String" Nullable="false" MaxLength="128" sap:label="File name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FTYPE" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Type de fichier" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FISRC" Type="Edm.String" Nullable="false" MaxLength="128" sap:label="Source du fichier" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AEDAT" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="char8" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AENAM" Type="Edm.String" Nullable="false" MaxLength="12" sap:label="Modifié par" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="DETAIL2RECETTE" sap:content-version="1">
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Detail" Multiplicity="1" Role="FromRole_DETAIL2RECETTE"/>
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Recette" Multiplicity="*" Role="ToRole_DETAIL2RECETTE"/>
+            </Association>
+            <Association Name="DETAIL2ENSEIGNE" sap:content-version="1">
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Detail" Multiplicity="1" Role="FromRole_DETAIL2ENSEIGNE"/>
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Enseigne" Multiplicity="*" Role="ToRole_DETAIL2ENSEIGNE"/>
+            </Association>
+            <Association Name="DETAIL2CARTE" sap:content-version="1">
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Detail" Multiplicity="1" Role="FromRole_DETAIL2CARTE"/>
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Carte" Multiplicity="*" Role="ToRole_DETAIL2CARTE"/>
+            </Association>
+            <Association Name="DETAIL2FILE" sap:content-version="1">
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Detail" Multiplicity="1" Role="FromRole_DETAIL2FILE"/>
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Files" Multiplicity="*" Role="ToRole_DETAIL2FILE"/>
+            </Association>
+            <Association Name="DETAIL2INTERVENANT" sap:content-version="1">
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Detail" Multiplicity="1" Role="FromRole_DETAIL2INTERVENANT"/>
+                <End Type="ZFT_GW_C_DEGUSTATION_SRV.Intervenant" Multiplicity="*" Role="ToRole_DETAIL2INTERVENANT"/>
+            </Association>
+            <EntityContainer Name="ZFT_GW_C_DEGUSTATION_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="DetailSet" EntityType="ZFT_GW_C_DEGUSTATION_SRV.Detail" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="IntervenantSet" EntityType="ZFT_GW_C_DEGUSTATION_SRV.Intervenant" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="RecetteSet" EntityType="ZFT_GW_C_DEGUSTATION_SRV.Recette" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="EnseigneSet" EntityType="ZFT_GW_C_DEGUSTATION_SRV.Enseigne" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CarteSet" EntityType="ZFT_GW_C_DEGUSTATION_SRV.Carte" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FilesSet" EntityType="ZFT_GW_C_DEGUSTATION_SRV.Files" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="DETAIL2FILESet" Association="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2FILE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="DetailSet" Role="FromRole_DETAIL2FILE"/>
+                    <End EntitySet="FilesSet" Role="ToRole_DETAIL2FILE"/>
+                </AssociationSet>
+                <AssociationSet Name="DETAIL2ENSEIGNESet" Association="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2ENSEIGNE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="DetailSet" Role="FromRole_DETAIL2ENSEIGNE"/>
+                    <End EntitySet="EnseigneSet" Role="ToRole_DETAIL2ENSEIGNE"/>
+                </AssociationSet>
+                <AssociationSet Name="DETAIL2RECETTESet" Association="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2RECETTE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="DetailSet" Role="FromRole_DETAIL2RECETTE"/>
+                    <End EntitySet="RecetteSet" Role="ToRole_DETAIL2RECETTE"/>
+                </AssociationSet>
+                <AssociationSet Name="DETAIL2CARTESet" Association="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2CARTE" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="DetailSet" Role="FromRole_DETAIL2CARTE"/>
+                    <End EntitySet="CarteSet" Role="ToRole_DETAIL2CARTE"/>
+                </AssociationSet>
+                <AssociationSet Name="DETAIL2INTERVENANTSet" Association="ZFT_GW_C_DEGUSTATION_SRV.DETAIL2INTERVENANT" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="DetailSet" Role="FromRole_DETAIL2INTERVENANT"/>
+                    <End EntitySet="IntervenantSet" Role="ToRole_DETAIL2INTERVENANT"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZFT_GW_C_DEGUSTATION_SRV/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZFT_GW_C_DEGUSTATION_SRV/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

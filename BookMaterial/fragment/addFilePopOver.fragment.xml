@@ -1,0 +1,73 @@
+<core:FragmentDefinition	xmlns				=	"sap.m"
+							xmlns:u 			=	"sap.ui.unified"
+							xmlns:core			=	"sap.ui.core">
+	
+	<ResponsivePopover		title				=	"{i18n>ADD_A_DOC}"
+							placement			=	"Left"
+							modal				=	"true"
+							contentWidth		=	"300px"
+							id					=	"sourcingFilePopover">
+		
+		<beginButton>
+			<Button			text				=	"{i18n>ADD}"
+							type				=	"Accept"
+							press				=	"UploadFile"
+							enabled 			=	"{	parts: [	{path: 'UploadImage>/URL'},
+																	{path: 'UploadImage>/description'}],
+														formatter:'.formatter.enableSave'}" />
+		</beginButton>
+		
+		<endButton>
+			<Button			id					=	"Cancel"
+							text				=	"{i18n>CANCEL}"
+							type				=	"Reject"
+							press				=	"closePopOver" />
+		</endButton>
+ 		<content>
+ 			<HBox>
+			 	<VBox>
+				 	<Label 					text 				=	"{i18n>FILE}"
+											class 				=	"sapUiTinyMarginBegin sapUiSmallMarginTop"
+											labelFor			=	"FilesUploader"
+											required			=	"true"/>
+											
+					<Label					text				=	"{i18n>DESCRIPTION}"
+											class 				=	"sapUiTinyMarginBegin sapUiMediumMarginTop"
+											labelFor			=	"FilesDescription"
+											required			=	"true"/>
+				</VBox>										
+				<VBox>
+					<u:FileUploader 		id 					= 	"FilesUploader"
+											name 				= 	"myFileUpload"
+											uploadUrl 			= 	"/sap/opu/odata/sap/ZMM_GW_GESTION_DEVIS_SRV/UP_FILESSet"
+											uploadComplete 		= 	"uploaderUploadComplete"
+											change 				= 	"uploaderValueChange"
+											typeMissmatch 		= 	"uploaderTypeMissmatch"
+											style				= 	"Emphasized"
+											iconOnly			=	"true"
+											icon				=	"sap-icon://add"
+											fileType			= 	"png,jpg,jpeg,xls,doc,docx,txt,pdf,csv,xlsx"
+											sendXHR 			= 	"true"
+											width				=	"150px"
+											value				=	"{	path		: 'UploadImage>/URL', 
+																		type		: 'sap.ui.model.odata.type.String' , 
+																		constraints	:{	maxLength	:	128, 
+																						nullable	:	false }
+																	}"
+											class 				=	"sapUiTinyMarginBegin sapUiTinyMarginEnd"/>
+				
+					<Input					id					=	"FilesDescription"
+											value				=	"{	path		: 'UploadImage>/description', 
+																		type		: 'sap.ui.model.odata.type.String' , 
+																		constraints	:{	maxLength	:	128, 
+																						nullable	:	false }
+																	}"
+											valueLiveUpdate		=	"true" 
+											width				=	"150px"
+											class 				=	"sapUiTinyMarginBegin sapUiTinyMarginEnd"/>
+				</VBox>
+			</HBox>
+		</content>
+							
+	</ResponsivePopover>
+</core:FragmentDefinition>

@@ -768,19 +768,19 @@ METHOD articleset_get_entityset.
           FROM    wrs1
           WHERE   asort EQ ls_chrct-char_value.
 
-          IF sy-subrc EQ 0.
-             AUTHORITY-CHECK OBJECT 'W_VKPR_PLT'
-               ID 'VKORG' FIELD lv_vkorg
-               ID 'VTWEG' FIELD '*'
-               ID 'PLTYP' FIELD '*'
-               ID 'MATKL' FIELD '*'
-               ID 'ACTVT' FIELD '03'.
-            IF sy-subrc EQ 0.
-              APPEND ls_chrct TO lt_chrc2.
-            ENDIF.
-          ELSE. " Si ce n'est pas une Gamme on la considere comme autorisee Ex : Non referencee
+*          IF sy-subrc EQ 0.
+*             AUTHORITY-CHECK OBJECT 'W_VKPR_PLT'
+*               ID 'VKORG' FIELD lv_vkorg
+*               ID 'VTWEG' FIELD '*'
+*               ID 'PLTYP' FIELD '*'
+*               ID 'MATKL' FIELD '*'
+*               ID 'ACTVT' FIELD '03'.
+*            IF sy-subrc EQ 0.
+*              APPEND ls_chrct TO lt_chrc2.
+*            ENDIF.
+*          ELSE. " Si ce n'est pas une Gamme on la considere comme autorisee Ex : Non referencee
             APPEND ls_chrct TO lt_chrc2.
-          ENDIF.
+*          ENDIF.
         ENDLOOP.
 
         lt_chrct[]                = lt_chrc2[].

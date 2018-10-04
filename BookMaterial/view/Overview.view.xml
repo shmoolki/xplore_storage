@@ -1,0 +1,249 @@
+<mvc:View	controllerName	=	"iae.controller.Overview"
+			xmlns			=	"sap.m"
+			xmlns:mvc		=	"sap.ui.core.mvc"
+			xmlns:c 		=	"sap.ui.core"
+			xmlns:t 		=	"sap.ui.table"
+			xmlns:semantic	=	"sap.m.semantic"
+			xmlns:footerbar	=	"sap.ushell.ui.footerbar">
+
+	<semantic:FullscreenPage	id				=	"page"
+								navButtonPress	=	"onNavBack"
+								showNavButton	=	"false"
+								title			=	"{i18n>worklistViewTitle}"
+								showFooter		=	"false">
+		<semantic:content>
+			<Panel 	expanded 		=	"true"
+					expandable 		=	"false">
+				<FlexBox		class		=	"sapUiTinyMarginTop sapUiTinyMarginBottom sapUiTinyMarginEnd">
+					
+					
+					<FlexBox	direction 	=	"Column"
+							  	width 		= 	"100%"
+								class 		=	"sapUiTinyMarginBegin">					
+						<Label 			text 				=	"{i18n>SITE}"/>
+						<Input	value				=	"{QuickFilter>/Site}"
+								id					=	"searchSite"
+								valueLiveUpdate 	=	"true"
+								class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+								width				=	"100%" 
+								showSuggestion		=	"true"
+								suggestionItems		=	"{/VH_SITESSet}"
+								maxSuggestionWidth	=	"auto"
+								change				=	"handleSearch">
+							<suggestionItems>
+								<c:Item text	=	"{WERKS} - {NAME1}" 	key	=	"{WERKS}"/>
+							</suggestionItems>
+						</Input>
+						<!--<SearchField	value				=	"{QuickFilter>/Site}"-->
+						<!--				liveChange			=	"handleSearch"-->
+						<!--				class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"-->
+						<!--				width 				=	"85%" -->
+						<!--				showSearchButton	=	"false"/>-->
+					</FlexBox>
+						
+					<!--<FlexBox	direction 	=	"Column"-->
+					<!--		 	width 		= 	"100%"-->
+					<!--			class 		=	"sapUiNoMarginBegin">-->
+					<!--	<Label 			text 			=	"{i18n>ARTICLE}"/>-->
+					<!--	<SearchField	value				=	"{QuickFilter>/Article}"-->
+					<!--					liveChange			=	"handleSearch"-->
+					<!--					class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"-->
+					<!--					width 				=	"85%" -->
+					<!--					showSearchButton	=	"false"/>-->
+					<!--</FlexBox>-->
+						
+					<FlexBox	direction 	=	"Column"
+							 	width 		= 	"200%"
+								class 		=	"sapUiTinyMarginBegin">
+						<Label 	text		=	"{i18n>DATE}"/>
+						<HBox	width		=	"100%">
+							<DatePicker 	class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+											value				=	"{QuickFilter>/DateFrom}"
+											change				=	"handleSearch"
+											displayFormat 		= 	"dd.MM.yyyy"
+											valueFormat 		=	"yyyyMMdd"/>
+							<Label 			text 				=	"{i18n>A}"
+											class				=	"sapUiTinyMarginTop sapUiTinyMarginBegin sapUiTinyMarginEnd"/>
+							<DatePicker 	class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+											value				=	"{QuickFilter>/DateTo}"
+											change				=	"handleSearch"
+											displayFormat 		= 	"dd.MM.yyyy"
+											valueFormat 		=	"yyyyMMdd"/>
+						</HBox>
+					</FlexBox>
+					
+					<FlexBox	direction 	=	"Column"
+							  	width 		= 	"100%"
+								class 		=	"sapUiTinyMarginBegin">					
+						<Label 	text 				=	"{i18n>STATUS}"/>
+						<MultiComboBox 	id					=	"multiComboBox"
+										width 				=	"200px"
+										selectedKeys 		=	"[1,2,3,4,5]"
+										selectionChange		=	"handleSearch">
+							<items>
+								<c:Item key	=	"01" 		text	=	"{i18n>DEVIS}" />
+								<c:Item key	=	"02" 		text	=	"{i18n>VALIDATION}" />
+								<c:Item key	=	"03" 		text	=	"{i18n>COMMANDE}" />
+								<c:Item key	=	"04" 		text	=	"{i18n>RECEPTIONNE}" />
+								<c:Item key	=	"05" 		text	=	"{i18n>FACTURE}" />
+								<c:Item key	=	"06" 		text	=	"{i18n>FACTURE_NO_RECEIPT}" class	=	"sapColorSelect" />
+								<c:Item key	=	"07" 		text	=	"{i18n>PAYE}" />
+								<c:Item key	=	"08" 		text	=	"{i18n>ANNULE}" />
+								<c:Item key	=	"09" 		text	=	"{i18n>REJETE}" />
+							</items>
+						</MultiComboBox >
+					
+					</FlexBox>
+					
+					<FlexBox	direction 	=	"Column"
+							  	width 		= 	"100%"
+								class 		=	"sapUiTinyMarginBegin">					
+						<Label 			text 				=	"{i18n>FOURNISSEUR}"/>
+						<Input	value				=	"{QuickFilter>/Fournisseur}"
+								id					=	"searchFournisseur"
+								valueLiveUpdate 	=	"true"
+								change				=	"handleSearch"
+								class 				=	"sapUiNoMarginTop"
+								width 				=	"100%" 
+								showSuggestion		=	"true"
+								maxSuggestionWidth	=	"auto"
+								suggestionItems		=	"{/VH_VENDORSSet}">
+							<suggestionItems>
+								<c:Item text="{LIFNR} - {NAME1}" key = "{LIFNR}" />
+							</suggestionItems>
+						</Input>
+						<!--<SearchField	value				=	"{QuickFilter>/Fournisseur}"-->
+						<!--				enableSuggestions	=	"true"-->
+						<!--				liveChange			=	"handleSearch"-->
+						<!--				class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"-->
+						<!--				width 				=	"85%" -->
+						<!--				suggestionItems		=	"{VHModel>/}"-->
+						<!--				showSearchButton	=	"false">-->
+						<!--	<suggestionItems>-->
+						<!--		<c:Item text="{Name}" />-->
+						<!--	</suggestionItems>-->
+						<!--</SearchField>-->
+					</FlexBox>
+					<FlexBox	direction 	=	"Column"
+							  	width 		= 	"100%"
+								class 		=	"sapUiTinyMarginBegin">					
+						<Label 			text 				=	"{i18n>MONTANT}"/>
+						<Input	value				=	"{QuickFilter>/Montant}"
+								id					=	"searchMontant"
+								valueLiveUpdate 	=	"true"
+								change				=	"handleSearch"
+								class 				=	"sapUiTinyMarginEnd sapUiNoMarginTop"
+								width 				=	"100%"/>
+					</FlexBox>
+					
+				</FlexBox>
+			</Panel>
+			<t:Table 	id						=	"table" 
+						rows 					=	"{/HEADRSet}"
+						selectionMode 			=	"None" 
+						editable				=	"false" 
+						enableCellFilter 		=	"false"
+						visibleRowCount		 	=	"{OverviewScreenModel>/Screen}"
+						showNoData 				=	"false"
+						threshold				=	"9999999"
+						enableBusyIndicator 	=	"true">
+			<t:toolbar>	
+				<Toolbar>
+					<ToolbarSpacer/>
+					
+					<Button 	text 	=	"{i18n>NEW_ASK}"
+								press 	=	"NewDevis"
+								icon 	=	"sap-icon://add"
+								class 	=	"sapUiSmallMarginEnd"
+								type 	=	"Default"/>
+
+				</Toolbar>
+			</t:toolbar>
+
+			<t:columns>
+				
+				<t:Column	width	=	"8%">
+					<Label 			text 				=	"{i18n>SUIVI}"/>
+					<t:template>
+						<!--<Text 		text				=	"{DESCR}"/>	-->
+						<Link 		text				= 	"{DAMNB}" 
+									emphasized 			= 	"true"
+									press 				= 	"onPress" />
+					</t:template>
+				</t:Column>
+
+				<t:Column 	sortProperty	 	=	"SNAME">
+					<Label 			text				=	"{i18n>SITE}" />
+					<t:template>
+						<ObjectIdentifier	title	=	"{SNAME}" 
+											text	=	"{WERKS}"/>
+					</t:template>
+				</t:Column>
+
+				<!--<t:Column>-->
+				<!--	<Label 			text 				=	"{i18n>FOURNISSEUR}"/>-->
+				<!--	<t:template>-->
+				<!--		<ObjectIdentifier	title	=	"{NAME1}" -->
+				<!--							text	=	"{LIFNR}"/>-->
+						<!--<Text 		text 				=	"{CDTXT}" />-->
+				<!--	</t:template>-->
+				<!--</t:Column>-->
+				
+				<!--<t:Column>-->
+				<!--	<Label 			text				=	"{i18n>ARTICLE}" />-->
+				<!--	<t:template>-->
+				<!--		<ObjectIdentifier	title	=	"{MATNR}" -->
+				<!--							text	=	"{MAKTX}"/>-->
+				<!--	</t:template>-->
+				<!--</t:Column>-->
+				
+				<t:Column	width	=	"8%">
+					<Label 			text 				=	"{i18n>DATE}"/>
+					<t:template>
+						<DatePicker value				=	"{ERDAT}"
+									displayFormat 		= 	"dd.MM.yyyy"
+									valueFormat			=	"yyyyMMdd"
+									editable			=	"false"/>
+					</t:template>
+				</t:Column>						
+
+				<t:Column>
+					<Label 			text				=	"{i18n>DESCRIPTIF}" />
+					<t:template>
+						<Text 		text				=	"{HDTXT}"/>
+					</t:template>
+				</t:Column>
+				
+				<!--<t:Column>-->
+				<!--	<Label 			text 				=	"{i18n>DELIV_DATE}"/>-->
+				<!--	<t:template>-->
+				<!--		<DatePicker value				=	"{EINDT}"-->
+				<!--					displayFormat 		= 	"dd.MM.yyyy"-->
+				<!--					valueFormat			=	"yyyyMMdd"-->
+				<!--					editable			=	"false"/>-->
+				<!--	</t:template>-->
+				<!--</t:Column>-->
+				
+				<t:Column	width	=	"9%"
+							sortProperty	 	=	"NETPR">
+					<Label 			text				=	"{i18n>MONTANT}" />
+					<t:template>
+							<ObjectNumber	number	="{NETPR}"
+											unit	="{WAERS}" />
+					</t:template>
+				</t:Column>
+				
+				<t:Column	width	=	"8%">
+					<Label 			text				=	"{i18n>STATUS}" />
+					<t:template>
+						<Text 		text				=	"{STTXT}"/>
+					</t:template>
+				</t:Column>
+				
+
+			</t:columns>					
+		</t:Table>		
+		
+		</semantic:content>
+	</semantic:FullscreenPage>
+</mvc:View>

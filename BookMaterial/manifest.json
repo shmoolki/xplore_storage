@@ -1,0 +1,194 @@
+{
+	"_version": "1.4.0",
+	"sap.app": {
+		"id": "iae",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/sap/opu/odata/sap/ZMM_GW_GESTION_DEVIS_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			},
+			"ZFT_GW_VALUE_HELP_SRV": {
+				"uri": "/sap/opu/odata/sap/ZFT_GW_VALUE_HELP_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/VHmetadata.xml",
+					"annotations": []
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "sap.ui.ui5-template-plugin.1worklist",
+			"version": "1.38.13"
+		},
+		"_version": "1.3.0"
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://task",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		],
+		"_version": "1.3.0"
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "iae.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.38.0",
+			"libs": {
+				"sap.m": {
+					"minVersion": "1.38.0"
+				},
+				"sap.suite.ui.commons": {
+					"minVersion": ""
+				},
+				"sap.suite.ui.microchart": {
+					"minVersion": ""
+				},
+				"sap.ui.core": {
+					"minVersion": "1.38.0"
+				},
+				"sap.ui.table": {
+					"minVersion": ""
+				},
+				"sap.ushell": {
+					"minVersion": "1.38.0"
+				},
+				"sap.uxap": {
+					"minVersion": ""
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "iae.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "None",
+					"defaultOperationMode": "Server",
+					"bindingMode": "TwoWay"
+				}
+			},
+			"VHModel": {
+				"dataSource": "ZFT_GW_VALUE_HELP_SRV",
+				"settings": {
+					"loadMetadataAsync": true,
+					"json": true,
+					"bJSON": true,
+					"defaultBindingMode": "TwoWay",
+					"useBatch": false,
+					"refreshAfterChange": false,
+					"defaultCountMode": "None",
+					"defaultOperationMode": "Server"
+				}
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "iae.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "Overview",
+					"target": [
+						"Overview"
+					]
+				},
+				{
+					"pattern": "DetailSet/{objectId}",
+					"name": "Detail",
+					"target": [
+						"Detail"
+					]
+				},
+				{
+					"name": "NouveauDevis",
+					"pattern": "NouveauDevis/{objectId}",
+					"target": [
+						"NouveauDevis"
+					]
+				}
+			],
+			"targets": {
+				"Overview": {
+					"viewName": "Overview",
+					"viewId": "Overview",
+					"viewLevel": 1
+				},
+				"Detail": {
+					"viewName": "Detail",
+					"viewId": "Detail",
+					"viewLevel": 2
+				},
+				"NouveauDevis": {
+					"viewName": "Detail",
+					"viewId": "NouveauDevis",
+					"viewLevel": 3
+				},
+				"objectNotFound": {
+					"viewName": "ObjectNotFound",
+					"viewId": "objectNotFound"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
+		},
+		"_version": "1.2.0"
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zmob_gst_devis/webapp",
+		"_version": "1.1.0"
+	}
+}

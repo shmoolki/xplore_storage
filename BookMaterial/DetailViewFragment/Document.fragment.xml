@@ -1,0 +1,165 @@
+<core:FragmentDefinition 	xmlns:layout 	= "sap.ui.layout"
+							xmlns:forms 	= "sap.ui.layout.form"
+							xmlns:core 		= "sap.ui.core"
+							xmlns 			= "sap.m"
+							xmlns:u 		= "sap.ui.unified"
+							xmlns:t 		= "sap.ui.table"
+							xmlns:uxap		= "sap.uxap"
+							id 				= "generalInfo">
+	<Table 			inset			=	"false"
+					id				=	"srcFileTable"
+				    items			=	"{docTable>/}"> 
+			         
+		<columns>
+			
+			<Column>
+				<Text 	text 		=	"{i18n>COMMANDE}" />
+			</Column>
+			
+			<Column>
+				<Text 	text 		=	"{i18n>FOURNISSEUR}" />
+			</Column>
+				 
+			<Column>
+				<Text 	text 		=	"{i18n>FILES}" />
+			</Column>
+			
+		</columns>
+		
+		<items>
+			
+			<ColumnListItem>
+			
+				<cells>
+			
+					<Text 			text 				=	"{docTable>EBELN}"/>
+					
+					<ObjectIdentifier 
+									title				=	"{docTable>NAME1}"
+									text				=	"{docTable>LIFNR}"/>
+					
+					<core:Icon		src					=	"sap-icon://pdf-attachment"
+									size				=	"2rem"
+									color				=	"Red"
+									press				=	"onOpenPdf"/>
+					
+				</cells>
+			
+			</ColumnListItem>
+		
+		</items>
+		
+	</Table>
+	<!--<layout:BlockLayout background="Dashboard">-->
+	<!--	<layout:BlockLayoutRow>-->
+	<!--		<layout:BlockLayoutCell	titleAlignment			=	"Begin"	-->
+	<!--								title					=	"{i18n>ACTION}"-->
+	<!--								width					=	"50">-->
+	<!--			<forms:SimpleForm	maxContainerCols		=	"12" -->
+	<!--								minWidth				=	"-1" -->
+	<!--								layout					=	"ResponsiveGridLayout" -->
+	<!--								labelSpanL				=	"5" -->
+	<!--								labelSpanM				=	"5" -->
+	<!--								labelSpanS				=	"5" -->
+	<!--								emptySpanL				=	"0" -->
+	<!--								emptySpanM				=	"0" -->
+	<!--								emptySpanS				=	"0" -->
+	<!--								columnsL				=	"2" -->
+	<!--								columnsM				=	"2">-->
+	<!--				<Label			text					=	"{i18n>DEMANDE_DEVIS}"-->
+	<!--								class					=	"sapUiSmallMarginTop"/>-->
+	<!--				<HBox>-->
+	<!--					<Input			value				=	"54649854865"-->
+	<!--									editable			=	"false"-->
+	<!--									class				=	"sapUiTinyMarginTop"/>-->
+	<!--					<core:Icon		src					=	"sap-icon://pdf-attachment"-->
+	<!--									size				=	"2rem"-->
+	<!--									color				=	"Red"-->
+	<!--									press				=	"onOpenPdf"/>-->
+	<!--				</HBox>-->
+					
+	<!--				<Label				text				=	"{i18n>COMMANDE}"-->
+	<!--									class				=	"sapUiSmallMarginTop"/>-->
+	<!--				<HBox>-->
+	<!--					<Input			value				=	"54649854865"-->
+	<!--									editable			=	"false"-->
+	<!--									class				=	"sapUiTinyMarginTop"/>-->
+	<!--					<core:Icon		src					=	"sap-icon://pdf-attachment"-->
+	<!--									size				=	"2rem"-->
+	<!--									color				=	"Red"-->
+	<!--									press				=	"onOpenPdf"/>-->
+	<!--				</HBox>-->
+
+	<!--		</forms:SimpleForm>-->
+	<!--		</layout:BlockLayoutCell>	-->
+	<!--		<layout:BlockLayoutCell		width			=	"50"	-->
+	<!--									title			=	"{i18n>PIECE_JOINTE}">-->
+				
+	<!--			<t:Table 	id						=	"FTable" -->
+	<!--						rows 					=	"{FileTable>/}"-->
+	<!--						selectionMode 			=	"{Edit>/selectMode}"  -->
+	<!--						editable				=	"false" -->
+	<!--						enableCellFilter 		=	"true"-->
+	<!--						minAutoRowCount			=	"3"-->
+	<!--						visibleRowCount	 		=	"5"-->
+	<!--						showNoData 				=	"true"-->
+	<!--						enableBusyIndicator 	=	"true"-->
+	<!--						rowSelectionChange 		=	"showRemoveButton">-->
+	<!--				<t:toolbar>	-->
+	<!--					<Toolbar>-->
+							
+	<!--						<ToolbarSpacer/>-->
+	<!--						<Button 	id 					=	"FDelete"-->
+	<!--									text 				=	"{i18n>DELETE_FILE}"-->
+	<!--									press 				=	"deleteRecipe"-->
+	<!--									icon 				=	"sap-icon://sys-cancel"-->
+	<!--									type 				=	"Reject"-->
+	<!--									visible 			=	"false"/>-->
+							
+	<!--						<Button 	text				=	"{i18n>ADD_FILE}"-->
+	<!--									visible 			=	"{	path:		'Edit>/EditOn',-->
+	<!--																formatter:	'.formatter.showFileButton'}"-->
+	<!--									icon 				=	"sap-icon://add-activity"-->
+	<!--									press				=	"addFilePopOver"-->
+	<!--									type				=	"Emphasized"/>-->
+	<!--					</Toolbar>-->
+	<!--				</t:toolbar>-->
+			
+	<!--				<t:columns>-->
+						
+	<!--					<t:Column  width	=	"25%">-->
+	<!--						<Label 			text 				=	"{i18n>NAME}"/>-->
+	<!--						<t:template>-->
+	<!--								<Label 			text 		=	"{FileTable>FNAME}"-->
+	<!--												design		=	"Bold"/>-->
+	<!--						</t:template>-->
+	<!--					</t:Column>-->
+				
+	<!--					<t:Column>-->
+	<!--						<Label 			text 				=	"{i18n>DESCRIPTION}"/>-->
+	<!--						<t:template>-->
+	<!--								<Input 			value 		=	"{FileTable>DESCR}"-->
+	<!--												editable	=	"{Edit>/EditOn}"-->
+	<!--												change		=	"GridtableUpdate"/>-->
+	<!--						</t:template>-->
+	<!--					</t:Column>-->
+						
+	<!--					<t:Column>-->
+	<!--						<Label 			text 				=	"{i18n>TYPE}"/>-->
+	<!--						<t:template>-->
+	<!--							<core:Icon	src 				=	"{	path:		'FileTable>FTYPE',-->
+	<!--																	formatter:	'.formatter.iconType'}" -->
+	<!--										color				=	"{	path:		'FileTable>FTYPE',-->
+	<!--																	formatter:	'.formatter.iconTypeColor'}"-->
+	<!--										press				=	"viewFile"/>-->
+	<!--						</t:template>-->
+	<!--					</t:Column>-->
+					
+	<!--				</t:columns>-->
+	<!--			</t:Table>-->
+			
+	<!--		</layout:BlockLayoutCell>-->
+		
+	<!--	</layout:BlockLayoutRow >-->
+	<!--</layout:BlockLayout>-->
+</core:FragmentDefinition>

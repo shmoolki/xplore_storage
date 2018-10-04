@@ -1,0 +1,142 @@
+<core:FragmentDefinition	xmlns   	    = "sap.m"
+							xmlns:t			= "sap.ui.table"
+                        	xmlns:core  	= "sap.ui.core">
+  
+  	<ResponsivePopover		title				=	"{i18n>FOURNISSEUR}"
+							placement			=	"Horizontal"
+							modal				=	"true">
+  		<beginButton>
+			<Button			text				=	"{i18n>ADD}"
+							type				=	"Accept"
+							press				=	"fournisseurSelected"/>
+							<!--enabled 			=	"{	parts: [	{path: 'UploadFile>/URL'},-->
+							<!--										{path: 'UploadFile>/description'}],-->
+							<!--							formatter:'.formatter.enableSave'}" -->
+		</beginButton>
+		
+		<endButton>
+			<Button			text				=	"{i18n>CANCEL}"
+							type				=	"Reject"
+							press				=	"closeFournisseurPopOver" />
+		</endButton>
+ 		<content>
+ 			<Table 		inset			=	"true"
+					    items			=	"{FournisseurTable>/}"
+						width			=	"400px"
+					    mode			= 	"None"> 
+				<headerToolbar>	
+					<Toolbar>
+							
+						<ToolbarSpacer/>
+						<!--<Button 	text 				=	"{i18n>DELETE}"-->
+						<!--			press 				=	"deleteRecipe"-->
+						<!--			icon 				=	"sap-icon://sys-cancel"-->
+						<!--			type 				=	"Reject"/>-->
+						
+						<Button 	text				=	"{i18n>ADD}"
+									icon 				=	"sap-icon://add-activity"
+									press				=	"addFournisseur"
+									visible 			=	"{	parts: [	{path:	'Edit>/EditOn'},
+																			{path:	'Edit>/NonRef'}],
+																formatter:'.formatter.modifVisible'}"
+									type				=	"Emphasized"/>
+					</Toolbar>	
+					</headerToolbar>	
+				<columns>
+					
+					<Column>
+						<Text	text 	=	"{i18n>VENDOR}"/>
+					</Column>
+					<Column>
+						<Text text 		=	"{i18n>MAIL}" />
+					</Column>
+						
+					<Column hAlign		=	"Center"
+							width		=	"15%">
+					</Column>
+					<Column hAlign		=	"Center"
+							vAlign		=	"Middle"
+							width		=	"15%">
+					</Column>
+					
+				</columns>
+					
+				<items>
+					
+					<ColumnListItem>
+					
+						<cells>
+							
+							<Input		value				=	"{FournisseurTable>NAME1}" 
+										editable			=	"{FournisseurTable>editable}"/>
+										
+							<Input		value				=	"{FournisseurTable>EMAIL}"
+										type				=	"Email"
+										editable			=	"{FournisseurTable>editable}"
+										textAlign			=	"Center"/>
+							<CheckBox	selected			=	"{FournisseurTable>SELEC}"
+										editable			=	"{	path:		'FournisseurTable>checkEditable',
+																	formatter:	'.formatter.checkEditable'}"/>
+							<core:Icon	src					=	"sap-icon://email"
+										color				=	"Orange"
+										press				=	"RFQSend"/>
+						
+						</cells>
+					
+					</ColumnListItem>
+				
+				</items>
+				
+			</Table>
+	  <!--		<t:Table 	rows 					=	"{FournisseurTable>/}"-->
+			<!--			selectionMode 			=	"{Edit>/selectMode}"  -->
+			<!--			editable				=	"false" -->
+			<!--			enableCellFilter 		=	"true"-->
+			<!--			minAutoRowCount			=	"3"-->
+			<!--			width					=	"400px"-->
+			<!--			visibleRowCount	 		=	"5"-->
+			<!--			showNoData 				=	"true"-->
+			<!--			enableBusyIndicator 	=	"true"-->
+			<!--			class					=	"sapUiTinyMarginBottom sapUiTinyMarginEnd sapUiTinyMarginBegin">-->
+			<!--	<t:toolbar>	-->
+			<!--		<Toolbar>-->
+						
+			<!--			<ToolbarSpacer/>-->
+			<!--			<Button 	id 					=	"FDelete"-->
+			<!--						text 				=	"{i18n>DELETE}"-->
+			<!--						press 				=	"deleteRecipe"-->
+			<!--						icon 				=	"sap-icon://sys-cancel"-->
+			<!--						type 				=	"Reject"/>-->
+						
+			<!--			<Button 	text				=	"{i18n>ADD}"-->
+			<!--						icon 				=	"sap-icon://add-activity"-->
+			<!--						press				=	"addFilePopOver"-->
+			<!--						type				=	"Emphasized"/>-->
+			<!--		</Toolbar>-->
+			<!--	</t:toolbar>-->
+		
+			<!--	<t:columns>-->
+					
+			<!--		<t:Column>-->
+			<!--			<Label 			text 				=	"{i18n>FOURNISSEUR}"/>-->
+			<!--			<t:template>-->
+			<!--					<ObjectIdentifier	title	=	"{FournisseurTable>NAME1}" -->
+			<!--										text	=	"{FournisseurTable>LIFNR}"/>-->
+			<!--			</t:template>-->
+			<!--		</t:Column>-->
+			
+			<!--		<t:Column>-->
+			<!--			<Label 			text 				=	"{i18n>MAIL}"/>-->
+			<!--			<t:template>-->
+			<!--					<Input 			value 		=	"{FournisseurTable>FMAIL}"-->
+			<!--									type		=	"Email"-->
+			<!--									editable	=	"{Edit>/EditOn}"/>-->
+			<!--			</t:template>-->
+			<!--		</t:Column>-->
+					
+			<!--	</t:columns>-->
+			<!--</t:Table>-->
+  		</content>
+  	</ResponsivePopover>
+  
+</core:FragmentDefinition>

@@ -1,0 +1,18 @@
+<core:FragmentDefinition  xmlns         = "sap.m"
+                          xmlns:core    = "sap.ui.core">
+  
+  <SelectDialog           title         = "{i18n>INTERVENANTS}"
+                          items         = "{/VHIntervenantsSet}"
+                          liveChange    = "handleIntervenantSearch"
+                          confirm       = "confirmIntervenant"
+                          cancel		=	"closeIntervenant">
+                          
+  
+    <StandardListItem     title         = "{FNAME}"
+                          description   = "{LNAME}" 
+                          info          = "{i18n>ID} :{INNUM}"  
+                          type          = "Active"/>
+  
+  </SelectDialog>
+  
+</core:FragmentDefinition>

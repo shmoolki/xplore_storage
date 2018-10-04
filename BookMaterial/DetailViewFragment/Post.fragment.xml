@@ -1,0 +1,235 @@
+<core:FragmentDefinition 	xmlns:layout 	= "sap.ui.layout"
+							xmlns:forms 	= "sap.ui.layout.form"
+							xmlns:core 		= "sap.ui.core"
+							xmlns:t 		= "sap.ui.table"
+							xmlns 			= "sap.m"
+							xmlns:uxap		= "sap.uxap"
+							id 				= "VolumeTab">
+	<layout:VerticalLayout>
+			<t:TreeTable id						=	"ITable"
+						rows 					=	"{	path:		'postTable>/',
+				    									parameters: {arrayNames:['items']},
+				    									sorter : {
+												            path : 'ANFPS' 
+												        	}
+														}"
+						selectionMode 			=	"{Edit>/selectMode}"  
+						editable				=	"false" 
+						enableCellFilter 		=	"true"
+						minAutoRowCount			=	"3"
+						visibleRowCount	 		=	"10"
+						enableBusyIndicator 	=	"true"
+						rowSelectionChange 		=	"showRemoveButton">
+				<t:toolbar>	
+					<Toolbar>
+					
+						<ToolbarSpacer/>
+						<!--<Button 	text 				=	"{i18n>SEND_DEVIS}"-->
+						<!--			press 				=	"NewPostePress"-->
+						<!--			visible 			=	"false"-->
+						<!--			icon 				=	"sap-icon://email"-->
+						<!--			id 					=	"ISend"-->
+						<!--			type 				=	"Emphasized"/>-->
+						<!--<ToolbarSeparator	visible		=	"{Edit>/EditOn}"/>-->
+						<Button 	text 				=	"{i18n>DELETE_POSTE}"
+									press 				=	"deletePost"
+									icon 				=	"sap-icon://sys-cancel"
+									type 				=	"Reject"
+									id 					=	"IDelete"
+									visible 			=	"false"/>
+						<Button 	text 				=	"{i18n>ADD_POSTE}"
+									press 				=	"NewPostePress"
+									visible 			=	"{Edit>/EditOn}"
+									icon 				=	"sap-icon://add"
+									type 				=	"Accept"/>
+						
+					</Toolbar>
+				</t:toolbar>
+		
+				<t:columns>
+					
+					<t:Column>
+						<Label 			text 				=	"{i18n>POST_NB}"/>
+						<t:template		width				=	"8%">
+							<HBox>
+								<Text		text 				=	"{postTable>ANFPS}"
+											visible 			=	"{	path:		'postTable>HEADR',
+																		formatter:	'.formatter.labelVisible'}"
+											class				=	"customBG"/>
+								<RadioButton	visible 		=	"{	path:		'postTable>HEADR',
+																		formatter:	'.formatter.radioButtonVisible'}"
+												groupName		=	"{postTable>ANFPS}"
+												selected		=	"{postTable>SELEC}"
+												enabled			=	"{Edit>/EditOn}"
+												select			=	"radioButtonFournisseur"/>
+							</HBox>
+						</t:template>
+					</t:Column>
+					
+					<t:Column>
+						<Label 			text 				=	"{i18n>ARTICLE_NB}"/>
+						<t:template>
+							<Input		value				=	"{postTable>MATNR}"
+										editable			=	"false"/>
+						</t:template>
+					</t:Column>
+						
+					<t:Column>
+						<Label 			text 				=	"{i18n>DESCR}"/>
+						<t:template>
+							<Input		value				=	"{postTable>MAKTX}"
+										editable			=	"false"/>
+						</t:template>
+					</t:Column>
+					
+					<t:Column>
+						<Label 			text 				=	"{i18n>TEXT_POST}"/>
+						<t:template>
+							<Input		value				=	"{postTable>ITTXT}"
+										editable			=	"{	parts: [	{path: 'postTable>HEADR'},
+																				{path: 'Edit>/EditOn'}],
+																	formatter:'.formatter.editableHeader'}"
+										change				=	"GridtableUpdate"/>
+						</t:template>
+					</t:Column>
+					
+					<t:Column>
+						<Label 			text 				=	"{i18n>FOURNISSEUR}"/>
+						<t:template>
+							<Input		value				=	"{postTable>NAME1}"
+										editable			=	"false"/>
+						</t:template>
+					</t:Column>
+					
+					<t:Column>
+						<Label 			text 				=	"{i18n>MAIL}"/>
+						<t:template>
+							<Link		text				=	"{postTable>EMAIL}"/>
+						</t:template>
+					</t:Column>
+					
+					<t:Column>
+						<Label 			text 				=	"{i18n>DEVIS}"/>
+						<t:template>
+							<Input		value 				=	"{postTable>ANFNR}"
+										editable			=	"{	parts: [	{path: 'Edit>/EditOn'},
+																				{path: 'P1_PO'},
+																				{path:	'postTable>HEADR'}],
+																	formatter:'.formatter.editablePost'}"
+										change				=	"GridtableUpdate"/>
+						</t:template>
+					</t:Column>
+				
+					<t:Column		width				=	"5%">
+						<Label 			text 				=	"{i18n>QTY}"/>
+						<t:template>
+							<Input		value				=	"{postTable>MENGE}"
+										editable			=	"{	parts: [	{path: 'postTable>HEADR'},
+																				{path: 'Edit>/EditOn'}],
+																	formatter:'.formatter.editableHeader'}"
+										liveChange			=	"checkQuantity"
+										change				=	"GridtableUpdate"/>
+						</t:template>
+					</t:Column>
+					
+					<t:Column>
+						<Label 			text 				=	"{i18n>PRIX}"/>
+						<t:template>
+							<Input		value				=	"{postTable>NETPR}"
+										editable			=	"{	parts: [	{path: 'Edit>/EditOn'},
+																				{path: 'P1_PO'},
+																				{path:	'postTable>HEADR'}],
+																	formatter:'.formatter.editablePost'}"
+										tooltip				=	"Prix euro"
+										change				=	"GridtableUpdate"
+										description 		=	"{postTable>WAERS}"
+										fieldWidth			=	"60%"/>
+																	
+							<!--<ObjectNumber	number	="{postTable>NETPR}"-->
+							<!--				unit	= />-->
+							
+						</t:template>
+					</t:Column>
+					
+					<t:Column 	hAlign				=	"Center"
+								width				=	"4.5%"
+								visible 			=	"{	path:		'P1_PO',
+															formatter:	'.formatter.devisPhase'}">
+						<Label 			text 				=	""/>
+						<t:template>
+							<core:Icon	src					=	"sap-icon://email"
+										color				=	"Grey"
+										size				=	"1.3rem"
+										visible 			=	"{	path:		'postTable>HEADR',
+																	formatter:	'.formatter.labelVisible'}"
+										press				=	"fournisseurPopover"/>
+						</t:template>
+					</t:Column>
+					
+					<!--<t:Column 	hAlign				=	"Center">-->
+					<!--	<Label 			text 				=	""/>-->
+					<!--	<t:template>-->
+					<!--		<core:Icon	src					=	"sap-icon://add"-->
+					<!--					color				=	"Green"-->
+					<!--					size				=	"1.8rem"-->
+					<!--					press				=	"filePopover"/>-->
+					<!--	</t:template>-->
+					<!--</t:Column>-->
+					
+					<t:Column 	hAlign				=	"Center"
+								width				=	"4.5%">
+						<Label 			text 				=	""/>
+						<t:template>
+							<core:Icon	src					=	"sap-icon://attachment"
+										color				=	"{	path:		'postTable>DOCEX',
+																	formatter:	'.formatter.hasAttachment'}"
+										size				=	"1.3rem"
+										visible				=	"{postTable>DOCUM}"
+										press				=	"filePopover"/>
+						</t:template>
+					</t:Column>
+					
+					<t:Column 	hAlign				=	"Center"
+								width				=	"4.5%"
+								visible 			=	"{COLGR}">
+						<Label 			text 				=	""/>
+						<t:template>
+							<core:Icon	src					=	"sap-icon://cart-approval"
+										color				=	"Green"
+										visible 			=	"{	parts: [	{path: 'postTable>RECPT'},
+																				{path: 'postTable>GR_OK'}],
+																	formatter:'.formatter.receptVisible'}"
+										size				=	"1.3rem"
+										tooltip				=	"{i18n>RECEPT}"
+										press				=	"Litige"/>
+										
+										
+						</t:template>
+					</t:Column>
+					
+					<t:Column 	hAlign				=	"Center"
+								width				=	"4.5%"
+								visible 			=	"{COLGR}">
+						<Label 			text 				=	""/>
+						<t:template>
+							<core:Icon	src					=	"sap-icon://cart-approval"
+										color				=	"Red"
+										size				=	"1.3rem"
+										visible 			=	"{	parts: [	{path: 'postTable>RECPT'},
+																				{path: 'postTable>GR_KO'}],
+																	formatter:'.formatter.receptVisible'}"
+										tooltip				=	"{i18n>RECEPT_LITIGE}"
+										press				=	"Litige"/>
+										
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:TreeTable>
+			<!--<HBox		alignItems		=	"End"-->
+			<!--			justifyContent	=	"End">-->
+			<!--	<Button 				text	=	"{i18n>BON_VALIDATION}"-->
+			<!--							type	=	"Emphasized"-->
+			<!--							visible =	"{Edit>/ButtonValidation}"/>-->
+			<!--</HBox>-->
+	</layout:VerticalLayout>
+</core:FragmentDefinition>

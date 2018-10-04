@@ -1,0 +1,69 @@
+/* Enter your custom styles here */
+/*.LabelSize{*/
+/*	font-size:0.7rem !important;*/
+/*}*/
+/*.InputSize{*/
+/*	font-size:0.7rem !important;*/
+/*}*/
+.sapMLabel{
+	font-size:0.75rem !important;
+}
+.sapMInputBaseInner{
+	font-size:0.75rem !important;
+}
+.sapMListTbl .sapMText, .sapMListTbl .sapMLabel{
+	font-size:0.75rem !important;
+}
+.sapMText{
+	font-size:0.75rem !important;
+}
+.sapMITBFilter .sapMITBText{
+	width:6rem !important;
+}
+.sapUiSizeCompact .sapMComboBoxTextFieldInner:not(.sapMComboBoxTextFieldInnerReadonly){
+    padding-right: 0rem !important;
+}
+.sapUiSizeCompact .sapMComboBoxTextFieldArrow{
+	width:1rem !important;
+}
+.sapUiSizeCompact .sapMSltArrow, .sapUiSizeCondensed .sapUiTableCell .sapMSltArrow {
+    width: 1rem !important;
+}
+.sapUiSizeCompact .sapMSltLabel, .sapUiSizeCompact .sapMSltNative, .sapUiSizeCondensed .sapUiTableCell .sapMSltLabel, .sapUiSizeCondensed .sapUiTableCell .sapMSltNative {
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+}
+.sapMSlt>.sapMSltLabel {
+	font-size: 0.75rem  !important;
+}
+.sapUiSizeCompact .sapUiFormEdit .sapMText {
+    padding-top: 0.55rem !important; 
+}
+
+.sapMPanelContent {
+    padding: 0rem !important;
+}
+
+.sapUiMedia-Std-Desktop .sapUxAPObjectPageHeaderIdentifier {
+    padding-left: 0rem !important;
+}
+
+.sapMListInsetBG {
+    padding: 0.4rem !important;
+}
+
+.sapUiSizeCompact .sapMTB.sapMListHdrTBar {
+    height: 2rem  !important;
+}
+
+.sapColorSelect .sapMSLITitleOnly {
+    color: #e52929	!important;
+}
+
+.customBG .sapMText {
+    background-color: #cccccc !important;
+}
+
+/*.suiteUiProcessFlowLaneHeaderContainer {*/
+/*    width: 70%  !important;*/
+/*}*/

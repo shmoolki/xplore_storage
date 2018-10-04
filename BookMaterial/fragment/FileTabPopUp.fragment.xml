@@ -1,0 +1,99 @@
+<core:FragmentDefinition  	xmlns       	= 	"sap.m"
+                          	xmlns:core  	= 	"sap.ui.core"
+                          	xmlns:forms 	= 	"sap.ui.layout.form"
+                          	xmlns:layout	= 	"sap.ui.layout"
+							xmlns:u 		= 	"sap.ui.unified"
+                          	id 				= 	"InitDialog">
+
+     <Dialog  		    	title 					= 	"{i18n>FILES}"
+     						type 					=	"Standard"
+     						contentWidth			=	"700px"
+     						horizontalScrolling 	=	"false"
+     						verticalScrolling		=	"false">
+     	 <buttons>
+     	 	
+        	<Button 	text	=	"{i18n>CLOSE}" 
+        				type	=	"Reject"
+        				press	=	"closeFilePopOver"/>
+        </buttons>
+     	<layout:VerticalLayout>
+		
+			<Table 			inset			=	"false"
+							id				=	"srcFileTable"
+						    items			=	"{FileTable>/}"
+						    width			=	"670px"
+						    delete 			= 	"onSourcingFileDelete"
+						    class	 		=	"sapUiSmallMarginBegin sapUiMediumMarginEnd"> 
+				<headerToolbar>	
+					<Toolbar>
+						<Label 	text 				=	"{i18n>FILES}"
+								class				=	"sapUiTinyMarginTop"
+								design				=	"Bold"/>
+						
+						<ToolbarSpacer/>
+						<Button 	text		=	"{i18n>ADD_FILE}"
+									icon 		=	"sap-icon://add-document"
+									press		=	"addFilePopOver"
+									type		=	"Emphasized"
+									class		=	"sapUiTinyMarginTop"
+									visible 	=	"{Edit>/uploadFile}"/>
+					</Toolbar>
+				</headerToolbar>		         
+				<columns>
+					
+					<Column>
+						<Text 	text 		=	"{i18n>NAME}" />
+					</Column>
+					
+					<Column>
+						<Text 	text 		=	"{i18n>DESCRIPTION}" />
+					</Column>
+						 
+					<Column>
+						<Text 	text 		=	"{i18n>FILES}" />
+					</Column>
+					
+					<!--<Column>-->
+					<!--	<Text 	text 		=	"{i18n>SIZE}" />-->
+					<!--</Column>-->
+					
+					<Column>
+						<Text 	text 		=	"{i18n>TYPE}" />
+					</Column>
+				</columns>
+				
+				<items>
+					
+					<ColumnListItem>
+					
+						<cells>
+					
+							<Text 		text 	=	"{FileTable>FNAME}"
+										class	=	"sapUiTinyMarginTop"/>
+							
+							<Input 		value 	=	"{FileTable>DESCR}"
+										editable=	"false"/>
+
+							<core:Icon 	src 	=	"sap-icon://inspection"
+										tooltip	=	"{FileTable>FISRC}"
+										press	=	"onFilePreview"
+										class	=	"sapUiTinyMarginTop sapUiMediumMarginBegin"/>
+
+							
+							<core:Icon	src 	=	"{	path: 'FileTable>FTYPE',
+																formatter:'.formatter.iconType'}" 
+										color	=	"{	path: 'FileTable>FTYPE',
+																formatter:'.formatter.iconTypeColor'}"
+										class	=	"sapUiTinyMarginTop sapUiTinyMarginBegin"/>
+							
+						</cells>
+					
+					</ColumnListItem>
+				
+				</items>
+				
+			</Table>
+
+		</layout:VerticalLayout>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,38 @@
+<core:FragmentDefinition	xmlns       	= "sap.m"
+							xmlns:forms 	= "sap.ui.layout.form"
+							xmlns:layout 	= "sap.ui.layout"
+                        	xmlns:core  	= "sap.ui.core">
+	
+	<Dialog 	id			=	"SyntheseDialog"
+				visible		=	"true"
+				showHeader	=	"true"
+				type		=	"Message">
+		
+		<buttons>
+					
+			<Button	text	=	"{i18n>SAVE}"
+					icon	=	"sap-icon://save" 
+					type	=	"Accept"
+					press	=	"GoodReceipt"/>
+			<Button	text	=	"{i18n>CLOSE}"
+					type	=	"Reject"
+					icon	=	"sap-icon://sys-cancel" 
+					press	=	"LitigeClose"/>
+		
+		</buttons>
+		<layout:VerticalLayout>
+			<Text			text		=	"{i18n>RECEPT_CONFIRM}"/>
+			
+			<Label			text		=	"{i18n>LITIGE_OBJECT}"
+							class		=	"sapUiSmallMarginTop"
+							visible 	=	"{Edit>/Litige}"/>
+		</layout:VerticalLayout>
+		<TextArea		width 				=	"100%"
+						value				=	"{Edit>/LTGTX}"
+						rows				=	"4"
+						visible 			=	"{Edit>/Litige}"
+						liveChange			= "onLitigePopulate"/>
+		
+	</Dialog>
+  
+</core:FragmentDefinition>
